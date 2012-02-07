@@ -1,0 +1,50 @@
+<%= form_for(@node) do |f| %>
+  <% if @node.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@node.errors.count, "error") %> prohibited this node from being saved:</h2>
+
+      <ul>
+      <% @node.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :street %><br />
+    <%= f.text_field :street %>
+  </div>
+  <div class="field">
+    <%= f.label :city %><br />
+    <%= f.text_field :city %>
+  </div>
+  <div class="field">
+    <%= f.label :country %><br />
+    <%= f.text_field :country %>
+  </div>
+  <div class="field">
+    <%= f.label :demand %><br />
+    <%= f.text_field :demand %>
+  </div>
+    <div class= "field">
+    <%= f.label :depot %><br />
+    <%= f.check_box :depot %>
+  </div>
+    <div class="field">
+        <%= f.label :latitude %>
+        <%= @node.latitude %>
+      </div>
+      <div class="field">
+        <%= f.label :longitude %>
+        <%= @node.longitude %>
+      </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

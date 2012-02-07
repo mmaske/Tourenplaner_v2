@@ -1,0 +1,37 @@
+<h1>Listing nodes</h1>
+
+<table>
+  <tr>
+
+
+    <th>Name</th>
+    <th>Street</th>
+    <th>City</th>
+    <th>Country</th>
+    <th>Demand</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @nodes.each do |node| %>
+  <tr>
+
+    <td><%= node.name %></td>
+    <td><%= node.street %></td>
+    <td><%= node.city %></td>
+    <td><%= node.country %></td>
+    <td><%= node.demand %>
+    <% if node.depot? %>
+      <%= "(Depot)"  %>
+      <% end %></td>
+    <td><%= link_to 'Show', node %></td>
+    <td><%= link_to 'Edit', edit_node_path(node) %></td>
+    <td><%= link_to 'Destroy', node, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+<%= gmaps4rails(@json) %>
+<br />
+
+<%= link_to 'New Node', new_node_path %>

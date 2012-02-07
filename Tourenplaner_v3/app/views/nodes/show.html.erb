@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Latitude:</b>
+  <%= @node.latitude %>
+</p>
+
+<p>
+  <b>Longitude:</b>
+  <%= @node.longitude %>
+</p>
+
+<p>
+  <b>Gmaps:</b>
+  <%= @node.gmaps %>
+</p>
+
+<p>
+  <b>Street:</b>
+  <%= @node.street %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @node.city %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @node.country %>
+</p>
+
+<p>
+  <b>Demand:</b>
+  <%= @node.demand %>
+</p>
+ <%= gmaps4rails(@json) %>
+
+<%= link_to 'Edit', edit_node_path(@node) %> |
+<%= link_to 'Back', nodes_path %>

@@ -1,0 +1,901 @@
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   2  set
+   3       k Menge der Fahrzeuge
+   4       i Kundenknoten
+   5       alias(i,j)
+   6  set Kundenknoten(i) subset;
+   7   
+   8   
+   9  parameter
+  10       t(i,j) Fahrzeit von Knoten i zu Knoten j
+  11       c(i,j) Entfernung von Knoten i zu Knoten j
+  12       d(i)   Nachfrage am Knoten i
+  13       cap    Kapazitaet des Fahrzeugs k
+  14       M      BigM
+  15       Tmax   Maximale Tourdauer /10000/;
+  16   
+INCLUDE    C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
+  18  set i /
+  19  dstart
+  20  dend
+  21  i2
+  22  i3
+  23  i4
+  24  i5
+  25  i6
+  26  /
+  27   
+  28  Scalar M /
+  29  1
+  30  /;
+  31   
+  32  c('dstart','dstart')= 0;
+  33  c('dend','dend')= 0;
+  34  c('dstart','dend')= 0;
+  35  c('dend','dstart')= 0;
+  36  c('dstart','i2')= 19.869127385757295;
+  37  c('dend','i2')= 19.869127385757295;
+  38  c('dstart','i3')= 6.67091367890866;
+  39  c('dend','i3')= 6.67091367890866;
+  40  c('dstart','i4')= 0.8469352250948264;
+  41  c('dend','i4')= 0.8469352250948264;
+  42  c('dstart','i5')= 2.7419018395144867;
+  43  c('dend','i5')= 2.7419018395144867;
+  44  c('dstart','i6')= 4.0903952552023615;
+  45  c('dend','i6')= 4.0903952552023615;
+  46  c('i2','dstart')= 19.869127385757295;
+  47  c('i2','dend')= 19.869127385757295;
+  48  c('i2','i2')= 0;
+  49  c('i2','i3')= 18.714716075469628;
+  50  c('i2','i4')= 20.515041007466877;
+  51  c('i2','i5')= 18.634307387960558;
+  52  c('i2','i6')= 17.85669562032608;
+  53  c('i3','dstart')= 6.67091367890866;
+  54  c('i3','dend')= 6.67091367890866;
+  55  c('i3','i2')= 18.714716075469624;
+  56  c('i3','i3')= 0;
+  57  c('i3','i4')= 6.409733995148277;
+  58  c('i3','i5')= 8.691511113041624;
+  59  c('i3','i6')= 9.644587795488121;
+  60  c('i4','dstart')= 0.8469352250948264;
+  61  c('i4','dend')= 0.8469352250948264;
+  62  c('i4','i2')= 20.515041007466877;
+  63  c('i4','i3')= 6.409733995148277;
+  64  c('i4','i4')= 0;
+  65  c('i4','i5')= 3.5550257079731833;
+  66  c('i4','i6')= 4.9159536308659915;
+  67  c('i5','dstart')= 2.7419018395144867;
+  68  c('i5','dend')= 2.7419018395144867;
+  69  c('i5','i2')= 18.634307387960558;
+  70  c('i5','i3')= 8.691511113041624;
+  71  c('i5','i4')= 3.5550257079731833;
+  72  c('i5','i5')= 0;
+  73  c('i5','i6')= 1.3727402094013288;
+  74  c('i6','dstart')= 4.0903952552023615;
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+  75  c('i6','dend')= 4.0903952552023615;
+  76  c('i6','i2')= 17.85669562032608;
+  77  c('i6','i3')= 9.644587795488121;
+  78  c('i6','i4')= 4.9159536308659915;
+  79  c('i6','i5')= 1.3727402094013286;
+  80  c('i6','i6')= 0;
+  81   
+  82   
+  83  t('dstart','dstart')= 0;
+  84  t('dend','dend')= 0;
+  85  t('dstart','dend')= 0;
+  86  t('dend','dstart')= 0;
+  87  t('dstart','i2')= 2;
+  88  t('dend','i2')= 2;
+  89  t('dstart','i3')= 2;
+  90  t('dend','i3')= 2;
+  91  t('dstart','i4')= 2;
+  92  t('dend','i4')= 2;
+  93  t('dstart','i5')= 2;
+  94  t('dend','i5')= 2;
+  95  t('dstart','i6')= 2;
+  96  t('dend','i6')= 2;
+  97  t('i2','dstart')= 2;
+  98  t('i2','dend')= 2;
+  99  t('i2','i2')= 0;
+ 100  t('i2','i3')= 2;
+ 101  t('i2','i4')= 2;
+ 102  t('i2','i5')= 2;
+ 103  t('i2','i6')= 2;
+ 104  t('i3','dstart')= 2;
+ 105  t('i3','dend')= 2;
+ 106  t('i3','i2')= 2;
+ 107  t('i3','i3')= 0;
+ 108  t('i3','i4')= 2;
+ 109  t('i3','i5')= 2;
+ 110  t('i3','i6')= 2;
+ 111  t('i4','dstart')= 2;
+ 112  t('i4','dend')= 2;
+ 113  t('i4','i2')= 2;
+ 114  t('i4','i3')= 2;
+ 115  t('i4','i4')= 0;
+ 116  t('i4','i5')= 2;
+ 117  t('i4','i6')= 2;
+ 118  t('i5','dstart')= 2;
+ 119  t('i5','dend')= 2;
+ 120  t('i5','i2')= 2;
+ 121  t('i5','i3')= 2;
+ 122  t('i5','i4')= 2;
+ 123  t('i5','i5')= 0;
+ 124  t('i5','i6')= 2;
+ 125  t('i6','dstart')= 2;
+ 126  t('i6','dend')= 2;
+ 127  t('i6','i2')= 2;
+ 128  t('i6','i3')= 2;
+ 129  t('i6','i4')= 2;
+ 130  t('i6','i5')= 2;
+ 131  t('i6','i6')= 0;
+ 132   
+ 133   
+ 134  Kundenknoten(i) = yes;
+ 135  Kundenknoten('dstart') = no;
+ 136   
+ 137   
+ 138  scalar cap /
+ 139  145.000000
+ 140  /;
+ 141   
+ 142  parameter d(i) /
+ 143  dstart   0
+ 144  dend     0
+ 145  i2 12.0
+ 146  i3 10.0
+ 147  i4 10.0
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 148  i5 14.0
+ 149  i6 25.0
+ 150  /;
+ 151   
+ 152   
+ 153   
+ 154   
+ 155   
+ 156   
+ 157  variables Z  Zielfunktionswert;
+ 158  binary variables x Transportmengen;
+ 159  positive variables ld Ladungsmenge;
+ 160  positive variables w Anfahrtszeitpunkte;
+ 161   
+ 162  Equations
+ 163  Zielfunktion                               Das ist die Zielfunktion
+ 164  Nur_einmal_abfahren(j)                     Jeder Kundenknoten darf nur einmal angefahren werden
+ 165  Nur_einmal_anfahren(j)                     Jeder Kundenknoten darf nur einmal angefahren werden
+ 166  Fahrzeugkapaziteat(i,j)                      Die Kapazitaet jedes Fahrzeugs darf nicht Ueberschritten werden
+ 167  Depot_einmal_pro_Fahrzeug_abfahren      Das Depot darf pro Fahrzeug nur einmal angefahren werden
+ 168  Bedingung(i)       Das ist noch eine Bedingung die noch nachzuvollziehen ist
+ 169  Kapazitaet1(i) xxx
+ 170  Kapazitaet2(i)                        dito
+ 171  Kurzzyklenbedingung(i,j)                 Unterbinden von Kurzzyklen
+ 172  Depot_einmal_pro_Fahrzeug_anfahren c;
+ 173   
+ 174  Zielfunktion..
+ 175       Z =e=   sum((i,j),c(i,j)*x(i,j));
+ 176   
+ 177  Nur_einmal_anfahren(j)$(Kundenknoten(j))..
+ 178       sum((i)$(ord(i)<>ord(j)),x(i,j)) =e= 1;
+ 179   
+ 180  Nur_einmal_abfahren(j)$(Kundenknoten(j))..
+ 181       sum((i)$(ord(i)<>ord(j)),x(j,i)) =e= 1;
+ 182   
+ 183  Fahrzeugkapaziteat(i,j)$(Kundenknoten(j))..
+ 184       ld(i) =g= ld(j) + d(i) - cap*(1-x(i,j));
+ 185   
+ 186  Depot_einmal_pro_Fahrzeug_abfahren..
+ 187       sum(i$(Kundenknoten(i)),x("dstart",i)) =l= M;
+ 188   
+ 189  Depot_einmal_pro_Fahrzeug_anfahren..
+ 190       sum(i$(Kundenknoten(i)),x(i,"dend")) =l= M;
+ 191   
+ 192  Bedingung(i)$(Kundenknoten(i))..
+ 193       w(i) + t(i,"dend")  =l= Tmax;
+ 194   
+ 195  Kapazitaet1(i)..
+ 196           d(i) =l= ld(i);
+ 197  Kapazitaet2(i)..
+ 198           ld(i) =l= cap;
+ 199   
+ 200  Kurzzyklenbedingung(i,j)$(Kundenknoten(j))..
+ 201       w(j)=g=w(i)+t(i,j)-Tmax*(1-x(i,j));
+ 202   
+ 203  model vrp /
+ 204                   Zielfunktion
+ 205                   , Nur_einmal_anfahren
+ 206                   , Nur_einmal_abfahren
+ 207                   , Fahrzeugkapaziteat
+ 208                   , Kapazitaet1
+ 209                   , Kapazitaet2
+ 210                   , Bedingung
+ 211                   , Depot_einmal_pro_Fahrzeug_abfahren
+ 212                   , Kurzzyklenbedingung
+ 213                   , Depot_einmal_pro_Fahrzeug_anfahren
+ 214                   /;
+ 215   
+ 216   
+ 217   
+ 218   
+ 219  solve vrp minimizing Z using mip ;
+ 220   
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 221  display x.l, w.l;
+ 222   
+ 223   
+ 224  file outputfile1 / 'VRP_Loesung1.txt'/;
+ 225  put outputfile1;
+ 226   
+ 227       loop(i,
+ 228           loop(j,
+ 229              if ( x.l(i,j) = 1,
+ 230               put  i.tl:0, ' ; ' j.tl:0 /
+ 231               );
+ 232           );
+ 233       );
+ 234   
+ 235  putclose outputfile1;
+ 236   
+ 237  file outputfile2 / 'VRP_Loesung2.txt'/;
+ 238  put outputfile2;
+ 239   
+ 240  loop(i,
+ 241          put  i.tl:0, ' ; ',  w.l(i) /
+ 242       );
+ 243   
+ 244  putclose outputfile2;
+ 245   
+ 246  file outputfile3 / 'VRP_Loesung3.txt'/;
+ 247  put outputfile3;
+ 248   
+ 249  loop(i,
+ 250               put  i.tl:0, ' ; ',  ld.l(i) /
+ 251       );
+ 252  putclose outputfile3;
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Sites\Tourenplaner_v3\VRP_V2.gms
+     2       17 INCLUDE        1      17  .C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 6
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE vrp Using MIP From line 219
+
+
+---- Zielfunktion  =E=  Das ist die Zielfunktion
+
+Zielfunktion..  Z - 19.8691273857573*x(dstart,i2) - 6.67091367890866*x(dstart,i3) - 0.846935225094826*x(dstart,i4) - 2.74190183951449*x(dstart,i5) - 4.09039525520236*x(dstart,i6) - 19.8691273857573*x(dend,i2) - 6.67091367890866*x(dend,i3)
+     
+      - 0.846935225094826*x(dend,i4) - 2.74190183951449*x(dend,i5) - 4.09039525520236*x(dend,i6) - 19.8691273857573*x(i2,dstart) - 19.8691273857573*x(i2,dend) - 18.7147160754696*x(i2,i3) - 20.5150410074669*x(i2,i4) - 18.6343073879606*x(i2,i5)
+     
+      - 17.8566956203261*x(i2,i6) - 6.67091367890866*x(i3,dstart) - 6.67091367890866*x(i3,dend) - 18.7147160754696*x(i3,i2) - 6.40973399514828*x(i3,i4) - 8.69151111304162*x(i3,i5) - 9.64458779548812*x(i3,i6) - 0.846935225094826*x(i4,dstart)
+     
+      - 0.846935225094826*x(i4,dend) - 20.5150410074669*x(i4,i2) - 6.40973399514828*x(i4,i3) - 3.55502570797318*x(i4,i5) - 4.91595363086599*x(i4,i6) - 2.74190183951449*x(i5,dstart) - 2.74190183951449*x(i5,dend) - 18.6343073879606*x(i5,i2)
+     
+      - 8.69151111304162*x(i5,i3) - 3.55502570797318*x(i5,i4) - 1.37274020940133*x(i5,i6) - 4.09039525520236*x(i6,dstart) - 4.09039525520236*x(i6,dend) - 17.8566956203261*x(i6,i2) - 9.64458779548812*x(i6,i3) - 4.91595363086599*x(i6,i4)
+     
+      - 1.37274020940133*x(i6,i5) =E= 0 ; (LHS = 0)
+     
+
+---- Nur_einmal_anfahren  =E=  Jeder Kundenknoten darf nur einmal angefahren werden
+
+Nur_einmal_anfahren(dend)..  x(dstart,dend) + x(i2,dend) + x(i3,dend) + x(i4,dend) + x(i5,dend) + x(i6,dend) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+Nur_einmal_anfahren(i2)..  x(dstart,i2) + x(dend,i2) + x(i3,i2) + x(i4,i2) + x(i5,i2) + x(i6,i2) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+Nur_einmal_anfahren(i3)..  x(dstart,i3) + x(dend,i3) + x(i2,i3) + x(i4,i3) + x(i5,i3) + x(i6,i3) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- Nur_einmal_abfahren  =E=  Jeder Kundenknoten darf nur einmal angefahren werden
+
+Nur_einmal_abfahren(dend)..  x(dend,dstart) + x(dend,i2) + x(dend,i3) + x(dend,i4) + x(dend,i5) + x(dend,i6) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+Nur_einmal_abfahren(i2)..  x(i2,dstart) + x(i2,dend) + x(i2,i3) + x(i2,i4) + x(i2,i5) + x(i2,i6) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+Nur_einmal_abfahren(i3)..  x(i3,dstart) + x(i3,dend) + x(i3,i2) + x(i3,i4) + x(i3,i5) + x(i3,i6) =E= 1 ; (LHS = 0, INFES = 1 ****)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- Fahrzeugkapaziteat  =G=  Die Kapazitaet jedes Fahrzeugs darf nicht Ueberschritten werden
+
+Fahrzeugkapaziteat(dstart,dend)..  - 145*x(dstart,dend) + ld(dstart) - ld(dend) =G= -145 ; (LHS = 0)
+     
+Fahrzeugkapaziteat(dstart,i2)..  - 145*x(dstart,i2) + ld(dstart) - ld(i2) =G= -145 ; (LHS = 0)
+     
+Fahrzeugkapaziteat(dstart,i3)..  - 145*x(dstart,i3) + ld(dstart) - ld(i3) =G= -145 ; (LHS = 0)
+     
+REMAINING 39 ENTRIES SKIPPED
+
+
+---- Kapazitaet1  =L=  xxx
+
+Kapazitaet1(dstart)..  - ld(dstart) =L= 0 ; (LHS = 0)
+     
+Kapazitaet1(dend)..  - ld(dend) =L= 0 ; (LHS = 0)
+     
+Kapazitaet1(i2)..  - ld(i2) =L= -12 ; (LHS = 0, INFES = 12 ****)
+     
+REMAINING 4 ENTRIES SKIPPED
+
+
+---- Kapazitaet2  =L=  dito
+
+Kapazitaet2(dstart)..  ld(dstart) =L= 145 ; (LHS = 0)
+     
+Kapazitaet2(dend)..  ld(dend) =L= 145 ; (LHS = 0)
+     
+Kapazitaet2(i2)..  ld(i2) =L= 145 ; (LHS = 0)
+     
+REMAINING 4 ENTRIES SKIPPED
+
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE vrp Using MIP From line 219
+
+
+---- Bedingung  =L=  Das ist noch eine Bedingung die noch nachzuvollziehen ist
+
+Bedingung(dend)..  w(dend) =L= 10000 ; (LHS = 0)
+     
+Bedingung(i2)..  w(i2) =L= 9998 ; (LHS = 0)
+     
+Bedingung(i3)..  w(i3) =L= 9998 ; (LHS = 0)
+     
+REMAINING 3 ENTRIES SKIPPED
+
+
+---- Depot_einmal_pro_Fahrzeug_abfahren  =L=  Das Depot darf pro Fahrzeug nur einmal angefahren werden
+
+Depot_einmal_pro_Fahrzeug_abfahren..  x(dstart,dend) + x(dstart,i2) + x(dstart,i3) + x(dstart,i4) + x(dstart,i5) + x(dstart,i6) =L= 1 ; (LHS = 0)
+     
+
+---- Kurzzyklenbedingung  =G=  Unterbinden von Kurzzyklen
+
+Kurzzyklenbedingung(dstart,dend)..  - 10000*x(dstart,dend) - w(dstart) + w(dend) =G= -10000 ; (LHS = 0)
+     
+Kurzzyklenbedingung(dstart,i2)..  - 10000*x(dstart,i2) - w(dstart) + w(i2) =G= -9998 ; (LHS = 0)
+     
+Kurzzyklenbedingung(dstart,i3)..  - 10000*x(dstart,i3) - w(dstart) + w(i3) =G= -9998 ; (LHS = 0)
+     
+REMAINING 39 ENTRIES SKIPPED
+
+
+---- Depot_einmal_pro_Fahrzeug_anfahren  =L=  c
+
+Depot_einmal_pro_Fahrzeug_anfahren..  x(dend,dend) + x(i2,dend) + x(i3,dend) + x(i4,dend) + x(i5,dend) + x(i6,dend) =L= 1 ; (LHS = 0)
+     
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 8
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE vrp Using MIP From line 219
+
+
+---- Z  Zielfunktionswert
+
+Z
+                (.LO, .L, .UP, .M = -INF, 0, +INF, 0)
+        1       Zielfunktion
+
+
+---- x  Transportmengen
+
+x(dstart,dend)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+        1       Nur_einmal_anfahren(dend)
+     -145       Fahrzeugkapaziteat(dstart,dend)
+        1       Depot_einmal_pro_Fahrzeug_abfahren
+   -10000       Kurzzyklenbedingung(dstart,dend)
+
+x(dstart,i2)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+      -19.8691  Zielfunktion
+        1       Nur_einmal_anfahren(i2)
+     -145       Fahrzeugkapaziteat(dstart,i2)
+        1       Depot_einmal_pro_Fahrzeug_abfahren
+   -10000       Kurzzyklenbedingung(dstart,i2)
+
+x(dstart,i3)
+                (.LO, .L, .UP, .M = 0, 0, 1, 0)
+       -6.6709  Zielfunktion
+        1       Nur_einmal_anfahren(i3)
+     -145       Fahrzeugkapaziteat(dstart,i3)
+        1       Depot_einmal_pro_Fahrzeug_abfahren
+   -10000       Kurzzyklenbedingung(dstart,i3)
+
+REMAINING 45 ENTRIES SKIPPED
+
+---- ld  Ladungsmenge
+
+ld(dstart)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       Fahrzeugkapaziteat(dstart,dend)
+        1       Fahrzeugkapaziteat(dstart,i2)
+        1       Fahrzeugkapaziteat(dstart,i3)
+        1       Fahrzeugkapaziteat(dstart,i4)
+        1       Fahrzeugkapaziteat(dstart,i5)
+        1       Fahrzeugkapaziteat(dstart,i6)
+       -1       Kapazitaet1(dstart)
+        1       Kapazitaet2(dstart)
+
+ld(dend)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       Fahrzeugkapaziteat(dstart,dend)
+        1       Fahrzeugkapaziteat(dend,i2)
+        1       Fahrzeugkapaziteat(dend,i3)
+        1       Fahrzeugkapaziteat(dend,i4)
+        1       Fahrzeugkapaziteat(dend,i5)
+        1       Fahrzeugkapaziteat(dend,i6)
+       -1       Fahrzeugkapaziteat(i2,dend)
+       -1       Fahrzeugkapaziteat(i3,dend)
+       -1       Fahrzeugkapaziteat(i4,dend)
+       -1       Fahrzeugkapaziteat(i5,dend)
+       -1       Fahrzeugkapaziteat(i6,dend)
+       -1       Kapazitaet1(dend)
+        1       Kapazitaet2(dend)
+
+ld(i2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       Fahrzeugkapaziteat(dstart,i2)
+       -1       Fahrzeugkapaziteat(dend,i2)
+        1       Fahrzeugkapaziteat(i2,dend)
+        1       Fahrzeugkapaziteat(i2,i3)
+        1       Fahrzeugkapaziteat(i2,i4)
+        1       Fahrzeugkapaziteat(i2,i5)
+        1       Fahrzeugkapaziteat(i2,i6)
+       -1       Fahrzeugkapaziteat(i3,i2)
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/07/12 10:29:17 Page 9
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Column Listing      SOLVE vrp Using MIP From line 219
+
+
+     ld  Ladungsmenge
+
+       -1       Fahrzeugkapaziteat(i4,i2)
+       -1       Fahrzeugkapaziteat(i5,i2)
+       -1       Fahrzeugkapaziteat(i6,i2)
+       -1       Kapazitaet1(i2)
+        1       Kapazitaet2(i2)
+
+REMAINING 4 ENTRIES SKIPPED
+
+---- w  Anfahrtszeitpunkte
+
+w(dstart)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+       -1       Kurzzyklenbedingung(dstart,dend)
+       -1       Kurzzyklenbedingung(dstart,i2)
+       -1       Kurzzyklenbedingung(dstart,i3)
+       -1       Kurzzyklenbedingung(dstart,i4)
+       -1       Kurzzyklenbedingung(dstart,i5)
+       -1       Kurzzyklenbedingung(dstart,i6)
+
+w(dend)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       Bedingung(dend)
+        1       Kurzzyklenbedingung(dstart,dend)
+       -1       Kurzzyklenbedingung(dend,i2)
+       -1       Kurzzyklenbedingung(dend,i3)
+       -1       Kurzzyklenbedingung(dend,i4)
+       -1       Kurzzyklenbedingung(dend,i5)
+       -1       Kurzzyklenbedingung(dend,i6)
+        1       Kurzzyklenbedingung(i2,dend)
+        1       Kurzzyklenbedingung(i3,dend)
+        1       Kurzzyklenbedingung(i4,dend)
+        1       Kurzzyklenbedingung(i5,dend)
+        1       Kurzzyklenbedingung(i6,dend)
+
+w(i2)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       Bedingung(i2)
+        1       Kurzzyklenbedingung(dstart,i2)
+        1       Kurzzyklenbedingung(dend,i2)
+       -1       Kurzzyklenbedingung(i2,dend)
+       -1       Kurzzyklenbedingung(i2,i3)
+       -1       Kurzzyklenbedingung(i2,i4)
+       -1       Kurzzyklenbedingung(i2,i5)
+       -1       Kurzzyklenbedingung(i2,i6)
+        1       Kurzzyklenbedingung(i3,i2)
+        1       Kurzzyklenbedingung(i4,i2)
+        1       Kurzzyklenbedingung(i5,i2)
+        1       Kurzzyklenbedingung(i6,i2)
+
+REMAINING 4 ENTRIES SKIPPED
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 10
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Model Statistics    SOLVE vrp Using MIP From line 219
+
+
+MODEL STATISTICS
+
+BLOCKS OF EQUATIONS          10     SINGLE EQUATIONS          119
+BLOCKS OF VARIABLES           4     SINGLE VARIABLES           63
+NON ZERO ELEMENTS           373     DISCRETE VARIABLES         48
+
+
+GENERATION TIME      =        0.016 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
+
+
+EXECUTION TIME       =        0.016 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 11
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 219
+
+
+               S O L V E      S U M M A R Y
+
+     MODEL   vrp                 OBJECTIVE  Z
+     TYPE    MIP                 DIRECTION  MINIMIZE
+     SOLVER  CPLEX               FROM LINE  219
+
+**** SOLVER STATUS     1 Normal Completion         
+**** MODEL STATUS      8 Integer Solution          
+**** OBJECTIVE VALUE               51.1556
+
+ RESOURCE USAGE, LIMIT          0.016      1000.000
+ ITERATION COUNT, LIMIT        36    2000000000
+
+IBM ILOG CPLEX   Jul 14, 2011 23.7.3 WEX 27723.27726 WEI x86_64/MS Windows
+Cplex 12.3.0.0
+
+MIP status(102): integer optimal, tolerance
+Fixing integer variables, and solving final LP...
+Fixed MIP status(1): optimal
+Solution satisfies tolerances.
+
+MIP Solution:           51.155566    (36 iterations, 0 nodes)
+Final Solve:            51.155566    (0 iterations)
+
+Best possible:          47.908912
+Absolute gap:            3.246655
+Relative gap:            0.063466
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU Zielfunkt~          .              .              .             1.0000      
+
+  Zielfunktion  Das ist die Zielfunktion
+
+---- EQU Nur_einmal_anfahren  Jeder Kundenknoten darf nur einmal angefahren werden
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+dend         1.0000         1.0000         1.0000          .          
+i2           1.0000         1.0000         1.0000          .          
+i3           1.0000         1.0000         1.0000          .          
+i4           1.0000         1.0000         1.0000          .          
+i5           1.0000         1.0000         1.0000          .          
+i6           1.0000         1.0000         1.0000          .          
+
+---- EQU Nur_einmal_abfahren  Jeder Kundenknoten darf nur einmal angefahren werden
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+dend         1.0000         1.0000         1.0000          .          
+i2           1.0000         1.0000         1.0000          .          
+i3           1.0000         1.0000         1.0000          .          
+i4           1.0000         1.0000         1.0000          .          
+i5           1.0000         1.0000         1.0000          .          
+i6           1.0000         1.0000         1.0000          .          
+
+---- EQU Fahrzeugkapaziteat  Die Kapazitaet jedes Fahrzeugs darf nicht Ueberschritten werden
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+dstart.dend      -145.0000      -145.0000        +INF             .          
+dstart.i2        -145.0000       123.0000        +INF             .          
+dstart.i3        -145.0000       135.0000        +INF             .          
+dstart.i4        -145.0000          .            +INF             .          
+dstart.i5        -145.0000       109.0000        +INF             .          
+dstart.i6        -145.0000        84.0000        +INF             .          
+dend  .dend      -145.0000          .            +INF             .          
+dend  .i2        -145.0000       123.0000        +INF             .          
+dend  .i3        -145.0000       135.0000        +INF             .          
+dend  .i4        -145.0000      -145.0000        +INF            EPS         
+dend  .i5        -145.0000       109.0000        +INF             .          
+dend  .i6        -145.0000        84.0000        +INF             .          
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 219
+
+
+     EQU Fahrzeugkapaziteat  Die Kapazitaet jedes Fahrzeugs darf nicht Ueberschritten werden
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+i2    .dend      -133.0000      -123.0000        +INF             .          
+i2    .i2        -133.0000          .            +INF             .          
+i2    .i3        -133.0000      -133.0000        +INF            EPS         
+i2    .i4        -133.0000      -123.0000        +INF             .          
+i2    .i5        -133.0000       -14.0000        +INF             .          
+i2    .i6        -133.0000       -39.0000        +INF             .          
+i3    .dend      -135.0000      -135.0000        +INF             .          
+i3    .i2        -135.0000       -12.0000        +INF             .          
+i3    .i3        -135.0000          .            +INF             .          
+i3    .i4        -135.0000      -135.0000        +INF             .          
+i3    .i5        -135.0000       -26.0000        +INF             .          
+i3    .i6        -135.0000       -51.0000        +INF             .          
+i4    .dend      -135.0000          .            +INF             .          
+i4    .i2        -135.0000       123.0000        +INF             .          
+i4    .i3        -135.0000       135.0000        +INF             .          
+i4    .i4        -135.0000          .            +INF             .          
+i4    .i5        -135.0000       109.0000        +INF             .          
+i4    .i6        -135.0000       -61.0000        +INF             .          
+i5    .dend      -131.0000      -109.0000        +INF             .          
+i5    .i2        -131.0000      -131.0000        +INF            EPS         
+i5    .i3        -131.0000        26.0000        +INF             .          
+i5    .i4        -131.0000      -109.0000        +INF             .          
+i5    .i5        -131.0000          .            +INF             .          
+i5    .i6        -131.0000       -25.0000        +INF             .          
+i6    .dend      -120.0000       -84.0000        +INF             .          
+i6    .i2        -120.0000        39.0000        +INF             .          
+i6    .i3        -120.0000        51.0000        +INF             .          
+i6    .i4        -120.0000       -84.0000        +INF             .          
+i6    .i5        -120.0000      -120.0000        +INF            EPS         
+i6    .i6        -120.0000          .            +INF             .          
+
+---- EQU Kapazitaet1  xxx
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+dstart        -INF         -145.0000          .              .          
+dend          -INF         -145.0000          .              .          
+i2            -INF          -22.0000       -12.0000          .          
+i3            -INF          -10.0000       -10.0000         EPS         
+i4            -INF         -145.0000       -10.0000          .          
+i5            -INF          -36.0000       -14.0000          .          
+i6            -INF          -61.0000       -25.0000          .          
+
+---- EQU Kapazitaet2  dito
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+dstart        -INF          145.0000       145.0000         EPS         
+dend          -INF          145.0000       145.0000         EPS         
+i2            -INF           22.0000       145.0000          .          
+i3            -INF           10.0000       145.0000          .          
+i4            -INF          145.0000       145.0000          .          
+i5            -INF           36.0000       145.0000          .          
+i6            -INF           61.0000       145.0000          .          
+
+---- EQU Bedingung  Das ist noch eine Bedingung die noch nachzuvollziehen ist
+
+            LOWER          LEVEL          UPPER         MARGINAL
+
+dend        -INF             .         10000.0000          .          
+i2          -INF         9996.0000      9998.0000          .          
+i3          -INF         9998.0000      9998.0000         EPS         
+i4          -INF            2.0000      9998.0000          .          
+i5          -INF            6.0000      9998.0000          .          
+i6          -INF            4.0000      9998.0000          .          
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 219
+
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU Depot_ein~        -INF            1.0000         1.0000          .          
+
+  Depot_einmal_pro_Fahrzeug_abfahren  Das Depot darf pro Fahrzeug nur einmal angefahren werden
+
+---- EQU Kurzzyklenbedingung  Unterbinden von Kurzzyklen
+
+                   LOWER          LEVEL          UPPER         MARGINAL
+
+dstart.dend    -10000.0000    -10000.0000        +INF             .          
+dstart.i2       -9998.0000      9996.0000        +INF             .          
+dstart.i3       -9998.0000      9998.0000        +INF             .          
+dstart.i4       -9998.0000         2.0000        +INF             .          
+dstart.i5       -9998.0000         6.0000        +INF             .          
+dstart.i6       -9998.0000         4.0000        +INF             .          
+dend  .dend    -10000.0000          .            +INF             .          
+dend  .i2       -9998.0000      9996.0000        +INF             .          
+dend  .i3       -9998.0000      9998.0000        +INF             .          
+dend  .i4       -9998.0000     -9998.0000        +INF            EPS         
+dend  .i5       -9998.0000         6.0000        +INF             .          
+dend  .i6       -9998.0000         4.0000        +INF             .          
+i2    .dend     -9998.0000     -9996.0000        +INF             .          
+i2    .i2      -10000.0000          .            +INF             .          
+i2    .i3       -9998.0000     -9998.0000        +INF            EPS         
+i2    .i4       -9998.0000     -9994.0000        +INF             .          
+i2    .i5       -9998.0000     -9990.0000        +INF             .          
+i2    .i6       -9998.0000     -9992.0000        +INF             .          
+i3    .dend     -9998.0000     -9998.0000        +INF             .          
+i3    .i2       -9998.0000        -2.0000        +INF             .          
+i3    .i3      -10000.0000          .            +INF             .          
+i3    .i4       -9998.0000     -9996.0000        +INF             .          
+i3    .i5       -9998.0000     -9992.0000        +INF             .          
+i3    .i6       -9998.0000     -9994.0000        +INF             .          
+i4    .dend     -9998.0000        -2.0000        +INF             .          
+i4    .i2       -9998.0000      9994.0000        +INF             .          
+i4    .i3       -9998.0000      9996.0000        +INF             .          
+i4    .i4      -10000.0000          .            +INF             .          
+i4    .i5       -9998.0000         4.0000        +INF             .          
+i4    .i6       -9998.0000     -9998.0000        +INF            EPS         
+i5    .dend     -9998.0000        -6.0000        +INF             .          
+i5    .i2       -9998.0000       -10.0000        +INF             .          
+i5    .i3       -9998.0000      9992.0000        +INF             .          
+i5    .i4       -9998.0000        -4.0000        +INF             .          
+i5    .i5      -10000.0000          .            +INF             .          
+i5    .i6       -9998.0000        -2.0000        +INF             .          
+i6    .dend     -9998.0000        -4.0000        +INF             .          
+i6    .i2       -9998.0000      9992.0000        +INF             .          
+i6    .i3       -9998.0000      9994.0000        +INF             .          
+i6    .i4       -9998.0000        -2.0000        +INF             .          
+i6    .i5       -9998.0000     -9998.0000        +INF            EPS         
+i6    .i6      -10000.0000          .            +INF             .          
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- EQU Depot_ein~        -INF             .             1.0000          .          
+
+  Depot_einmal_pro_Fahrzeug_anfahren  c
+
+                           LOWER          LEVEL          UPPER         MARGINAL
+
+---- VAR Z                 -INF           51.1556        +INF             .          
+
+  Z  Zielfunktionswert
+
+---- VAR x  Transportmengen
+
+                     LOWER          LEVEL          UPPER         MARGINAL
+
+dstart.dend            .             1.0000         1.0000         EPS         
+dstart.i2              .              .             1.0000        19.8691      
+dstart.i3              .              .             1.0000         6.6709      
+dstart.i4              .              .             1.0000         0.8469      
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 14
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 219
+
+
+     VAR x  Transportmengen
+
+                     LOWER          LEVEL          UPPER         MARGINAL
+
+dstart.i5              .              .             1.0000         2.7419      
+dstart.i6              .              .             1.0000         4.0904      
+dend  .dstart          .              .             1.0000         EPS         
+dend  .dend            .              .             1.0000         EPS         
+dend  .i2              .              .             1.0000        19.8691      
+dend  .i3              .              .             1.0000         6.6709      
+dend  .i4              .             1.0000         1.0000         0.8469      
+dend  .i5              .              .             1.0000         2.7419      
+dend  .i6              .              .             1.0000         4.0904      
+i2    .dstart          .              .             1.0000        19.8691      
+i2    .dend            .              .             1.0000        19.8691      
+i2    .i2              .              .             1.0000         EPS         
+i2    .i3              .             1.0000         1.0000        18.7147      
+i2    .i4              .              .             1.0000        20.5150      
+i2    .i5              .              .             1.0000        18.6343      
+i2    .i6              .              .             1.0000        17.8567      
+i3    .dstart          .             1.0000         1.0000         6.6709      
+i3    .dend            .              .             1.0000         6.6709      
+i3    .i2              .              .             1.0000        18.7147      
+i3    .i3              .              .             1.0000         EPS         
+i3    .i4              .              .             1.0000         6.4097      
+i3    .i5              .              .             1.0000         8.6915      
+i3    .i6              .              .             1.0000         9.6446      
+i4    .dstart          .              .             1.0000         0.8469      
+i4    .dend            .              .             1.0000         0.8469      
+i4    .i2              .              .             1.0000        20.5150      
+i4    .i3              .              .             1.0000         6.4097      
+i4    .i4              .              .             1.0000         EPS         
+i4    .i5              .              .             1.0000         3.5550      
+i4    .i6              .             1.0000         1.0000         4.9160      
+i5    .dstart          .              .             1.0000         2.7419      
+i5    .dend            .              .             1.0000         2.7419      
+i5    .i2              .             1.0000         1.0000        18.6343      
+i5    .i3              .              .             1.0000         8.6915      
+i5    .i4              .              .             1.0000         3.5550      
+i5    .i5              .              .             1.0000         EPS         
+i5    .i6              .              .             1.0000         1.3727      
+i6    .dstart          .              .             1.0000         4.0904      
+i6    .dend            .              .             1.0000         4.0904      
+i6    .i2              .              .             1.0000        17.8567      
+i6    .i3              .              .             1.0000         9.6446      
+i6    .i4              .              .             1.0000         4.9160      
+i6    .i5              .             1.0000         1.0000         1.3727      
+i6    .i6              .              .             1.0000         EPS         
+
+---- VAR ld  Ladungsmenge
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+dstart          .           145.0000        +INF             .          
+dend            .           145.0000        +INF             .          
+i2              .            22.0000        +INF             .          
+i3              .            10.0000        +INF             .          
+i4              .           145.0000        +INF             .          
+i5              .            36.0000        +INF             .          
+i6              .            61.0000        +INF             .          
+
+---- VAR w  Anfahrtszeitpunkte
+
+              LOWER          LEVEL          UPPER         MARGINAL
+
+dstart          .              .            +INF            EPS         
+dend            .              .            +INF            EPS         
+i2              .          9996.0000        +INF             .          
+i3              .          9998.0000        +INF             .          
+i4              .             2.0000        +INF             .          
+i5              .             6.0000        +INF             .          
+i6              .             4.0000        +INF             .          
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 15
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 219
+
+
+**** REPORT SUMMARY :        0     NONOPT
+                             0 INFEASIBLE
+                             0  UNBOUNDED
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/07/12 10:29:17 Page 16
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+E x e c u t i o n
+
+
+----    221 VARIABLE x.L  Transportmengen
+
+            dstart        dend          i2          i3          i4          i5          i6
+
+dstart                   1.000
+dend                                                         1.000
+i2                                               1.000
+i3           1.000
+i4                                                                                   1.000
+i5                                   1.000
+i6                                                                       1.000
+
+
+----    221 VARIABLE w.L  Anfahrtszeitpunkte
+
+i2 9996.000,    i3 9998.000,    i4    2.000,    i5    6.000,    i6    4.000
+
+
+**** REPORT FILE SUMMARY
+
+outputfile1 C:\Sites\Tourenplaner_v3\VRP_Loesung1.txt
+outputfile2 C:\Sites\Tourenplaner_v3\VRP_Loesung2.txt
+outputfile3 C:\Sites\Tourenplaner_v3\VRP_Loesung3.txt
+
+
+EXECUTION TIME       =        0.000 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
+
+
+USER: Stefan Helber                                  G110217/0001AH-WIN
+      Leibniz University Hannover, Lehrstuhl fuer ProduktionswirtDC6657
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Sites\Tourenplaner_v3\VRP_V2.gms
+Output     C:\Sites\Tourenplaner_v3\VRP_V2.lst
