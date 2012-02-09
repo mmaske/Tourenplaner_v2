@@ -8,6 +8,8 @@ class Link < ActiveRecord::Base
 attr_accessible :polyline
 belongs_to :project
 has_many :nodes
+belongs_to :user
+has_one :vehicle
 
 
 end

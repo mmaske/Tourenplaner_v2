@@ -1,5 +1,5 @@
 class Node < ActiveRecord::Base
-attr_accessible :id, :name, :longitude, :latitude, :demand, :country,  :street, :city, :depot
+attr_accessible :id, :name, :longitude, :latitude, :demand, :country,  :street, :city, :depot, :earliest, :latest, :user_id
 acts_as_gmappable :process_geocoding => true, :validation =>true
   def gmaps4rails_address
   "#{self.street}, #{self.city}, #{self.country}"
@@ -10,4 +10,6 @@ acts_as_gmappable :process_geocoding => true, :validation =>true
 
   belongs_to :project, :class_name => "Project"
   belongs_to :link
+  belongs_to :user
+  belongs_to :tour
   end

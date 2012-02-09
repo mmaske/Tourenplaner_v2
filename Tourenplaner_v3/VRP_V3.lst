@@ -1,0 +1,240 @@
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/09/12 03:45:53 Page 1
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+   2  set
+   3       k Menge der Fahrzeuge
+   4       i Kundenknoten
+   5       alias(i,j)
+   6  set Kundenknoten(i) subset;
+   7   
+   8   
+   9  parameter
+  10       t(i,j) Fahrzeit von Knoten i zu Knoten j
+  11       c(i,j) Entfernung von Knoten i zu Knoten j
+  12       d(i)   Nachfrage am Knoten i
+  13       cap(k) Kapazitaet des Fahrzeugs k
+  14       BigM   BigM
+  15       Tmax   Maximale Tourdauer
+  16       m      Anzahl der Knoten
+  17       tf(i)  fruehester Bedienzeitpunkt des Knoten
+  18       ts(i)  spaetester Bedienzeitpunkt des Knoten;
+  19   
+INCLUDE    C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
+  21  set i /
+  22  i1
+  23  /
+  24   
+  25  set k /
+  26  v1
+  27  /;
+  28   
+  29  Scalar m /
+  30  1
+  31  /;
+  32   
+  33  Scalar Tmax /
+  34  12
+  35  /;
+  36   
+  37  c('i1','i1')= 0;
+  38   
+  39   
+  40  t('i1','i1')= 0;
+  41   
+  42   
+  43  Kundenknoten(i) = yes;
+  44   
+  45   
+  46  parameter cap(k) /
+  47  v1 145.0
+  48  /;
+  49   
+  50  parameter tf(i) /
+  51  i1 0
+  52  /;
+  53   
+  54  parameter ts(i) /
+  55  i1 40
+  56  /;
+  57   
+  58  parameter d(i) /
+  59  i1 22.0
+  60  /;
+  61   
+  62  parameter sz(i) Servicezeit;
+  63            sz(i) = d(i)*5;
+  64  parameter BigM BigM;
+  65           BigM = sum((i,j), t(i,j)+sz(i))+1;
+  66   
+  67   
+  68   
+  69  variables Z  Zielfunktionswert;
+  70  binary variables x Bedienunsvariable;
+  71  binary variables y Tourvariable;
+  72  positive variables w Anfahrtszeitpunkte;
+  73  positive variable hv  Hilfsvariable;
+  74   
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/09/12 03:45:53 Page 2
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+  75  Equations
+  76  Zielfunktion                               Das ist die Zielfunktion
+  77  Kapazitaetsrestriktion(k)                  xxx
+  78  Restriktion2(i,k)                          xxx
+  79  Restriktion3(j,k)                          xxx
+  80  Restriktion4(j)                            xxx
+  81  Restriktion5(i,j)                          xxx
+  82  Restriktion6(i,k)                          xxx
+  83  Restriktion7(i)                            xxx
+  84  Restriktion8(i)                            xxx
+  85  Restriktion9(i,j,k)                        xxx
+  86  Restriktion10(i,k)                         xxx
+  87  Restriktion11                              xxx;
+  88   
+  89   
+  90  Zielfunktion..
+  91       Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));
+  92   
+  93  Kapazitaetsrestriktion(k)..
+  94           sum(i, d(i)*y(i,k)) =l= cap(k);
+  95   
+  96  Restriktion2(i,k)..
+  97           sum(j, x(i,j,k)) =e= y(i,k);
+  98   
+  99  Restriktion3(j,k)..
+ 100           sum(i, x(i,j,k)) =e= y(j,k);
+ 101   
+ 102  Restriktion4(i)$(Kundenknoten(i))..
+ 103           sum(k, y(i,k)) =e= 1;
+ 104   
+ 105  Restriktion5(i,j)$(Kundenknoten(j) and Kundenknoten(i) and ord(i)<>ord(j))..
+ 106           hv(i)-hv(j)+ m*sum(k, x(i,j,k)) =l= m-1;
+ 107   
+ 108  Restriktion6(i,k)..
+ 109           x(i,i,k) =e= 0;
+ 110   
+ 111  Restriktion7(i)$(Kundenknoten(i))..
+ 112           w(i) =g= tf(i);
+ 113   
+ 114  Restriktion8(i)$(Kundenknoten(i))..
+ 115           w(i) =l= ts(i);
+ 116   
+ 117  Restriktion9(i,j,k)$(Kundenknoten(j) and ord(i)<>ord(j))..
+ 118           w(j) =g= w(i) + sz(i) + t(i,j) - (1-x(i,j,k))*BigM;
+ 119   
+ 120  Restriktion10(i,k)$(Kundenknoten(i))..
+ 121           w(i) + sz(i) + t(i,'depot') - (1-x(i,'depot',k))*BigM =l= Tmax;
+****                                    $170
+**** LINE     80 INPUT       C:\Sites\Tourenplaner_v3\VRP_V3.gms
+ 122   
+ 123  Restriktion11..
+ 124           w('dstart')=e=0
+ 125   
+ 126   
+ 127  model vrp /
+ 128                   Zielfunktion
+ 129                    ,Kapazitaetsrestriktion
+ 130                    ,Restriktion2
+ 131                    ,Restriktion3
+ 132                    ,Restriktion4
+ 133                    ,Restriktion5
+ 134                    ,Restriktion6
+ 135                    ,Restriktion7
+ 136                    ,Restriktion8
+ 137                    ,Restriktion9
+ 138                    ,Restriktion10
+ 139                    ,Restriktion11
+ 140                   /;
+ 141   
+ 142   
+ 143   
+ 144   
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/09/12 03:45:53 Page 3
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+C o m p i l a t i o n
+
+
+ 145  solve vrp minimizing Z using mip ;
+****                                   $257
+**** LINE    104 INPUT       C:\Sites\Tourenplaner_v3\VRP_V3.gms
+ 146   
+ 147  display x.l, w.l;
+****            $141 $141
+**** LINE    106 INPUT       C:\Sites\Tourenplaner_v3\VRP_V3.gms
+ 148   
+ 149   
+ 150  file outputfile1 / 'VRP_Loesung1.txt'/;
+ 151  put outputfile1;
+ 152     loop(k,
+ 153       loop(i,
+ 154           loop(j,
+ 155              if ( x.l(i,j,k) = 1,
+ 156               put  i.tl:0, ' ; ' j.tl:0 /
+ 157               );
+ 158           );
+ 159       );
+ 160  );
+ 161   
+ 162  putclose outputfile1;
+ 163   
+ 164  file outputfile2 / 'VRP_Loesung2.txt'/;
+ 165  put outputfile2;
+ 166   
+ 167  loop(i,
+ 168          put  i.tl:0, ' ; ',  w.l(i) /
+ 169       );
+ 170   
+ 171  putclose outputfile2;
+ 172   
+ 173  file outputfile3 / 'VRP_Loesung3.txt'/;
+ 174  put outputfile3;
+ 175   
+ 176  loop(k,
+ 177  loop(i,
+ 178               put  i.tl:0, ' ; ', k.tl:0, " ; ",  y.l(i,k) /
+****                                                     $141
+**** LINE    137 INPUT       C:\Sites\Tourenplaner_v3\VRP_V3.gms
+ 179       );
+ 180  );
+ 181  putclose outputfile3;
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/09/12 03:45:53 Page 4
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Error Messages
+
+
+141  Symbol neither initialized nor assigned
+        A wild shot: You may have spurious commas in the explanatory
+        text of a declaration. Check symbol reference list.
+170  Domain violation for element
+257  Solve statement not checked because of previous errors
+
+**** 5 ERROR(S)   0 WARNING(S)
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/09/12 03:45:53 Page 5
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Include File Summary
+
+
+   SEQ   GLOBAL TYPE      PARENT   LOCAL  FILENAME
+
+     1        1 INPUT          0       0  C:\Sites\Tourenplaner_v3\VRP_V3.gms
+     2       20 INCLUDE        1      20  .C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
+
+
+COMPILATION TIME     =        0.000 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
+
+
+USER: Stefan Helber                                  G110217/0001AH-WIN
+      Leibniz University Hannover, Lehrstuhl fuer ProduktionswirtDC6657
+      License for teaching and research at degree granting institutions
+
+
+**** FILE SUMMARY
+
+Input      C:\Sites\Tourenplaner_v3\VRP_V3.gms
+Output     C:\Sites\Tourenplaner_v3\VRP_V3.lst
+
+**** USER ERROR(S) ENCOUNTERED

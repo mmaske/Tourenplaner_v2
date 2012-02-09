@@ -21,9 +21,12 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
     t.string   "tolatitude"
     t.string   "tolongitude"
     t.boolean  "gmaps"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "links", ["user_id"], :name => "index_links_on_user_id"
 
   create_table "nodes", :force => true do |t|
     t.float    "latitude"
@@ -39,17 +42,19 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
     t.integer  "project_id"
     t.string   "polyline"
     t.integer  "tour_id"
+    t.string   "earliest"
+    t.string   "latest"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "nodes", ["project_id"], :name => "index_nodes_on_project_id"
   add_index "nodes", ["tour_id"], :name => "index_nodes_on_tour_id"
+  add_index "nodes", ["user_id"], :name => "index_nodes_on_user_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"
-    t.boolean  "distance_accuracy"
-    t.boolean  "duration_accuracy"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -60,15 +65,22 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
   create_table "tours", :force => true do |t|
     t.string   "servicetime"
     t.string   "maxduration"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "tours", ["user_id"], :name => "index_tours_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.boolean  "distance_accuracy"
+    t.boolean  "duration_accuracy"
+    t.string   "tourduration"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "optimized"
     t.string   "encrypted_password"
     t.string   "salt"
   end
@@ -80,10 +92,14 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
     t.string   "Type"
     t.float    "Capacity"
     t.integer  "project_id"
+    t.integer  "user_id"
+    t.integer  "link_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "vehicles", ["link_id"], :name => "index_vehicles_on_link_id"
   add_index "vehicles", ["project_id"], :name => "index_vehicles_on_project_id"
+  add_index "vehicles", ["user_id"], :name => "index_vehicles_on_user_id"
 
 end

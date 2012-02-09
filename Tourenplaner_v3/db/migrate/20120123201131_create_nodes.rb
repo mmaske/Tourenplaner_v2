@@ -14,11 +14,15 @@ class CreateNodes < ActiveRecord::Migration
       t.integer :project_id
       t.string :polyline
       t.integer :tour_id
+      t.string :earliest
+      t.string :latest
+      t.integer :user_id
 
       t.timestamps
     end
     add_index :nodes, [:project_id]
     add_index :nodes, [:tour_id]
+    add_index :nodes, [:user_id]
   end
 
   def self.down

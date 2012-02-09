@@ -9,9 +9,11 @@ class CreateLinks < ActiveRecord::Migration
       t.string :tolatitude
       t.string :tolongitude
       t.boolean :gmaps
+      t.integer :user_id
 
       t.timestamps
     end
+    add_index :links, [:user_id]
   end
 
   def self.down

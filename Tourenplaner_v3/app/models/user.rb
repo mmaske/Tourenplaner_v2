@@ -1,7 +1,10 @@
 class User < ActiveRecord::Base
   attr_accessor :password
-  attr_accessible :name, :email, :password, :password_confirmation
+  attr_accessible :name, :email, :password, :password_confirmation, :tourduration, :distance_accuracy, :duration_accuracy, :optimized
   has_many :projects, :class_name => "Project", :dependent => :destroy
+  has_many :nodes
+  has_many :vehicles
+  has_many :links
   email_regex = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :name,  :presence => true,
@@ -10,9 +13,10 @@ class User < ActiveRecord::Base
                     :format     => { :with => email_regex },
                     :uniqueness => { :case_sensitive => false }
   # Automatically create the virtual attribute 'password_confirmation'.
-  validates :password, :presence     => true,
-                       :confirmation => true,
-                       :length       => { :within => 6..40 }
+
+  validates :password, :presence     => true,# :on => :create
+                       :confirmation => true,# :on => :create
+                       :length       => { :within => 6..40 }#, :on => :create
   before_save :encrypt_password
 
   def has_password?(submitted_password)

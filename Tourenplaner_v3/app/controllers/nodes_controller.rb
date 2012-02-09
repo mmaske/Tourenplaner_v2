@@ -4,8 +4,8 @@ class NodesController < ApplicationController
   # GET /nodes
   # GET /nodes.xml
   def index
-    @nodes = Node.all
-    @json = Node.all.to_gmaps4rails
+    @nodes = Node.where(:user_id => current_user[:id])
+    @json = Node.where(:user_id => current_user[:id]).to_gmaps4rails
 
     respond_to do |format|
       format.html # index.html.erb
@@ -18,7 +18,7 @@ class NodesController < ApplicationController
   def show
     @node = Node.find(params[:id])
     @json = Node.find(params[:id]).to_gmaps4rails
-
+   # @json = Node.where(:user_id => current_user[:id]).to_gmaps4rails
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @node }
@@ -28,7 +28,7 @@ class NodesController < ApplicationController
   # GET /nodes/new
   # GET /nodes/new.xml
   def new
-    @node = Node.new
+    @node = Node.new(:user_id => current_user[:id])
 
 
     respond_to do |format|
@@ -41,26 +41,25 @@ class NodesController < ApplicationController
   def edit
     @node = Node.find(params[:id])
     @json = Node.find(params[:id]).to_gmaps4rails
-
+    current_user[:optimized] = false
   end
 
   # POST /nodes
   # POST /nodes.xml
   def create
 
-    @node = Node.new
-  #  @project = Project.find(params[:id])
+
     @node = Node.new(params[:node])
- #   @node.project_id = @project.id
-    @json = Node.all.to_gmaps4rails
+    @node.user_id = current_user[:id]
+    @json = Node.where(:user_id => current_user[:id]).to_gmaps4rails
+    current_user[:optimized] = false
 
 
 
-    @json = Node.all.to_gmaps4rails
 
     respond_to do |format|
       if @node.save
-        format.html { redirect_to(@node, :notice => 'Node was successfully created.') }
+        format.html { redirect_to(nodes_path, :notice => 'Node was successfully created.') }
         format.xml  { render :xml => @node, :status => :created, :location => @node }
       else
         format.html { render :action => "new" }
@@ -77,7 +76,8 @@ class NodesController < ApplicationController
 
     respond_to do |format|
       if @node.update_attributes(params[:node])
-        format.html { redirect_to(@node, :notice => 'Node was successfully updated.') }
+        current_user[:optimized] = false
+        format.html { redirect_to(nodes_path, :notice => 'Node was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -91,6 +91,7 @@ class NodesController < ApplicationController
   def destroy
     @node = Node.find(params[:id])
     @node.destroy
+    current_user[:optimized] = false
 
     respond_to do |format|
       format.html { redirect_to(nodes_url) }

@@ -1,6 +1,7 @@
 SampleApp2::Application.routes.draw do
   resources :projects
-
+  match '/user/:id/edit', :to => 'users#update'
+  match '/user/:id/solution', :to => 'projects#show_solution', :as => :solution
   get "sessions/new"
 
   resources :vehicles
@@ -10,13 +11,14 @@ SampleApp2::Application.routes.draw do
   resources :sessions, :only => [:new, :create, :destroy]
   match '/signup', :to => 'users#new'
 
+
+
   match '/contact', :to => 'pages#contact'
   match '/about', :to => 'pages#about'
   match '/help', :to => 'pages#help'
   match '/signup', :to => 'users#new'
   match '/signin', :to => 'sessions#new'
   match '/signout', :to => 'sessions#destroy'
-  match '/My projects', :to => 'projects#index'
   match 'projects/optimize', :to => 'projects#optimize'
   match 'projects/read_vrp_solution', :to => 'projects#read_vrp_solution'
   match 'projects/read_polyline', :to => 'projects#read_polyline'

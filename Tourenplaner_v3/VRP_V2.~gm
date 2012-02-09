@@ -10,73 +10,92 @@ parameter
      t(i,j) Fahrzeit von Knoten i zu Knoten j
      c(i,j) Entfernung von Knoten i zu Knoten j
      d(i)   Nachfrage am Knoten i
-     cap    Kapazitaet des Fahrzeugs k
-     M      BigM
-     Tmax   Maximale Tourdauer /10000/;
+     cap(i) Kapazitaet des Fahrzeugs k
+     BigM   BigM
+     Tmax   Maximale Tourdauer
+     m      Anzahl der Knoten
+     tf(i)  fruehester Bedienzeitpunkt des Knoten
+     ts(i)  spaetester Bedienzeitpunkt des Knoten;
 
 $include VRP_v1_Input_Instanz1.inc
-
-
+parameter sz(i) Servicezeit;
+          sz(i) = d(i)*5;
+parameter BigM BigM;
+         BigM = sum((i,j), t(i,j)+sz(i))+1;
 
 
 
 variables Z  Zielfunktionswert;
-binary variables x Transportmengen;
-positive variables ld Ladungsmenge;
+binary variables x Bedienunsvariable;
+binary variables y Tourvariable;
 positive variables w Anfahrtszeitpunkte;
+positive variable hv  Hilfsvariable;
 
 Equations
 Zielfunktion                               Das ist die Zielfunktion
-Nur_einmal_abfahren(j)                     Jeder Kundenknoten darf nur einmal angefahren werden
-Nur_einmal_anfahren(j)                     Jeder Kundenknoten darf nur einmal angefahren werden
-Fahrzeugkapaziteat(i,j)                      Die Kapazitaet jedes Fahrzeugs darf nicht Ueberschritten werden
-Depot_einmal_pro_Fahrzeug_abfahren      Das Depot darf pro Fahrzeug nur einmal angefahren werden
-Bedingung(i)       Das ist noch eine Bedingung die noch nachzuvollziehen ist
-Kapazitaet1(i) xxx
-Kapazitaet2(i)                        dito
-Kurzzyklenbedingung(i,j)                 Unterbinden von Kurzzyklen
-Depot_einmal_pro_Fahrzeug_anfahren c;
+Kapazitaetsrestriktion(k)                  xxx
+Restriktion2(i,k)                          xxx
+Restriktion3(j,k)                          xxx
+Restriktion4(j)                            xxx
+Restriktion5(i,j)                          xxx
+Restriktion6(i,k)                          xxx
+Restriktion7(i)                            xxx
+Restriktion8(i)                            xxx
+Restriktion9(i,j,k)                        xxx
+Restriktion10(i,k)                         xxx
+Restriktion11                              xxx;
+
 
 Zielfunktion..
-     Z =e=   sum((i,j),c(i,j)*x(i,j));
+     Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));
 
-Nur_einmal_anfahren(j)$(Kundenknoten(j))..
-     sum((i)$(ord(i)<>ord(j)),x(i,j)) =e= 1;
+Kapazitaetsrestriktion(k)..
+         sum(i, d(i)*y(i,k)) =l= cap(i);
 
-Nur_einmal_abfahren(j)$(Kundenknoten(j))..
-     sum((i)$(ord(i)<>ord(j)),x(j,i)) =e= 1;
+Restriktion2(i,k)..
+         sum(j, x(i,j,k)) =e= y(i,k);
 
-Fahrzeugkapaziteat(i,j)$(Kundenknoten(j))..
-     ld(i) =g= ld(j) + d(i) - cap*(1-x(i,j));
+Restriktion3(j,k)..
+         sum(i, x(i,j,k)) =e= y(j,k);
 
-Depot_einmal_pro_Fahrzeug_abfahren..
-     sum(i$(Kundenknoten(i)),x("dstart",i)) =l= M;
+Restriktion4(i)$(Kundenknoten(i))..
+         sum(k, y(i,k)) =e= 1;
 
-Depot_einmal_pro_Fahrzeug_anfahren..
-     sum(i$(Kundenknoten(i)),x(i,"dend")) =l= M;
+Restriktion5(i,j)$(Kundenknoten(j) and Kundenknoten(i) and ord(i)<>ord(j))..
+         hv(i)-hv(j)+ m*sum(k, x(i,j,k)) =l= m-1;
 
-Bedingung(i)$(Kundenknoten(i))..
-     w(i) + t(i,"dend")  =l= Tmax;
+Restriktion6(i,k)..
+         x(i,i,k) =e= 0;
 
-Kapazitaet1(i)..
-         d(i) =l= ld(i);
-Kapazitaet2(i)..
-         ld(i) =l= cap;
+Restriktion7(i)$(Kundenknoten(i))..
+         w(i) =g= tf(i);
 
-Kurzzyklenbedingung(i,j)$(Kundenknoten(j))..
-     w(j)=g=w(i)+t(i,j)-Tmax*(1-x(i,j));
+Restriktion8(i)$(Kundenknoten(i))..
+         w(i) =l= ts(i);
+
+Restriktion9(i,j,k)$(Kundenknoten(j) and ord(i)<>ord(j))..
+         w(j) =g= w(i) + sz(i) + t(i,j) - (1-x(i,j,k))*BigM;
+
+Restriktion10(i,k)$(Kundenknoten(i))..
+         w(i) + sz(i) + t(i,'depot') - (1-x(i,'depot',k))*BigM =l= Tmax;
+
+Restriktion11..
+         w('dstart')=e=0
+
 
 model vrp /
                  Zielfunktion
-                 , Nur_einmal_anfahren
-                 , Nur_einmal_abfahren
-                 , Fahrzeugkapaziteat
-                 , Kapazitaet1
-                 , Kapazitaet2
-                 , Bedingung
-                 , Depot_einmal_pro_Fahrzeug_abfahren
-                 , Kurzzyklenbedingung
-                 , Depot_einmal_pro_Fahrzeug_anfahren
+                  ,Kapazitaetsrestriktion
+                  ,Restriktion2
+                  ,Restriktion3
+                  ,Restriktion4
+                  ,Restriktion5
+                  ,Restriktion6
+                  ,Restriktion7
+                  ,Restriktion8
+                  ,Restriktion9
+                  ,Restriktion10
+                  ,Restriktion11
                  /;
 
 
@@ -89,14 +108,15 @@ display x.l, w.l;
 
 file outputfile1 / 'VRP_Loesung1.txt'/;
 put outputfile1;
-
+   loop(k,
      loop(i,
          loop(j,
-            if ( x.l(i,j) = 1,
+            if ( x.l(i,j,k) = 1,
              put  i.tl:0, ' ; ' j.tl:0 /
              );
          );
      );
+);
 
 putclose outputfile1;
 
@@ -112,7 +132,9 @@ putclose outputfile2;
 file outputfile3 / 'VRP_Loesung3.txt'/;
 put outputfile3;
 
+loop(k,
 loop(i,
-             put  i.tl:0, ' ; ',  ld.l(i) /
+             put  i.tl:0, ' ; ', k.tl:0, " ; ",  y.l(i,k) /
      );
+);
 putclose outputfile3;

@@ -2,7 +2,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles
   # GET /vehicles.xml
   def index
-    @vehicles = Vehicle.all
+    @vehicles = Vehicle.where(:user_id => current_user[:id])
 
     respond_to do |format|
       format.html # index.html.erb
@@ -25,7 +25,7 @@ class VehiclesController < ApplicationController
   # GET /vehicles/new.xml
   def new
     @vehicle = Vehicle.new
-
+    @vehicle = Vehicle.new(:user_id => current_user[:id])
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @vehicle }
@@ -35,15 +35,18 @@ class VehiclesController < ApplicationController
   # GET /vehicles/1/edit
   def edit
     @vehicle = Vehicle.find(params[:id])
+    current_user[:optimized] = false
   end
 
   # POST /vehicles
   # POST /vehicles.xml
   def create
     @vehicle = Vehicle.new(params[:vehicle])
+    @vehicle.user_id = current_user[:id]
 
     respond_to do |format|
       if @vehicle.save
+        current_user[:optimized] = false
         format.html { redirect_to(@vehicle, :notice => 'Vehicle was successfully created.') }
         format.xml  { render :xml => @vehicle, :status => :created, :location => @vehicle }
       else
@@ -60,6 +63,7 @@ class VehiclesController < ApplicationController
 
     respond_to do |format|
       if @vehicle.update_attributes(params[:vehicle])
+        current_user[:optimized] = false
         format.html { redirect_to(@vehicle, :notice => 'Vehicle was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -74,7 +78,7 @@ class VehiclesController < ApplicationController
   def destroy
     @vehicle = Vehicle.find(params[:id])
     @vehicle.destroy
-
+    current_user[:optimized] = false
     respond_to do |format|
       format.html { redirect_to(vehicles_url) }
       format.xml  { head :ok }

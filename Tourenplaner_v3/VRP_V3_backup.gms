@@ -10,14 +10,14 @@ parameter
      t(i,j) Fahrzeit von Knoten i zu Knoten j
      c(i,j) Entfernung von Knoten i zu Knoten j
      d(i)   Nachfrage am Knoten i
-     cap(k) Kapazitaet des Fahrzeugs k
+     cap(i) Kapazitaet des Fahrzeugs k
      BigM   BigM
-     Tmax   Maximale Tourdauer
+     Tmax   Maximale Tourdauer /50/
      m      Anzahl der Knoten
      tf(i)  fruehester Bedienzeitpunkt des Knoten
      ts(i)  spaetester Bedienzeitpunkt des Knoten;
 
-$include VRP_v1_Input_Instanz1.inc
+$include VRP_v3_Input_Instanz1_Buch.inc
 parameter sz(i) Servicezeit;
           sz(i) = d(i)*5;
 parameter BigM BigM;
@@ -50,7 +50,7 @@ Zielfunktion..
      Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));
 
 Kapazitaetsrestriktion(k)..
-         sum(i, d(i)*y(i,k)) =l= cap(k);
+         sum(i, d(i)*y(i,k)) =l= cap(i);
 
 Restriktion2(i,k)..
          sum(j, x(i,j,k)) =e= y(i,k);

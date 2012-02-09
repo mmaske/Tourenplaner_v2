@@ -1,9 +1,26 @@
-<h1>Sample App</h1>
+<h1>Route Optimizer</h1>
 
-<p>
-  This is the home page for the
-  <a href="http://railstutorial.org/">Ruby on Rails Tutorial</a>
-  sample application.
-</p>
+
+<% if signed_in? %>
+<% if ((Node.where(:user_id => current_user[:id]).count > 0) &&
+        (Vehicle.where(:user_id => current_user[:id]).count > 0) &&
+        current_user[:tourduration] != nil ) %>
+<%= button_to "Optimiere", :controller => 'projects', :action =>  'optimize'  %>
+<% else %>
+<p><%= "Willkommen " + current_user[:name].upcase+"! Diese Applikation bietet Ihnen die Möglichkeit Touren
+optimiert zu planen. Bevor Sie beginnen können, müssen Sie zunächst Ihre Eingabeparameter definieren. Wählen Sie Ihre
+Fahrzeuge, Kunden sowie deren Eigenschaften über die in der Fußleiste gegebenen Reiter aus. Sobald Sie Ihre Angaben gemacht haben, wird an dieser Stelle ein Optimierungsbutton verfügbar sein." %></p>
+<% end %>
+
+<% if (Link.where(:user_id => current_user[:id]).count > 0) %>
+<%= button_to "Read solution", :controller => 'projects', :action =>  'read_vrp_solution'  %>
+<% if (Link.where(:user_id => current_user[:id]).count > 0) %>
+<%= button_to "read_polyline", :controller => 'projects', :action =>  'read_polyline'  %>
+<%= button_to "show solution" , :controller => 'projects', :action =>  'show_solution'  %>
+
+<% end %>
+<% end %>
+<% else %>
 
 <%= link_to "Sign up now!", signup_path, :class => "signup_button round" %>
+<% end %>

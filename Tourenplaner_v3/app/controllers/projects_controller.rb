@@ -43,12 +43,22 @@ class ProjectsController < ApplicationController
     @title = "Edit project"
   end
   def show_solution
-    @links =Link.find(:all)
-    #@project = Project.find(params[:id])
-    @json = Node.find(:all).to_gmaps4rails
+    #if Link.where(:user_id => current_user[:id]).nil?
+    #  respond_to do |format|
 
-      render :template => "projects/solution"
-  end
+    #    format.html { redirect_to(user_path, :notice => 'Project was successfully created.') }
+     #end# redirect_to(user_path, :notice => "Bitte ermitteln Sie zunächst eine zulässige Lösung")
+    #else
+
+    #Link.where(:user_id => current_user[:id])
+    @links =Link.where(:user_id => current_user[:id])
+    #@project = Project.find(params[:id])
+    @json = Node.where(:user_id => current_user[:id]).to_gmaps4rails
+
+    render :template => "projects/solution"
+    #end
+    end
+
 
   # POST /projects
   # POST /projects.xml
@@ -95,9 +105,26 @@ class ProjectsController < ApplicationController
   end
 
   def optimize
-    @project = Project.find(:all)
-    @nodes = Node.find(:all)
-    @vehicles = Vehicle.find(:all)
+    @project = Project.where(:user_id => current_user[:id])
+    @nodes = Node.where(:user_id => current_user[:id])
+    @vehicles = Vehicle.where(:user_id => current_user[:id])
+    @user = User.where(:id => current_user[:id])
+
+#    if File.exists?("VRP_V3.gms")
+#    File.open("VRP_V3.gms", "r+") do |line|
+#    while (at_line-=20) >0
+#       line.readline
+#    end
+#    position = line.position
+#    rest = line.read
+#    line.seek position
+#    line.write ["$include VRP_v3_Input_Instanz1#{current_user.id}.inc", rest]
+
+
+
+
+
+    current_user[:optimized] = true
 
     if File.exist?("VRP_v1_Input_Instanz1.inc")
       File.delete("VRP_v1_Input_Instanz1.inc")
@@ -124,97 +151,63 @@ class ProjectsController < ApplicationController
       end } #schreibe sie in die include datei
     printf(fil, "/" + "\n\n")
 
-    printf(fil, "Scalar BigM / \n")
-    printf(fil, @vehicles.count.to_s + "\n")
-# @vehicles.each { |so| printf(fil, "v" + so.id.to_s + "\n") } #schreibe sie in die include datei
+    printf(fil, "set k / \n")
+    @vehicles.each { |so|
+        printf(fil, "v" + so.id.to_s + "\n")
+      }
     printf(fil, "/;" + "\n\n")
+
+#####Knotenanzahl definieren#####
+    printf(fil, "Scalar m / \n")
+    printf(fil, @nodes.count.to_s + "\n")
+    printf(fil, "/;" + "\n\n")
+
+#####maximale Tourdauer definieren#####
+    printf(fil, "Scalar Tmax / \n")
+    printf(fil, current_user[:tourduration] + "\n")
+    printf(fil, "/;" + "\n\n")
+
 
 #####print distance matrix#####
 
     @nodes.each do |i|
       @nodes.each do |j|
         if i!=j
-
-         # x=Gmaps4rails.destination(
-         #     {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
-         # distance = x.first["distance"]["value"]
-
+         if current_user.distance_accuracy?
+          x=Gmaps4rails.destination(
+              {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
+          distance = x.first["distance"]["value"]
+         else
           distance2=Geocoder::Calculations.distance_between([i.latitude, i.longitude], [j.latitude, j.longitude])
           distance=distance2*Geocoder::Calculations.mi_in_km
+         end
           if i.depot?
-            printf(fil, "c('dstart','i#{j.id.to_s}')= #{distance};" + "\n")
-            printf(fil, "c('dend','i#{j.id.to_s}')= #{distance};" + "\n")
+            printf(fil, "c('depot','i#{j.id.to_s}')= #{distance};" + "\n")
+
 
           else
             if j.depot?
-              printf(fil, "c('i#{i.id.to_s}','dstart')= #{distance};" + "\n")
-              printf(fil, "c('i#{i.id.to_s}','dend')= #{distance};" + "\n")
+              printf(fil, "c('i#{i.id.to_s}','depot')= #{distance};" + "\n")
+
 
             else
               printf(fil, "c('i#{i.id.to_s}','i#{j.id.to_s}')= #{distance};" + "\n")
             end
           end
-          #  x=Gmaps4rails.destination(
-          #          #    {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
+
         else
           if i.depot?
-            printf(fil, "c('dstart','dstart')= 0;" + "\n")
-            printf(fil, "c('dend','dend')= 0;" + "\n")
-            printf(fil, "c('dstart','dend')= 0;" + "\n")
-            printf(fil, "c('dend','dstart')= 0;" + "\n")
+            printf(fil, "c('depot','depot')= 0;" + "\n")
+
 
           else
             printf(fil, "c('i#{i.id.to_s}','i#{j.id.to_s}')= 0;" + "\n")
           end
         end
-        #distance = x.first["distance"]["value"]
+
       end
     end
 
-          #  x=Gmaps4rails.destination(
-          #    {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
-          #distance = x.first["distance"]["value"]
-          #printf(fil, "%-30f", distance)
-       # else
-         # printf(fil, "%-30s", "999999")
-
-       # end
-
-
-#    printf(fil, "table c(i,j)  "+"\n" + "%-9s", "")
-#    @nodes.each do |i|
-#      if i.depot?
-#        printf(fil, "%-30s", "d")
-#
-#      else
-#        printf(fil, "%-30s", "i" +i.id.to_s)
-#      end
-#    end
-#    printf(fil, "\n")
-#
-#    @nodes.each do |i|
-#      if i.depot?
-#        printf(fil, "%-9s", "d")
-#
-#      else
-#        printf(fil, "%-9s", "i" +i.id.to_s)
-#     end
-#      @nodes.each do |j|
-#        if i!=j
-#          distance2=Geocoder::Calculations.distance_between([i.latitude, i.longitude], [j.latitude, j.longitude])
-#          distance=distance2*Geocoder::Calculations.mi_in_km
-#          #  x=Gmaps4rails.destination(
-#          #    {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
-#          #distance = x.first["distance"]["value"]
-#          printf(fil, "%-30f", distance)
-#        else
-#          printf(fil, "%-30s", "999999")
-#
-#        end
-#
-#      end
-#      printf(fil, "\n")
-#    end
     printf(fil, "\n\n")
 #
 ####print duration matrix#####
@@ -223,18 +216,20 @@ class ProjectsController < ApplicationController
     @nodes.each do |i|
       @nodes.each do |j|
         if i!=j
-#         x=Gmaps4rails.destination(
-#         {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
-#         duration = x.first["duration"]["value"]
-          duration = 2
+          if current_user.duration_accuracy?
+         x=Gmaps4rails.destination(
+         {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
+         duration = x.first["duration"]["value"]
+         else
+          duration2=Geocoder::Calculations.distance_between([i.latitude, i.longitude], [j.latitude, j.longitude])
+          duration=duration2*Geocoder::Calculations.mi_in_km
+         end
           if i.depot?
-            printf(fil, "t('dstart','i#{j.id.to_s}')= #{duration};" + "\n")
-            printf(fil, "t('dend','i#{j.id.to_s}')= #{duration};" + "\n")
+            printf(fil, "t('depot','i#{j.id.to_s}')= #{duration};" + "\n")
 
           else
             if j.depot?
-              printf(fil, "t('i#{i.id.to_s}','dstart')= #{duration};" + "\n")
-              printf(fil, "t('i#{i.id.to_s}','dend')= #{duration};" + "\n")
+              printf(fil, "t('i#{i.id.to_s}','depot')= #{duration};" + "\n")
 
             else
               printf(fil, "t('i#{i.id.to_s}','i#{j.id.to_s}')= #{duration};" + "\n")
@@ -243,10 +238,7 @@ class ProjectsController < ApplicationController
 
         else
           if i.depot?
-            printf(fil, "t('dstart','dstart')= 0;" + "\n")
-            printf(fil, "t('dend','dend')= 0;" + "\n")
-            printf(fil, "t('dstart','dend')= 0;" + "\n")
-            printf(fil, "t('dend','dstart')= 0;" + "\n")
+            printf(fil, "t('depot','depot')= 0;" + "\n")
           else
             printf(fil, "t('i#{i.id.to_s}','i#{j.id.to_s}')= 0;" + "\n")
           end
@@ -256,40 +248,6 @@ class ProjectsController < ApplicationController
       end
     end
 
-
-#    printf(fil, "table t(i,j) "+"\n" + "%-9s", "")
-#   @nodes.each do |i|
-#      if i.depot?
-#        printf(fil, "%-30s", "d")
-#
-#      else
-#        printf(fil, "%-30s", "i" +i.id.to_s)
-#      end
-#    end
-#    printf(fil, "\n")
-#    @nodes.each do |i|
-#      if i.depot?
-#       printf(fil, "%-9s", "d")
-#
-#      else
-#        printf(fil, "%-9s", "i" +i.id.to_s)
-#      end
-#      @nodes.each do |j|
-#        if i!=j
-#x=Gmaps4rails.destination(
-#    {"from" => "#{i.street}+#{i.city}", "to" => "#{j.street}+#{j.city}"})
-#duration = x.first["duration"]["value"]
-#printf(fil, "%-30f", duration)
-#          printf(fil, "%-30f", "2")
-#
-#        else
-#          printf(fil, "%-30s", "999999")
-#
-#        end
-#
-#      end
-#      printf(fil, "\n")
-#    end
     printf(fil, "\n\n")
 
 #####Depot Knoten definieren#####
@@ -297,20 +255,46 @@ class ProjectsController < ApplicationController
 
     @nodes.each do |li|
       if li.depot?
-        printf(fil, "Kundenknoten('dstart') = no;"+"\n")
+        printf(fil, "Kundenknoten('depot') = no;"+"\n")
 
       end
     end
     printf(fil, "\n\n")
 
 #####Fahrzeugkapazitäten definieren#####
-    printf(fil, "scalar cap /"+"\n")
-
-    cap = @vehicles.first.Capacity
-# cap=k.first.Capacity
-    printf(fil, "%-10f", cap)
+    printf(fil, "parameter cap(k) /"+"\n")
+    @vehicles.each do |v|
+    printf(fil, "v" +v.id.to_s + " " + v.Capacity.to_s)
     printf(fil, "\n")
+    end
+    printf(fil, "/;" + "\n\n")
 
+#####Früheste Bedienzeitpunkte definieren#####
+    printf(fil, "parameter tf(i) /"+"\n")
+    @nodes.each do |node|
+    if node.depot?
+    printf(fil, "depot ")
+    printf(fil, node.earliest)
+    printf(fil, "\n")
+    else
+    printf(fil, "i" +node.id.to_s + " " + node.earliest)
+    printf(fil, "\n")
+    end
+    end
+    printf(fil, "/;" + "\n\n")
+
+#####Späteste Bedienzeitpunkte definieren#####
+    printf(fil, "parameter ts(i) /"+"\n")
+    @nodes.each do |node|
+    if node.depot?
+    printf(fil, "depot ")
+    printf(fil, node.latest)
+    printf(fil, "\n")
+    else
+    printf(fil, "i" +node.id.to_s + " " + node.latest)
+    printf(fil, "\n")
+    end
+    end
     printf(fil, "/;" + "\n\n")
 
 #####Nachfrage definieren#####
@@ -318,15 +302,11 @@ class ProjectsController < ApplicationController
 
     @nodes.each do |k|
       if k.depot?
-        printf(fil, "%-9s", "dstart", " ")
-        printf(fil, "0")
-        printf(fil, "\n")
-        printf(fil, "%-9s", "dend", " ")
+        printf(fil, "depot ")
         printf(fil, "0")
         printf(fil, "\n")
       else
         printf(fil, "i" +k.id.to_s)
-
         demand=k.demand
         printf(fil, " " + demand.to_s)
         printf(fil, "\n")
@@ -335,7 +315,9 @@ class ProjectsController < ApplicationController
     printf(fil, "/;" + "\n\n")
     fil.close
 
-    system "gams VRP_V2"
+    system "gams VRP_V3"
+
+
 
     respond_to do |format|
       format.html { redirect_to(projects_url) }

@@ -1,0 +1,27 @@
+<h1>On Page</h1>
+
+<div class="field">
+
+   </div>
+<%= form_for (@user) do |f|  %>
+  <div class= "field">
+ <%= f.label :tourduration %>
+ <%= f.text_field :tourduration %>
+    </div>
+ <div class= "field">
+ <label>Genaue Distanzen nutzen</label>
+ <%= f.check_box :distance_accuracy %>
+   </div>
+ <div class= "field">
+ <label>Genaue Fahrzeiten nutzen</label>
+ <%= f.check_box :duration_accuracy %>
+   </div>
+       <div class= "field">
+ <%= f.label :password %>
+ <%= f.password_field :password %>
+     </div>
+ <div class= "field">
+<%= f.submit "Update" %>
+   </div>
+<% end %>
+

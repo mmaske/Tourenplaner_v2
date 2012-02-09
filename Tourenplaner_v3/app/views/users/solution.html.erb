@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+<b>Links</b>
+
+
+<% @links.each do |link| %>
+      <%=   %>
+  <td><%= link.fromnode.to_s + " zu " + link.tonode.to_s + "|"%></td>
+
+<% end %>
+</p>
+
+
+<%= gmaps4rails(@json) %>

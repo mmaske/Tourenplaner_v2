@@ -19,6 +19,10 @@
     <%= f.label :password_confirmation, "Confirmation" %><br />
     <%= f.password_field :password_confirmation %>
   </div>
+        <div class="field">
+    <% f.label :tourduration, "Maximale Tourdauer" %><br />
+    <% f.text_field :tourduration %>
+  </div>
   <div class="actions">
     <%= f.submit "Sign up" %>
   </div>
