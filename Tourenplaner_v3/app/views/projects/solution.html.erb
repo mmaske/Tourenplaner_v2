@@ -1,19 +1,42 @@
 <p id="notice"><%= notice %></p>
 
+<table>
+ <tr>
+   <th>Fahrzeug</th>
+   <th>Uhrzeit</th>
+   <th>Kunde</th>
+   <th>Adresse</th>
+   <th>Nachfrage</th>
+</tr>
+
+  <% @vehicles.each do |vehicle| %>
+<tr>
 
 
-<p>
-<b>Links</b>
-
-
-<% @links.each do |link| %>
-      <%=   %>
-  <td><%= link.fromnode.to_s + " zu " + link.tonode.to_s + "|"%></td>
+<% @nodes.each do |node| %>
+<% if node != nil %>
+<% if node.depot == true %>
+<td><%= "#{vehicle.VehicleName}" %></td>
+<td><%=  "#{node.servicetime}" %></td>
+<td><%=  "#{node.name}" %></td>
+<td><%=  "#{node.gmaps4rails_address}" %></td>
+<td><%=  "#{node.demand}" %></td>                 <% else %>
+<% if node.vehicle_id == vehicle.id %>
+<td><%=  "#{vehicle.VehicleName}" %></td>
+<td><%=  "#{node.servicetime}" %></td>
+<td><%=  "#{node.name}" %></td>
+<td><%=  "#{node.gmaps4rails_address}" %></td>
+<td><%=  "#{node.demand}" %></td>
+<% end %>
+<% end %>
+<% end %></tr>
+<% end %>
 
 <% end %>
-</p>
 
 
+
+</table>
 <%= gmaps4rails(@json) %>
 
 <%= link_to 'Back', projects_path %>

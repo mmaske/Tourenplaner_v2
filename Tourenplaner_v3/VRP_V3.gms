@@ -112,7 +112,7 @@ put outputfile1;
      loop(i,
          loop(j,
             if ( x.l(i,j,k) = 1,
-             put  i.tl:0, ' ; ' j.tl:0 /
+             put  i.tl:0, ' ; ' j.tl:0, ' ; ' y.l(i,k), ' ; ' k.tl:0 /
              );
          );
      );
@@ -134,7 +134,9 @@ put outputfile3;
 
 loop(k,
 loop(i,
+    if (y.l(i,k) = 1,
              put  i.tl:0, ' ; ', k.tl:0, " ; ",  y.l(i,k) /
+          );
      );
 );
 putclose outputfile3;

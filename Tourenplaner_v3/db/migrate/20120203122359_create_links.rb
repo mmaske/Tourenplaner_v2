@@ -10,10 +10,14 @@ class CreateLinks < ActiveRecord::Migration
       t.string :tolongitude
       t.boolean :gmaps
       t.integer :user_id
+      t.integer :tour_id
+      t.integer :vehicle_id
 
       t.timestamps
     end
     add_index :links, [:user_id]
+    add_index :links, [:tour_id]
+    add_index :links, [:vehicle_id]
   end
 
   def self.down

@@ -1,7 +1,11 @@
-dstart ; dend
-dend ; i4
-i2 ; i3
-i3 ; dstart
-i4 ; i6
-i5 ; i2
-i6 ; i5
+depot ; i9 ;         1.00 ; v1
+i2 ; i10 ;         1.00 ; v1
+i6 ; i7 ;         1.00 ; v1
+i7 ; depot ;         1.00 ; v1
+i9 ; i2 ;         1.00 ; v1
+i10 ; i6 ;         1.00 ; v1
+depot ; i5 ;         1.00 ; v3
+i3 ; depot ;         1.00 ; v3
+i4 ; i8 ;         1.00 ; v3
+i5 ; i4 ;         1.00 ; v3
+i8 ; i3 ;         1.00 ; v3

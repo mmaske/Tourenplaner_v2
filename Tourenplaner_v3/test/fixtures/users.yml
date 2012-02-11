@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+1n:
+    id: 1
+    name: "Fritz Blitz"
+    email: "fritz@blitz.de"
+    encrypted_password: 6f9c1aea361c9454879db6f463e9eeedf21024080749f3ecdc60efcdfc2c3cba
+    salt: 4b325cb2256ee9bb4ded7cbf321be27e9eee60ceda0e4b8cb7bd9b16dbd36dd7
+    created_at: "2012-02-09 23:29:45.297939"
+
+

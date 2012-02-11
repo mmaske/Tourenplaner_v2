@@ -1,0 +1,107 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+1n:
+  id: 1
+  name: "Peter Max AG"
+  street: "Liebigstr. 33"
+  city: Hannover
+  country: Germany
+  demand:
+  depot: true
+  latitude: 52.3942
+  longitude: 9.75592
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+2n:
+  id: 2
+  name: "Grün AG"
+  street: "Auf der Wakhorst 5"
+  city: Bordenau
+  country: Germany
+  demand: 40
+  depot: false
+  latitude: 52.4611802
+  longitude: 9.4842421
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+3n:
+  id: 3
+  name: "Blau AG"
+  street: "Am Südbahnhof 4"
+  city: Hannover
+  country: Germany
+  demand: 40
+  depot: false
+  latitude: 52.3694224
+  longitude: 9.7608041
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+4n:
+  id: 4
+  name: "Rosa AG"
+  street: "Am Europaplatz 4"
+  city: Hannover
+  country: Germany
+  demand: 40
+  depot: false
+  latitude: 52.3843515
+  longitude: 9.9542978
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+5n:
+  id: 5
+  name: "Lila AG"
+  street: "Grenzheide 4"
+  city: Langenhagen
+  country: Germany
+  demand: 12
+  depot: false
+  latitude: 52.454136
+  longitude: 9.7602063
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+6n:
+  id: 6
+  name: "Himmelblau AG"
+  street: "Callinstr. 22"
+  city: Hannover
+  country: Germany
+  demand: 35
+  depot: false
+  latitude: 52.3870361
+  longitude: 9.7144059
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+7n:
+  id: 7
+  name: "Cremeweiß AG"
+  street: "Königsworther Platz 1"
+  city: Hannover
+  country: Germany
+  demand: 25
+  depot: false
+  latitude: 52.3791768
+  longitude: 9.7238821
+  gmaps: true
+  user_id: 1
+  earliest: 0
+  latest: 4000
+
+

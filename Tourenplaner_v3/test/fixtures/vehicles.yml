@@ -1,0 +1,20 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+1n:
+    id: 1
+    vehiclename: H-AM1111
+    type: Sprinter
+    capacity: 150
+
+2n:
+    id: 2
+    vehiclename: H-AM1112
+    type: Sprinter
+    capacity: 150
+
+2n:
+    id: 3
+    vehiclename: H-AM1113
+    type: Sprinter
+    capacity: 150
+

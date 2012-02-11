@@ -39,10 +39,18 @@
     <%= f.label :latest %><br />
     <%= f.text_field :latest %>
   </div>
+    <% if (Node.where(:user_id => current_user[:id],:depot => true).count > 0)%>
+    <div class= "field">
+    <p>Sie haben bereits ein Depot gewählt</p>
+    <% f.label :depot %><br />
+    <% f.check_box :depot %>
+  </div>
+     <% else %>
     <div class= "field">
     <%= f.label :depot %><br />
     <%= f.check_box :depot %>
   </div>
+     <% end %>
     <div class="field">
     <% f.label :latitude %>
     <% @node.latitude %>

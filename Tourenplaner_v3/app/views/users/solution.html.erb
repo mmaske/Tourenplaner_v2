@@ -4,6 +4,7 @@
 <b>Links</b>
 
 
+
 <% @links.each do |link| %>
       <%=   %>
   <td><%= link.fromnode.to_s + " zu " + link.tonode.to_s + "|"%></td>
@@ -13,3 +14,7 @@
 
 
 <%= gmaps4rails(@json) %>
+<%= gmaps({
+       "polylines"    => { "data" => @polylines_json }
+     })
+ %>

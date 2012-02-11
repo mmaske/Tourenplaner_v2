@@ -22,11 +22,15 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
     t.string   "tolongitude"
     t.boolean  "gmaps"
     t.integer  "user_id"
+    t.integer  "tour_id"
+    t.integer  "vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "links", ["tour_id"], :name => "index_links_on_tour_id"
   add_index "links", ["user_id"], :name => "index_links_on_user_id"
+  add_index "links", ["vehicle_id"], :name => "index_links_on_vehicle_id"
 
   create_table "nodes", :force => true do |t|
     t.float    "latitude"
@@ -42,9 +46,12 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
     t.integer  "project_id"
     t.string   "polyline"
     t.integer  "tour_id"
-    t.string   "earliest"
-    t.string   "latest"
+    t.float    "earliest"
+    t.float    "latest"
     t.integer  "user_id"
+    t.float    "servicetime"
+    t.integer  "jobnumber"
+    t.integer  "vehicle_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -52,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
   add_index "nodes", ["project_id"], :name => "index_nodes_on_project_id"
   add_index "nodes", ["tour_id"], :name => "index_nodes_on_tour_id"
   add_index "nodes", ["user_id"], :name => "index_nodes_on_user_id"
+  add_index "nodes", ["vehicle_id"], :name => "index_nodes_on_vehicle_id"
 
   create_table "projects", :force => true do |t|
     t.string   "name"

@@ -1,0 +1,3 @@
+"id","name","email","distance_accuracy","duration_accuracy","tourduration","created_at","updated_at","optimized","encrypted_password","salt"
+"1","Fritz Blitz","fritz@blitz.de","f","t","10000","2012-02-09 23:29:45.297939","2012-02-10 00:40:06.361370","","6f9c1aea361c9454879db6f463e9eeedf21024080749f3ecdc60efcdfc2c3cba","4b325cb2256ee9bb4ded7cbf321be27e9eee60ceda0e4b8cb7bd9b16dbd36dd7"
+"2","Peter Max","peter@peter.de","f","f","100000","2012-02-10 02:42:37.394825","2012-02-10 02:54:34.841860","f","89ca56c551cfdc894a48f7b57778b708be81ba38105b70ef255897c390eb4a57","5d564cc3297d76517b9d5998a69b029569e06f14ce42eba156380a758bef1c9a"
