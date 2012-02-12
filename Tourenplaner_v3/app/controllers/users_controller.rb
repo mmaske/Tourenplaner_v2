@@ -15,10 +15,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     @user.optimized=false
+
     if @user.save
+
       sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      flash[:success] = "Ihr Account wurde erfolgreich angelegt"
+      @project = Project.new(:user_id => current_user[:id])
+      @project.save
+      redirect_to root_path
     else
       @title = "Sign up"
       render 'new'

@@ -1,24 +1,23 @@
 <h1>Route Optimizer</h1>
 
 
+
 <% if signed_in? %>
 <% if ((Node.where(:user_id => current_user[:id]).count > 0) &&
         (Vehicle.where(:user_id => current_user[:id]).count > 0) &&
-        current_user[:tourduration] != nil ) %>
-<%= button_to "Optimiere", :controller => 'projects', :action =>  'optimize'  %>
+        Project.where(:user_id => current_user[:id]).first.tourduration != nil ) %>
+<%= button_to "Optimiere", :controller => 'projects', :action =>  'optimize' %>
 <% else %>
 <p><%= "Willkommen "%><!--% if current_user != nil %><!--%= current_user[:name].upcase %><!--% end %-->  <%="! Diese Applikation bietet Ihnen die Möglichkeit Touren
 optimiert zu planen. Bevor Sie beginnen können, müssen Sie zunächst Ihre Eingabeparameter definieren. Wählen Sie Ihre
 Fahrzeuge, Kunden sowie deren Eigenschaften über die in der Fußleiste gegebenen Reiter aus. Sobald Sie Ihre Angaben gemacht haben, wird an dieser Stelle ein Optimierungsbutton verfügbar sein." %></p>
 <% end %>
 
-<!--% if (Link.where(:user_id => current_user[:id]).count > 0) %-->
+<% if (Project.where(:user_id => current_user[:id]).first.optimized?) %>
 <%= button_to "Read solution", :controller => 'projects', :action =>  'read_vrp_solution'  %>
-<% if (Link.where(:user_id => current_user[:id]).count > 0) %>
-<%= button_to "read_polyline", :controller => 'projects', :action =>  'read_polyline'  %>
-<%= button_to "show solution" , :controller => 'projects', :action =>  'show_solution'  %>
-
-<!--% end %-->
+<% if (Project.where(:user_id => current_user[:id]).first.loading?) %>
+<%= button_to "Show solution" , projects_read_vrp_solution_path %>
+<% end %>
 <% end %>
 <% else %>
 

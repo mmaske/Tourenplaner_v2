@@ -3,11 +3,8 @@ class CreateUsers < ActiveRecord::Migration
     create_table :users do |t|
       t.string :name
       t.string :email
-      t.boolean :distance_accuracy
-      t.boolean :duration_accuracy
-      t.string :tourduration
       t.timestamps
-      t.boolean :optimized
+
     end
   end
 

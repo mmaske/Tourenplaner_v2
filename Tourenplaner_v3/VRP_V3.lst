@@ -1,4 +1,4 @@
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 1
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 1
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
@@ -23,431 +23,227 @@ C o m p i l a t i o n
   19   
 INCLUDE    C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
   21  set i /
-  22  depot
-  23  i2
-  24  i3
-  25  i4
-  26  i5
-  27  i6
-  28  i7
-  29  i8
-  30  i9
-  31  i10
-  32  /
-  33   
-  34  set k /
-  35  v1
-  36  v3
-  37  /;
-  38   
-  39  Scalar m /
-  40  10
-  41  /;
-  42   
-  43  Scalar Tmax /
-  44  100000
-  45  /;
-  46   
-  47  c('depot','depot')= 0;
-  48  c('depot','i2')= 19.86912738575703;
-  49  c('depot','i3')= 2.775014689388068;
-  50  c('depot','i4')= 13.506685673970596;
-  51  c('depot','i5')= 6.67091367890866;
-  52  c('depot','i6')= 2.9275838054129673;
-  53  c('depot','i7')= 2.7419018395144006;
-  54  c('depot','i8')= 8.068683877728688;
-  55  c('depot','i9')= 9.981604667392043;
-  56  c('depot','i10')= 11.214618021224261;
-  57  c('i2','depot')= 19.86912738575703;
-  58  c('i2','i2')= 0;
-  59  c('i2','i3')= 21.352282004700186;
-  60  c('i2','i4')= 32.999410090817086;
-  61  c('i2','i5')= 18.714716075469596;
-  62  c('i2','i6')= 17.650696795722496;
-  63  c('i2','i7')= 18.634307387960305;
-  64  c('i2','i8')= 27.93755232281283;
-  65  c('i2','i9')= 9.991775431714249;
-  66  c('i2','i10')= 8.740453671669597;
-  67  c('i3','depot')= 2.775014689388068;
-  68  c('i3','i2')= 21.352282004700186;
-  69  c('i3','i3')= 0;
-  70  c('i3','i4')= 13.238949541025276;
-  71  c('i3','i5')= 9.41980980390068;
-  72  c('i3','i6')= 3.7087614999630203;
-  73  c('i3','i7')= 2.731053410766599;
-  74  c('i3','i8')= 7.12270216819312;
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 2
+  22  i6
+  23  depot
+  24  i8
+  25  i9
+  26  /
+  27   
+  28  set k /
+  29  v2
+  30  /;
+  31   
+  32  Scalar m /
+  33  4
+  34  /;
+  35   
+  36  Scalar Tmax /
+  37  4000.0
+  38  /;
+  39   
+  40  c('i6','i6')= 0;
+  41  c('i6','depot')= 21335.0;
+  42  c('i6','i8')= 425.0;
+  43  c('i6','i9')= 27019.0;
+  44  c('depot','i6')= 21101.0;
+  45  c('depot','depot')= 0;
+  46  c('depot','i8')= 20720.0;
+  47  c('depot','i9')= 4609.0;
+  48  c('i8','i6')= 425.0;
+  49  c('i8','depot')= 21113.0;
+  50  c('i8','i8')= 0;
+  51  c('i8','i9')= 26797.0;
+  52  c('i9','i6')= 25674.0;
+  53  c('i9','depot')= 4167.0;
+  54  c('i9','i8')= 25293.0;
+  55  c('i9','i9')= 0;
+  56   
+  57   
+  58  t('i6','i6')= 0;
+  59  t('i6','depot')= 1482.0;
+  60  t('i6','i8')= 64.0;
+  61  t('i6','i9')= 1545.0;
+  62  t('depot','i6')= 1329.0;
+  63  t('depot','depot')= 0;
+  64  t('depot','i8')= 1293.0;
+  65  t('depot','i9')= 739.0;
+  66  t('i8','i6')= 56.0;
+  67  t('i8','depot')= 1436.0;
+  68  t('i8','i8')= 0;
+  69  t('i8','i9')= 1499.0;
+  70  t('i9','i6')= 1507.0;
+  71  t('i9','depot')= 447.0;
+  72  t('i9','i8')= 1471.0;
+  73  t('i9','i9')= 0;
+  74   
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 2
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
-  75  c('i3','i9')= 11.36180657397978;
-  76  c('i3','i10')= 12.960873566527445;
-  77  c('i4','depot')= 13.506685673970596;
-  78  c('i4','i2')= 32.999410090817086;
-  79  c('i4','i3')= 13.238949541025276;
-  80  c('i4','i4')= 0;
-  81  c('i4','i5')= 15.279440161795787;
-  82  c('i4','i6')= 16.283482634457076;
-  83  c('i4','i7')= 15.649598935814122;
-  84  c('i4','i8')= 6.352268044361378;
-  85  c('i4','i9')= 23.36891616089229;
-  86  c('i4','i10')= 24.260998782612468;
-  87  c('i5','depot')= 6.67091367890866;
-  88  c('i5','i2')= 18.714716075469596;
-  89  c('i5','i3')= 9.41980980390068;
-  90  c('i5','i4')= 15.279440161795787;
-  91  c('i5','i5')= 0;
-  92  c('i5','i6')= 8.08180180779545;
-  93  c('i5','i7')= 8.691511113041594;
-  94  c('i5','i8')= 12.113041720298014;
-  95  c('i5','i9')= 10.603816114443804;
-  96  c('i5','i10')= 10.42331697447466;
-  97  c('i6','depot')= 2.927583805412967;
-  98  c('i6','i2')= 17.650696795722496;
-  99  c('i6','i3')= 3.7087614999630203;
- 100  c('i6','i4')= 16.283482634457076;
- 101  c('i6','i5')= 8.08180180779545;
- 102  c('i6','i6')= 0;
- 103  c('i6','i7')= 1.0850714871722846;
- 104  c('i6','i8')= 10.52039163708269;
- 105  c('i6','i9')= 7.658921508271695;
- 106  c('i6','i10')= 9.273380291573156;
- 107  c('i7','depot')= 2.7419018395144006;
- 108  c('i7','i2')= 18.634307387960305;
- 109  c('i7','i3')= 2.731053410766599;
- 110  c('i7','i4')= 15.649598935814122;
- 111  c('i7','i5')= 8.691511113041594;
- 112  c('i7','i6')= 1.0850714871722846;
- 113  c('i7','i7')= 0;
- 114  c('i7','i8')= 9.72720421245321;
- 115  c('i7','i9')= 8.649342387309778;
- 116  c('i7','i10')= 10.32735750042799;
- 117  c('i8','depot')= 8.068683877728688;
- 118  c('i8','i2')= 27.93755232281283;
- 119  c('i8','i3')= 7.12270216819312;
- 120  c('i8','i4')= 6.352268044361378;
- 121  c('i8','i5')= 12.113041720298012;
- 122  c('i8','i6')= 10.520391637082692;
- 123  c('i8','i7')= 9.72720421245321;
- 124  c('i8','i8')= 0;
- 125  c('i8','i9')= 18.022426365201394;
- 126  c('i8','i10')= 19.27099347808942;
- 127  c('i9','depot')= 9.981604667392043;
- 128  c('i9','i2')= 9.991775431714249;
- 129  c('i9','i3')= 11.36180657397978;
- 130  c('i9','i4')= 23.368916160892287;
- 131  c('i9','i5')= 10.603816114443802;
- 132  c('i9','i6')= 7.658921508271695;
- 133  c('i9','i7')= 8.649342387309778;
- 134  c('i9','i8')= 18.022426365201394;
- 135  c('i9','i9')= 0;
- 136  c('i9','i10')= 2.3038596192179304;
- 137  c('i10','depot')= 11.214618021224261;
- 138  c('i10','i2')= 8.740453671669597;
- 139  c('i10','i3')= 12.960873566527445;
- 140  c('i10','i4')= 24.260998782612468;
- 141  c('i10','i5')= 10.423316974474659;
- 142  c('i10','i6')= 9.273380291573156;
- 143  c('i10','i7')= 10.32735750042799;
- 144  c('i10','i8')= 19.27099347808942;
- 145  c('i10','i9')= 2.3038596192179304;
- 146  c('i10','i10')= 0;
+  75   
+  76  Kundenknoten(i) = yes;
+  77  Kundenknoten('depot') = no;
+  78   
+  79   
+  80  parameter cap(k) /
+  81  v2 120.0
+  82  /;
+  83   
+  84  parameter tf(i) /
+  85  i6 0.0
+  86  depot 0.0
+  87  i8 0.0
+  88  i9 0.0
+  89  /;
+  90   
+  91  parameter ts(i) /
+  92  i6 4000.0
+  93  depot 4000.0
+  94  i8 4000.0
+  95  i9 40000.0
+  96  /;
+  97   
+  98  parameter d(i) /
+  99  i6 12.0
+ 100  depot 0
+ 101  i8 22.0
+ 102  i9 12.0
+ 103  /;
+ 104   
+ 105  parameter sz(i) Servicezeit;
+ 106            sz(i) = d(i)*5;
+ 107  parameter BigM BigM;
+ 108           BigM = sum((i,j), t(i,j)+sz(i))+1;
+ 109   
+ 110   
+ 111   
+ 112  variables Z  Zielfunktionswert;
+ 113  binary variables x Bedienunsvariable;
+ 114  binary variables y Tourvariable;
+ 115  positive variables w Anfahrtszeitpunkte;
+ 116  positive variable hv  Hilfsvariable;
+ 117   
+ 118  Equations
+ 119  Zielfunktion                               Das ist die Zielfunktion
+ 120  Kapazitaetsrestriktion(k)                  xxx
+ 121  Restriktion2(i,k)                          xxx
+ 122  Restriktion3(j,k)                          xxx
+ 123  Restriktion4(j)                            xxx
+ 124  Restriktion5(i,j)                          xxx
+ 125  Restriktion6(i,k)                          xxx
+ 126  Restriktion7(i)                            xxx
+ 127  Restriktion8(i)                            xxx
+ 128  Restriktion9(i,j,k)                        xxx
+ 129  Restriktion10(i,k)                         xxx
+ 130  Restriktion11                              xxx
+ 131  ;
+ 132   
+ 133  Zielfunktion..
+ 134       Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));
+ 135   
+ 136  Kapazitaetsrestriktion(k)..
+ 137           sum(i, d(i)*y(i,k)) =l= cap(k);
+ 138   
+ 139  Restriktion2(i,k)..
+ 140           sum(j, x(i,j,k)) =e= y(i,k);
+ 141   
+ 142  Restriktion3(j,k)..
+ 143           sum(i, x(i,j,k)) =e= y(j,k);
+ 144   
+ 145  Restriktion4(i)$(Kundenknoten(i))..
+ 146           sum(k, y(i,k)) =e= 1;
  147   
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 3
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 3
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 148   
- 149  t('depot','depot')= 0;
- 150  t('depot','i2')= 19.86912738575703;
- 151  t('depot','i3')= 2.775014689388068;
- 152  t('depot','i4')= 13.506685673970596;
- 153  t('depot','i5')= 6.67091367890866;
- 154  t('depot','i6')= 2.9275838054129673;
- 155  t('depot','i7')= 2.7419018395144006;
- 156  t('depot','i8')= 8.068683877728688;
- 157  t('depot','i9')= 9.981604667392043;
- 158  t('depot','i10')= 11.214618021224261;
- 159  t('i2','depot')= 19.86912738575703;
- 160  t('i2','i2')= 0;
- 161  t('i2','i3')= 21.352282004700186;
- 162  t('i2','i4')= 32.999410090817086;
- 163  t('i2','i5')= 18.714716075469596;
- 164  t('i2','i6')= 17.650696795722496;
- 165  t('i2','i7')= 18.634307387960305;
- 166  t('i2','i8')= 27.93755232281283;
- 167  t('i2','i9')= 9.991775431714249;
- 168  t('i2','i10')= 8.740453671669597;
- 169  t('i3','depot')= 2.775014689388068;
- 170  t('i3','i2')= 21.352282004700186;
- 171  t('i3','i3')= 0;
- 172  t('i3','i4')= 13.238949541025276;
- 173  t('i3','i5')= 9.41980980390068;
- 174  t('i3','i6')= 3.7087614999630203;
- 175  t('i3','i7')= 2.731053410766599;
- 176  t('i3','i8')= 7.12270216819312;
- 177  t('i3','i9')= 11.36180657397978;
- 178  t('i3','i10')= 12.960873566527445;
- 179  t('i4','depot')= 13.506685673970596;
- 180  t('i4','i2')= 32.999410090817086;
- 181  t('i4','i3')= 13.238949541025276;
- 182  t('i4','i4')= 0;
- 183  t('i4','i5')= 15.279440161795787;
- 184  t('i4','i6')= 16.283482634457076;
- 185  t('i4','i7')= 15.649598935814122;
- 186  t('i4','i8')= 6.352268044361378;
- 187  t('i4','i9')= 23.36891616089229;
- 188  t('i4','i10')= 24.260998782612468;
- 189  t('i5','depot')= 6.67091367890866;
- 190  t('i5','i2')= 18.714716075469596;
- 191  t('i5','i3')= 9.41980980390068;
- 192  t('i5','i4')= 15.279440161795787;
- 193  t('i5','i5')= 0;
- 194  t('i5','i6')= 8.08180180779545;
- 195  t('i5','i7')= 8.691511113041594;
- 196  t('i5','i8')= 12.113041720298014;
- 197  t('i5','i9')= 10.603816114443804;
- 198  t('i5','i10')= 10.42331697447466;
- 199  t('i6','depot')= 2.927583805412967;
- 200  t('i6','i2')= 17.650696795722496;
- 201  t('i6','i3')= 3.7087614999630203;
- 202  t('i6','i4')= 16.283482634457076;
- 203  t('i6','i5')= 8.08180180779545;
- 204  t('i6','i6')= 0;
- 205  t('i6','i7')= 1.0850714871722846;
- 206  t('i6','i8')= 10.52039163708269;
- 207  t('i6','i9')= 7.658921508271695;
- 208  t('i6','i10')= 9.273380291573156;
- 209  t('i7','depot')= 2.7419018395144006;
- 210  t('i7','i2')= 18.634307387960305;
- 211  t('i7','i3')= 2.731053410766599;
- 212  t('i7','i4')= 15.649598935814122;
- 213  t('i7','i5')= 8.691511113041594;
- 214  t('i7','i6')= 1.0850714871722846;
- 215  t('i7','i7')= 0;
- 216  t('i7','i8')= 9.72720421245321;
- 217  t('i7','i9')= 8.649342387309778;
- 218  t('i7','i10')= 10.32735750042799;
- 219  t('i8','depot')= 8.068683877728688;
- 220  t('i8','i2')= 27.93755232281283;
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 4
+ 148  Restriktion5(i,j)$(Kundenknoten(j) and Kundenknoten(i) and ord(i)<>ord(j))..
+ 149           hv(i)-hv(j)+ m*sum(k, x(i,j,k)) =l= m-1;
+ 150   
+ 151  Restriktion6(i,k)..
+ 152           x(i,i,k) =e= 0;
+ 153   
+ 154  Restriktion7(i)$(Kundenknoten(i))..
+ 155           w(i) =g= tf(i);
+ 156   
+ 157  Restriktion8(i)$(Kundenknoten(i))..
+ 158           w(i) =l= ts(i);
+ 159   
+ 160  Restriktion9(i,j,k)$(Kundenknoten(j) and ord(i)<>ord(j))..
+ 161           w(j) =g= w(i) + sz(i) + t(i,j) - (1-x(i,j,k))*BigM;
+ 162   
+ 163  Restriktion10(i,k)$(Kundenknoten(i))..
+ 164           w(i) + sz(i) + t(i,'depot') - (1-x(i,'depot',k))*BigM =l= Tmax;
+ 165   
+ 166  Restriktion11..
+ 167           w('dstart')=e=0
+ 168   
+ 169   
+ 170  model vrp /
+ 171                   Zielfunktion
+ 172                    ,Kapazitaetsrestriktion
+ 173                    ,Restriktion2
+ 174                    ,Restriktion3
+ 175                    ,Restriktion4
+ 176                    ,Restriktion5
+ 177                    ,Restriktion6
+ 178                    ,Restriktion7
+ 179                    ,Restriktion8
+ 180                    ,Restriktion9
+ 181                    ,Restriktion10
+ 182                    ,Restriktion11
+ 183                   /;
+ 184   
+ 185   
+ 186   
+ 187   
+ 188  solve vrp minimizing Z using mip ;
+ 189   
+ 190  display x.l, w.l;
+ 191   
+ 192   
+ 193  file outputfile1 / 'VRP_Loesung1.txt'/;
+ 194  put outputfile1;
+ 195     loop(k,
+ 196       loop(i,
+ 197           loop(j,
+ 198              if ( x.l(i,j,k) = 1,
+ 199               put  i.tl:0, ' ; ' j.tl:0, ' ; ' y.l(i,k), ' ; ' k.tl:0 /
+ 200               );
+ 201           );
+ 202       );
+ 203  );
+ 204   
+ 205  putclose outputfile1;
+ 206   
+ 207  file outputfile2 / 'VRP_Loesung2.txt'/;
+ 208  put outputfile2;
+ 209   
+ 210  loop(i,
+ 211          put  i.tl:0, ' ; ',  w.l(i) /
+ 212       );
+ 213   
+ 214  putclose outputfile2;
+ 215   
+ 216  file outputfile3 / 'VRP_Loesung3.txt'/;
+ 217  put outputfile3;
+ 218   
+ 219  loop(k,
+ 220  loop(i,
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 4
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 C o m p i l a t i o n
 
 
- 221  t('i8','i3')= 7.12270216819312;
- 222  t('i8','i4')= 6.352268044361378;
- 223  t('i8','i5')= 12.113041720298012;
- 224  t('i8','i6')= 10.520391637082692;
- 225  t('i8','i7')= 9.72720421245321;
- 226  t('i8','i8')= 0;
- 227  t('i8','i9')= 18.022426365201394;
- 228  t('i8','i10')= 19.27099347808942;
- 229  t('i9','depot')= 9.981604667392043;
- 230  t('i9','i2')= 9.991775431714249;
- 231  t('i9','i3')= 11.36180657397978;
- 232  t('i9','i4')= 23.368916160892287;
- 233  t('i9','i5')= 10.603816114443802;
- 234  t('i9','i6')= 7.658921508271695;
- 235  t('i9','i7')= 8.649342387309778;
- 236  t('i9','i8')= 18.022426365201394;
- 237  t('i9','i9')= 0;
- 238  t('i9','i10')= 2.3038596192179304;
- 239  t('i10','depot')= 11.214618021224261;
- 240  t('i10','i2')= 8.740453671669597;
- 241  t('i10','i3')= 12.960873566527445;
- 242  t('i10','i4')= 24.260998782612468;
- 243  t('i10','i5')= 10.423316974474659;
- 244  t('i10','i6')= 9.273380291573156;
- 245  t('i10','i7')= 10.32735750042799;
- 246  t('i10','i8')= 19.27099347808942;
- 247  t('i10','i9')= 2.3038596192179304;
- 248  t('i10','i10')= 0;
- 249   
- 250   
- 251  Kundenknoten(i) = yes;
- 252  Kundenknoten('depot') = no;
- 253   
- 254   
- 255  parameter cap(k) /
- 256  v1 150.0
- 257  v3 150.0
- 258  /;
- 259   
- 260  parameter tf(i) /
- 261  depot 0.0
- 262  i2 0.0
- 263  i3 0.0
- 264  i4 0.0
- 265  i5 0.0
- 266  i6 0.0
- 267  i7 0.0
- 268  i8 0.0
- 269  i9 0.0
- 270  i10 0.0
- 271  /;
- 272   
- 273  parameter ts(i) /
- 274  depot 4000.0
- 275  i2 4000.0
- 276  i3 4000.0
- 277  i4 4000.0
- 278  i5 4000.0
- 279  i6 4000.0
- 280  i7 4000.0
- 281  i8 4000.0
- 282  i9 4000.0
- 283  i10 4000.0
- 284  /;
- 285   
- 286  parameter d(i) /
- 287  depot 0
- 288  i2 40.0
- 289  i3 40.0
- 290  i4 40.0
- 291  i5 12.0
- 292  i6 35.0
- 293  i7 25.0
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 5
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-C o m p i l a t i o n
-
-
- 294  i8 30.0
- 295  i9 30.0
- 296  i10 20.0
- 297  /;
- 298   
- 299  parameter sz(i) Servicezeit;
- 300            sz(i) = d(i)*5;
- 301  parameter BigM BigM;
- 302           BigM = sum((i,j), t(i,j)+sz(i))+1;
- 303   
- 304   
- 305   
- 306  variables Z  Zielfunktionswert;
- 307  binary variables x Bedienunsvariable;
- 308  binary variables y Tourvariable;
- 309  positive variables w Anfahrtszeitpunkte;
- 310  positive variable hv  Hilfsvariable;
- 311   
- 312  Equations
- 313  Zielfunktion                               Das ist die Zielfunktion
- 314  Kapazitaetsrestriktion(k)                  xxx
- 315  Restriktion2(i,k)                          xxx
- 316  Restriktion3(j,k)                          xxx
- 317  Restriktion4(j)                            xxx
- 318  Restriktion5(i,j)                          xxx
- 319  Restriktion6(i,k)                          xxx
- 320  Restriktion7(i)                            xxx
- 321  Restriktion8(i)                            xxx
- 322  Restriktion9(i,j,k)                        xxx
- 323  Restriktion10(i,k)                         xxx
- 324  Restriktion11                              xxx;
- 325   
- 326   
- 327  Zielfunktion..
- 328       Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));
- 329   
- 330  Kapazitaetsrestriktion(k)..
- 331           sum(i, d(i)*y(i,k)) =l= cap(k);
- 332   
- 333  Restriktion2(i,k)..
- 334           sum(j, x(i,j,k)) =e= y(i,k);
- 335   
- 336  Restriktion3(j,k)..
- 337           sum(i, x(i,j,k)) =e= y(j,k);
- 338   
- 339  Restriktion4(i)$(Kundenknoten(i))..
- 340           sum(k, y(i,k)) =e= 1;
- 341   
- 342  Restriktion5(i,j)$(Kundenknoten(j) and Kundenknoten(i) and ord(i)<>ord(j))..
- 343           hv(i)-hv(j)+ m*sum(k, x(i,j,k)) =l= m-1;
- 344   
- 345  Restriktion6(i,k)..
- 346           x(i,i,k) =e= 0;
- 347   
- 348  Restriktion7(i)$(Kundenknoten(i))..
- 349           w(i) =g= tf(i);
- 350   
- 351  Restriktion8(i)$(Kundenknoten(i))..
- 352           w(i) =l= ts(i);
- 353   
- 354  Restriktion9(i,j,k)$(Kundenknoten(j) and ord(i)<>ord(j))..
- 355           w(j) =g= w(i) + sz(i) + t(i,j) - (1-x(i,j,k))*BigM;
- 356   
- 357  Restriktion10(i,k)$(Kundenknoten(i))..
- 358           w(i) + sz(i) + t(i,'depot') - (1-x(i,'depot',k))*BigM =l= Tmax;
- 359   
- 360  Restriktion11..
- 361           w('dstart')=e=0
- 362   
- 363   
- 364  model vrp /
- 365                   Zielfunktion
- 366                    ,Kapazitaetsrestriktion
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 6
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-C o m p i l a t i o n
-
-
- 367                    ,Restriktion2
- 368                    ,Restriktion3
- 369                    ,Restriktion4
- 370                    ,Restriktion5
- 371                    ,Restriktion6
- 372                    ,Restriktion7
- 373                    ,Restriktion8
- 374                    ,Restriktion9
- 375                    ,Restriktion10
- 376                    ,Restriktion11
- 377                   /;
- 378   
- 379   
- 380   
- 381   
- 382  solve vrp minimizing Z using mip ;
- 383   
- 384  display x.l, w.l;
- 385   
- 386   
- 387  file outputfile1 / 'VRP_Loesung1.txt'/;
- 388  put outputfile1;
- 389     loop(k,
- 390       loop(i,
- 391           loop(j,
- 392              if ( x.l(i,j,k) = 1,
- 393               put  i.tl:0, ' ; ' j.tl:0, ' ; ' y.l(i,k), ' ; ' k.tl:0 /
- 394               );
- 395           );
- 396       );
- 397  );
- 398   
- 399  putclose outputfile1;
- 400   
- 401  file outputfile2 / 'VRP_Loesung2.txt'/;
- 402  put outputfile2;
- 403   
- 404  loop(i,
- 405          put  i.tl:0, ' ; ',  w.l(i) /
- 406       );
- 407   
- 408  putclose outputfile2;
- 409   
- 410  file outputfile3 / 'VRP_Loesung3.txt'/;
- 411  put outputfile3;
- 412   
- 413  loop(k,
- 414  loop(i,
- 415      if (y.l(i,k) = 1,
- 416               put  i.tl:0, ' ; ', k.tl:0, " ; ",  y.l(i,k) /
- 417            );
- 418       );
- 419  );
- 420  putclose outputfile3;
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 7
+ 221      if (y.l(i,k) = 1,
+ 222               put  i.tl:0, ' ; ', k.tl:0, " ; ",  y.l(i,k) /
+ 223            );
+ 224       );
+ 225  );
+ 226  putclose outputfile3;
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 5
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 Include File Summary
 
@@ -458,189 +254,129 @@ Include File Summary
      2       20 INCLUDE        1      20  .C:\Sites\Tourenplaner_v3\VRP_v1_Input_Instanz1.inc
 
 
-COMPILATION TIME     =        0.031 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 8
+COMPILATION TIME     =        0.015 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 6
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE vrp Using MIP From line 382
+Equation Listing    SOLVE vrp Using MIP From line 188
 
 
 ---- Zielfunktion  =E=  Das ist die Zielfunktion
 
-Zielfunktion..  Z - 19.869127385757*x(depot,i2,v1) - 19.869127385757*x(depot,i2,v3) - 2.77501468938807*x(depot,i3,v1) - 2.77501468938807*x(depot,i3,v3) - 13.5066856739706*x(depot,i4,v1) - 13.5066856739706*x(depot,i4,v3) - 6.67091367890866*x(depot,i5,v1)
+Zielfunktion..  Z - 21335*x(i6,depot,v2) - 425*x(i6,i8,v2) - 27019*x(i6,i9,v2) - 21101*x(depot,i6,v2) - 20720*x(depot,i8,v2) - 4609*x(depot,i9,v2) - 425*x(i8,i6,v2) - 21113*x(i8,depot,v2) - 26797*x(i8,i9,v2) - 25674*x(i9,i6,v2) - 4167*x(i9,depot,v2)
      
-      - 6.67091367890866*x(depot,i5,v3) - 2.92758380541297*x(depot,i6,v1) - 2.92758380541297*x(depot,i6,v3) - 2.7419018395144*x(depot,i7,v1) - 2.7419018395144*x(depot,i7,v3) - 8.06868387772869*x(depot,i8,v1) - 8.06868387772869*x(depot,i8,v3)
-     
-      - 9.98160466739204*x(depot,i9,v1) - 9.98160466739204*x(depot,i9,v3) - 11.2146180212243*x(depot,i10,v1) - 11.2146180212243*x(depot,i10,v3) - 19.869127385757*x(i2,depot,v1) - 19.869127385757*x(i2,depot,v3) - 21.3522820047002*x(i2,i3,v1)
-     
-      - 21.3522820047002*x(i2,i3,v3) - 32.9994100908171*x(i2,i4,v1) - 32.9994100908171*x(i2,i4,v3) - 18.7147160754696*x(i2,i5,v1) - 18.7147160754696*x(i2,i5,v3) - 17.6506967957225*x(i2,i6,v1) - 17.6506967957225*x(i2,i6,v3) - 18.6343073879603*x(i2,i7,v1)
-     
-      - 18.6343073879603*x(i2,i7,v3) - 27.9375523228128*x(i2,i8,v1) - 27.9375523228128*x(i2,i8,v3) - 9.99177543171425*x(i2,i9,v1) - 9.99177543171425*x(i2,i9,v3) - 8.7404536716696*x(i2,i10,v1) - 8.7404536716696*x(i2,i10,v3)
-     
-      - 2.77501468938807*x(i3,depot,v1) - 2.77501468938807*x(i3,depot,v3) - 21.3522820047002*x(i3,i2,v1) - 21.3522820047002*x(i3,i2,v3) - 13.2389495410253*x(i3,i4,v1) - 13.2389495410253*x(i3,i4,v3) - 9.41980980390068*x(i3,i5,v1)
-     
-      - 9.41980980390068*x(i3,i5,v3) - 3.70876149996302*x(i3,i6,v1) - 3.70876149996302*x(i3,i6,v3) - 2.7310534107666*x(i3,i7,v1) - 2.7310534107666*x(i3,i7,v3) - 7.12270216819312*x(i3,i8,v1) - 7.12270216819312*x(i3,i8,v3) - 11.3618065739798*x(i3,i9,v1)
-     
-      - 11.3618065739798*x(i3,i9,v3) - 12.9608735665274*x(i3,i10,v1) - 12.9608735665274*x(i3,i10,v3) - 13.5066856739706*x(i4,depot,v1) - 13.5066856739706*x(i4,depot,v3) - 32.9994100908171*x(i4,i2,v1) - 32.9994100908171*x(i4,i2,v3)
-     
-      - 13.2389495410253*x(i4,i3,v1) - 13.2389495410253*x(i4,i3,v3) - 15.2794401617958*x(i4,i5,v1) - 15.2794401617958*x(i4,i5,v3) - 16.2834826344571*x(i4,i6,v1) - 16.2834826344571*x(i4,i6,v3) - 15.6495989358141*x(i4,i7,v1) - 15.6495989358141*x(i4,i7,v3)
-     
-      - 6.35226804436138*x(i4,i8,v1) - 6.35226804436138*x(i4,i8,v3) - 23.3689161608923*x(i4,i9,v1) - 23.3689161608923*x(i4,i9,v3) - 24.2609987826125*x(i4,i10,v1) - 24.2609987826125*x(i4,i10,v3) - 6.67091367890866*x(i5,depot,v1)
-     
-      - 6.67091367890866*x(i5,depot,v3) - 18.7147160754696*x(i5,i2,v1) - 18.7147160754696*x(i5,i2,v3) - 9.41980980390068*x(i5,i3,v1) - 9.41980980390068*x(i5,i3,v3) - 15.2794401617958*x(i5,i4,v1) - 15.2794401617958*x(i5,i4,v3)
-     
-      - 8.08180180779545*x(i5,i6,v1) - 8.08180180779545*x(i5,i6,v3) - 8.69151111304159*x(i5,i7,v1) - 8.69151111304159*x(i5,i7,v3) - 12.113041720298*x(i5,i8,v1) - 12.113041720298*x(i5,i8,v3) - 10.6038161144438*x(i5,i9,v1) - 10.6038161144438*x(i5,i9,v3)
-     
-      - 10.4233169744747*x(i5,i10,v1) - 10.4233169744747*x(i5,i10,v3) - 2.92758380541297*x(i6,depot,v1) - 2.92758380541297*x(i6,depot,v3) - 17.6506967957225*x(i6,i2,v1) - 17.6506967957225*x(i6,i2,v3) - 3.70876149996302*x(i6,i3,v1)
-     
-      - 3.70876149996302*x(i6,i3,v3) - 16.2834826344571*x(i6,i4,v1) - 16.2834826344571*x(i6,i4,v3) - 8.08180180779545*x(i6,i5,v1) - 8.08180180779545*x(i6,i5,v3) - 1.08507148717228*x(i6,i7,v1) - 1.08507148717228*x(i6,i7,v3) - 10.5203916370827*x(i6,i8,v1)
-     
-      - 10.5203916370827*x(i6,i8,v3) - 7.6589215082717*x(i6,i9,v1) - 7.6589215082717*x(i6,i9,v3) - 9.27338029157316*x(i6,i10,v1) - 9.27338029157316*x(i6,i10,v3) - 2.7419018395144*x(i7,depot,v1) - 2.7419018395144*x(i7,depot,v3)
-     
-      - 18.6343073879603*x(i7,i2,v1) - 18.6343073879603*x(i7,i2,v3) - 2.7310534107666*x(i7,i3,v1) - 2.7310534107666*x(i7,i3,v3) - 15.6495989358141*x(i7,i4,v1) - 15.6495989358141*x(i7,i4,v3) - 8.69151111304159*x(i7,i5,v1) - 8.69151111304159*x(i7,i5,v3)
-     
-      - 1.08507148717228*x(i7,i6,v1) - 1.08507148717228*x(i7,i6,v3) - 9.72720421245321*x(i7,i8,v1) - 9.72720421245321*x(i7,i8,v3) - 8.64934238730978*x(i7,i9,v1) - 8.64934238730978*x(i7,i9,v3) - 10.327357500428*x(i7,i10,v1) - 10.327357500428*x(i7,i10,v3)
-     
-      - 8.06868387772869*x(i8,depot,v1) - 8.06868387772869*x(i8,depot,v3) - 27.9375523228128*x(i8,i2,v1) - 27.9375523228128*x(i8,i2,v3) - 7.12270216819312*x(i8,i3,v1) - 7.12270216819312*x(i8,i3,v3) - 6.35226804436138*x(i8,i4,v1)
-     
-      - 6.35226804436138*x(i8,i4,v3) - 12.113041720298*x(i8,i5,v1) - 12.113041720298*x(i8,i5,v3) - 10.5203916370827*x(i8,i6,v1) - 10.5203916370827*x(i8,i6,v3) - 9.72720421245321*x(i8,i7,v1) - 9.72720421245321*x(i8,i7,v3) - 18.0224263652014*x(i8,i9,v1)
-     
-      - 18.0224263652014*x(i8,i9,v3) - 19.2709934780894*x(i8,i10,v1) - 19.2709934780894*x(i8,i10,v3) - 9.98160466739204*x(i9,depot,v1) - 9.98160466739204*x(i9,depot,v3) - 9.99177543171425*x(i9,i2,v1) - 9.99177543171425*x(i9,i2,v3)
-     
-      - 11.3618065739798*x(i9,i3,v1) - 11.3618065739798*x(i9,i3,v3) - 23.3689161608923*x(i9,i4,v1) - 23.3689161608923*x(i9,i4,v3) - 10.6038161144438*x(i9,i5,v1) - 10.6038161144438*x(i9,i5,v3) - 7.6589215082717*x(i9,i6,v1) - 7.6589215082717*x(i9,i6,v3)
-     
-      - 8.64934238730978*x(i9,i7,v1) - 8.64934238730978*x(i9,i7,v3) - 18.0224263652014*x(i9,i8,v1) - 18.0224263652014*x(i9,i8,v3) - 2.30385961921793*x(i9,i10,v1) - 2.30385961921793*x(i9,i10,v3) - 11.2146180212243*x(i10,depot,v1)
-     
-      - 11.2146180212243*x(i10,depot,v3) - 8.7404536716696*x(i10,i2,v1) - 8.7404536716696*x(i10,i2,v3) - 12.9608735665274*x(i10,i3,v1) - 12.9608735665274*x(i10,i3,v3) - 24.2609987826125*x(i10,i4,v1) - 24.2609987826125*x(i10,i4,v3)
-     
-      - 10.4233169744747*x(i10,i5,v1) - 10.4233169744747*x(i10,i5,v3) - 9.27338029157316*x(i10,i6,v1) - 9.27338029157316*x(i10,i6,v3) - 10.327357500428*x(i10,i7,v1) - 10.327357500428*x(i10,i7,v3) - 19.2709934780894*x(i10,i8,v1)
-     
-      - 19.2709934780894*x(i10,i8,v3) - 2.30385961921793*x(i10,i9,v1) - 2.30385961921793*x(i10,i9,v3) =E= 0 ; (LHS = 0)
+      - 25293*x(i9,i8,v2) =E= 0 ; (LHS = 0)
      
 
 ---- Kapazitaetsrestriktion  =L=  xxx
 
-Kapazitaetsrestriktion(v1)..  40*y(i2,v1) + 40*y(i3,v1) + 40*y(i4,v1) + 12*y(i5,v1) + 35*y(i6,v1) + 25*y(i7,v1) + 30*y(i8,v1) + 30*y(i9,v1) + 20*y(i10,v1) =L= 150 ; (LHS = 0)
-     
-Kapazitaetsrestriktion(v3)..  40*y(i2,v3) + 40*y(i3,v3) + 40*y(i4,v3) + 12*y(i5,v3) + 35*y(i6,v3) + 25*y(i7,v3) + 30*y(i8,v3) + 30*y(i9,v3) + 20*y(i10,v3) =L= 150 ; (LHS = 0)
+Kapazitaetsrestriktion(v2)..  12*y(i6,v2) + 22*y(i8,v2) + 12*y(i9,v2) =L= 120 ; (LHS = 0)
      
 
 ---- Restriktion2  =E=  xxx
 
-Restriktion2(depot,v1)..  x(depot,depot,v1) + x(depot,i2,v1) + x(depot,i3,v1) + x(depot,i4,v1) + x(depot,i5,v1) + x(depot,i6,v1) + x(depot,i7,v1) + x(depot,i8,v1) + x(depot,i9,v1) + x(depot,i10,v1) - y(depot,v1) =E= 0 ; (LHS = 0)
+Restriktion2(i6,v2)..  x(i6,i6,v2) + x(i6,depot,v2) + x(i6,i8,v2) + x(i6,i9,v2) - y(i6,v2) =E= 0 ; (LHS = 0)
      
-Restriktion2(depot,v3)..  x(depot,depot,v3) + x(depot,i2,v3) + x(depot,i3,v3) + x(depot,i4,v3) + x(depot,i5,v3) + x(depot,i6,v3) + x(depot,i7,v3) + x(depot,i8,v3) + x(depot,i9,v3) + x(depot,i10,v3) - y(depot,v3) =E= 0 ; (LHS = 0)
+Restriktion2(depot,v2)..  x(depot,i6,v2) + x(depot,depot,v2) + x(depot,i8,v2) + x(depot,i9,v2) - y(depot,v2) =E= 0 ; (LHS = 0)
      
-Restriktion2(i2,v1)..  x(i2,depot,v1) + x(i2,i2,v1) + x(i2,i3,v1) + x(i2,i4,v1) + x(i2,i5,v1) + x(i2,i6,v1) + x(i2,i7,v1) + x(i2,i8,v1) + x(i2,i9,v1) + x(i2,i10,v1) - y(i2,v1) =E= 0 ; (LHS = 0)
+Restriktion2(i8,v2)..  x(i8,i6,v2) + x(i8,depot,v2) + x(i8,i8,v2) + x(i8,i9,v2) - y(i8,v2) =E= 0 ; (LHS = 0)
      
-REMAINING 17 ENTRIES SKIPPED
-
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/11/12 01:51:27 Page 9
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE vrp Using MIP From line 382
+REMAINING ENTRY SKIPPED
 
 
 ---- Restriktion3  =E=  xxx
 
-Restriktion3(depot,v1)..  x(depot,depot,v1) + x(i2,depot,v1) + x(i3,depot,v1) + x(i4,depot,v1) + x(i5,depot,v1) + x(i6,depot,v1) + x(i7,depot,v1) + x(i8,depot,v1) + x(i9,depot,v1) + x(i10,depot,v1) - y(depot,v1) =E= 0 ; (LHS = 0)
+Restriktion3(i6,v2)..  x(i6,i6,v2) + x(depot,i6,v2) + x(i8,i6,v2) + x(i9,i6,v2) - y(i6,v2) =E= 0 ; (LHS = 0)
      
-Restriktion3(depot,v3)..  x(depot,depot,v3) + x(i2,depot,v3) + x(i3,depot,v3) + x(i4,depot,v3) + x(i5,depot,v3) + x(i6,depot,v3) + x(i7,depot,v3) + x(i8,depot,v3) + x(i9,depot,v3) + x(i10,depot,v3) - y(depot,v3) =E= 0 ; (LHS = 0)
+Restriktion3(depot,v2)..  x(i6,depot,v2) + x(depot,depot,v2) + x(i8,depot,v2) + x(i9,depot,v2) - y(depot,v2) =E= 0 ; (LHS = 0)
      
-Restriktion3(i2,v1)..  x(depot,i2,v1) + x(i2,i2,v1) + x(i3,i2,v1) + x(i4,i2,v1) + x(i5,i2,v1) + x(i6,i2,v1) + x(i7,i2,v1) + x(i8,i2,v1) + x(i9,i2,v1) + x(i10,i2,v1) - y(i2,v1) =E= 0 ; (LHS = 0)
+Restriktion3(i8,v2)..  x(i6,i8,v2) + x(depot,i8,v2) + x(i8,i8,v2) + x(i9,i8,v2) - y(i8,v2) =E= 0 ; (LHS = 0)
      
-REMAINING 17 ENTRIES SKIPPED
+REMAINING ENTRY SKIPPED
 
 
 ---- Restriktion4  =E=  xxx
 
-Restriktion4(i2)..  y(i2,v1) + y(i2,v3) =E= 1 ; (LHS = 0, INFES = 1 ****)
+Restriktion4(i6)..  y(i6,v2) =E= 1 ; (LHS = 0, INFES = 1 ****)
      
-Restriktion4(i3)..  y(i3,v1) + y(i3,v3) =E= 1 ; (LHS = 0, INFES = 1 ****)
+Restriktion4(i8)..  y(i8,v2) =E= 1 ; (LHS = 0, INFES = 1 ****)
      
-Restriktion4(i4)..  y(i4,v1) + y(i4,v3) =E= 1 ; (LHS = 0, INFES = 1 ****)
+Restriktion4(i9)..  y(i9,v2) =E= 1 ; (LHS = 0, INFES = 1 ****)
      
-REMAINING 6 ENTRIES SKIPPED
-
 
 ---- Restriktion5  =L=  xxx
 
-Restriktion5(i2,i3)..  10*x(i2,i3,v1) + 10*x(i2,i3,v3) + hv(i2) - hv(i3) =L= 9 ; (LHS = 0)
+Restriktion5(i6,i8)..  4*x(i6,i8,v2) + hv(i6) - hv(i8) =L= 3 ; (LHS = 0)
      
-Restriktion5(i2,i4)..  10*x(i2,i4,v1) + 10*x(i2,i4,v3) + hv(i2) - hv(i4) =L= 9 ; (LHS = 0)
+Restriktion5(i6,i9)..  4*x(i6,i9,v2) + hv(i6) - hv(i9) =L= 3 ; (LHS = 0)
      
-Restriktion5(i2,i5)..  10*x(i2,i5,v1) + 10*x(i2,i5,v3) + hv(i2) - hv(i5) =L= 9 ; (LHS = 0)
+Restriktion5(i8,i6)..  4*x(i8,i6,v2) - hv(i6) + hv(i8) =L= 3 ; (LHS = 0)
      
-REMAINING 69 ENTRIES SKIPPED
+REMAINING 3 ENTRIES SKIPPED
 
 
 ---- Restriktion6  =E=  xxx
 
-Restriktion6(depot,v1)..  x(depot,depot,v1) =E= 0 ; (LHS = 0)
+Restriktion6(i6,v2)..  x(i6,i6,v2) =E= 0 ; (LHS = 0)
      
-Restriktion6(depot,v3)..  x(depot,depot,v3) =E= 0 ; (LHS = 0)
+Restriktion6(depot,v2)..  x(depot,depot,v2) =E= 0 ; (LHS = 0)
      
-Restriktion6(i2,v1)..  x(i2,i2,v1) =E= 0 ; (LHS = 0)
+Restriktion6(i8,v2)..  x(i8,i8,v2) =E= 0 ; (LHS = 0)
      
-REMAINING 17 ENTRIES SKIPPED
+REMAINING ENTRY SKIPPED
 
 
 ---- Restriktion7  =G=  xxx
 
-Restriktion7(i2)..  w(i2) =G= 0 ; (LHS = 0)
+Restriktion7(i6)..  w(i6) =G= 0 ; (LHS = 0)
      
-Restriktion7(i3)..  w(i3) =G= 0 ; (LHS = 0)
+Restriktion7(i8)..  w(i8) =G= 0 ; (LHS = 0)
      
-Restriktion7(i4)..  w(i4) =G= 0 ; (LHS = 0)
-     
-REMAINING 6 ENTRIES SKIPPED
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 7
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Equation Listing    SOLVE vrp Using MIP From line 188
 
+
+     Restriktion7  =G=  xxx
+
+Restriktion7(i9)..  w(i9) =G= 0 ; (LHS = 0)
+     
 
 ---- Restriktion8  =L=  xxx
 
-Restriktion8(i2)..  w(i2) =L= 4000 ; (LHS = 0)
+Restriktion8(i6)..  w(i6) =L= 4000 ; (LHS = 0)
      
-Restriktion8(i3)..  w(i3) =L= 4000 ; (LHS = 0)
+Restriktion8(i8)..  w(i8) =L= 4000 ; (LHS = 0)
      
-Restriktion8(i4)..  w(i4) =L= 4000 ; (LHS = 0)
+Restriktion8(i9)..  w(i9) =L= 40000 ; (LHS = 0)
      
-REMAINING 6 ENTRIES SKIPPED
-
 
 ---- Restriktion9  =G=  xxx
 
-Restriktion9(depot,i2,v1)..  - 14685.5368498426*x(depot,i2,v1) - w(depot) + w(i2) =G= -14665.6677224569 ; (LHS = 0)
+Restriktion9(i6,i8,v2)..  - 13789*x(i6,i8,v2) - w(i6) + w(i8) =G= -13665 ; (LHS = 0)
      
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 10
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Equation Listing    SOLVE vrp Using MIP From line 382
-
-
-     Restriktion9  =G=  xxx
-
-Restriktion9(depot,i2,v3)..  - 14685.5368498426*x(depot,i2,v3) - w(depot) + w(i2) =G= -14665.6677224569 ; (LHS = 0)
+Restriktion9(i6,i9,v2)..  - 13789*x(i6,i9,v2) - w(i6) + w(i9) =G= -12184 ; (LHS = 0)
      
-Restriktion9(depot,i3,v1)..  - 14685.5368498426*x(depot,i3,v1) - w(depot) + w(i3) =G= -14682.7618351532 ; (LHS = 0)
+Restriktion9(depot,i6,v2)..  - 13789*x(depot,i6,v2) + w(i6) - w(depot) =G= -12460 ; (LHS = 0)
      
-REMAINING 159 ENTRIES SKIPPED
+REMAINING 6 ENTRIES SKIPPED
 
 
 ---- Restriktion10  =L=  xxx
 
-Restriktion10(i2,v1)..  14685.5368498426*x(i2,depot,v1) + w(i2) =L= 114465.667722457 ; (LHS = 0)
+Restriktion10(i6,v2)..  13789*x(i6,depot,v2) + w(i6) =L= 16247 ; (LHS = 0)
      
-Restriktion10(i2,v3)..  14685.5368498426*x(i2,depot,v3) + w(i2) =L= 114465.667722457 ; (LHS = 0)
+Restriktion10(i8,v2)..  13789*x(i8,depot,v2) + w(i8) =L= 16243 ; (LHS = 0)
      
-Restriktion10(i3,v1)..  14685.5368498426*x(i3,depot,v1) + w(i3) =L= 114482.761835153 ; (LHS = 0)
+Restriktion10(i9,v2)..  13789*x(i9,depot,v2) + w(i9) =L= 17282 ; (LHS = 0)
      
-REMAINING 15 ENTRIES SKIPPED
-
 
 ---- Restriktion11  =E=  xxx
 
 Restriktion11..  w(dstart) =E= 0 ; (LHS = 0)
      
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 11
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 8
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE vrp Using MIP From line 382
+Column Listing      SOLVE vrp Using MIP From line 188
 
 
 ---- Z  Zielfunktionswert
@@ -652,285 +388,162 @@ Z
 
 ---- x  Bedienunsvariable
 
-x(depot,depot,v1)
+x(i6,i6,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-        1       Restriktion2(depot,v1)
-        1       Restriktion3(depot,v1)
-        1       Restriktion6(depot,v1)
+        1       Restriktion2(i6,v2)
+        1       Restriktion3(i6,v2)
+        1       Restriktion6(i6,v2)
 
-x(depot,depot,v3)
+x(i6,depot,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-        1       Restriktion2(depot,v3)
-        1       Restriktion3(depot,v3)
-        1       Restriktion6(depot,v3)
+   -21335       Zielfunktion
+        1       Restriktion2(i6,v2)
+        1       Restriktion3(depot,v2)
+    13789       Restriktion10(i6,v2)
 
-x(depot,i2,v1)
+x(i6,i8,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-      -19.8691  Zielfunktion
-        1       Restriktion2(depot,v1)
-        1       Restriktion3(i2,v1)
-   -14685.5368  Restriktion9(depot,i2,v1)
+     -425       Zielfunktion
+        1       Restriktion2(i6,v2)
+        1       Restriktion3(i8,v2)
+        4       Restriktion5(i6,i8)
+   -13789       Restriktion9(i6,i8,v2)
 
-REMAINING 197 ENTRIES SKIPPED
+REMAINING 13 ENTRIES SKIPPED
 
 ---- y  Tourvariable
 
-y(depot,v1)
+y(i6,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-       -1       Restriktion2(depot,v1)
-       -1       Restriktion3(depot,v1)
+       12       Kapazitaetsrestriktion(v2)
+       -1       Restriktion2(i6,v2)
+       -1       Restriktion3(i6,v2)
+        1       Restriktion4(i6)
 
-y(depot,v3)
+y(depot,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-       -1       Restriktion2(depot,v3)
-       -1       Restriktion3(depot,v3)
+       -1       Restriktion2(depot,v2)
+       -1       Restriktion3(depot,v2)
 
-y(i2,v1)
+y(i8,v2)
                 (.LO, .L, .UP, .M = 0, 0, 1, 0)
-       40       Kapazitaetsrestriktion(v1)
-       -1       Restriktion2(i2,v1)
-       -1       Restriktion3(i2,v1)
-        1       Restriktion4(i2)
+       22       Kapazitaetsrestriktion(v2)
+       -1       Restriktion2(i8,v2)
+       -1       Restriktion3(i8,v2)
+        1       Restriktion4(i8)
 
-REMAINING 17 ENTRIES SKIPPED
+REMAINING ENTRY SKIPPED
 
 ---- w  Anfahrtszeitpunkte
 
+w(i6)
+                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
+        1       Restriktion7(i6)
+        1       Restriktion8(i6)
+       -1       Restriktion9(i6,i8,v2)
+       -1       Restriktion9(i6,i9,v2)
+        1       Restriktion9(depot,i6,v2)
+        1       Restriktion9(i8,i6,v2)
+        1       Restriktion9(i9,i6,v2)
+        1       Restriktion10(i6,v2)
+
 w(depot)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-       -1       Restriktion9(depot,i2,v1)
-       -1       Restriktion9(depot,i2,v3)
-       -1       Restriktion9(depot,i3,v1)
-       -1       Restriktion9(depot,i3,v3)
-       -1       Restriktion9(depot,i4,v1)
-       -1       Restriktion9(depot,i4,v3)
-       -1       Restriktion9(depot,i5,v1)
-       -1       Restriktion9(depot,i5,v3)
-       -1       Restriktion9(depot,i6,v1)
-       -1       Restriktion9(depot,i6,v3)
-       -1       Restriktion9(depot,i7,v1)
-       -1       Restriktion9(depot,i7,v3)
-       -1       Restriktion9(depot,i8,v1)
-       -1       Restriktion9(depot,i8,v3)
-       -1       Restriktion9(depot,i9,v1)
-       -1       Restriktion9(depot,i9,v3)
-       -1       Restriktion9(depot,i10,v1)
-       -1       Restriktion9(depot,i10,v3)
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 12
+       -1       Restriktion9(depot,i6,v2)
+       -1       Restriktion9(depot,i8,v2)
+       -1       Restriktion9(depot,i9,v2)
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                         02/12/12 19:01:21 Page 9
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE vrp Using MIP From line 382
+Column Listing      SOLVE vrp Using MIP From line 188
 
 
      w  Anfahrtszeitpunkte
 
 
-w(i2)
+w(i8)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-        1       Restriktion7(i2)
-        1       Restriktion8(i2)
-        1       Restriktion9(depot,i2,v1)
-        1       Restriktion9(depot,i2,v3)
-       -1       Restriktion9(i2,i3,v1)
-       -1       Restriktion9(i2,i3,v3)
-       -1       Restriktion9(i2,i4,v1)
-       -1       Restriktion9(i2,i4,v3)
-       -1       Restriktion9(i2,i5,v1)
-       -1       Restriktion9(i2,i5,v3)
-       -1       Restriktion9(i2,i6,v1)
-       -1       Restriktion9(i2,i6,v3)
-       -1       Restriktion9(i2,i7,v1)
-       -1       Restriktion9(i2,i7,v3)
-       -1       Restriktion9(i2,i8,v1)
-       -1       Restriktion9(i2,i8,v3)
-       -1       Restriktion9(i2,i9,v1)
-       -1       Restriktion9(i2,i9,v3)
-       -1       Restriktion9(i2,i10,v1)
-       -1       Restriktion9(i2,i10,v3)
-        1       Restriktion9(i3,i2,v1)
-        1       Restriktion9(i3,i2,v3)
-        1       Restriktion9(i4,i2,v1)
-        1       Restriktion9(i4,i2,v3)
-        1       Restriktion9(i5,i2,v1)
-        1       Restriktion9(i5,i2,v3)
-        1       Restriktion9(i6,i2,v1)
-        1       Restriktion9(i6,i2,v3)
-        1       Restriktion9(i7,i2,v1)
-        1       Restriktion9(i7,i2,v3)
-        1       Restriktion9(i8,i2,v1)
-        1       Restriktion9(i8,i2,v3)
-        1       Restriktion9(i9,i2,v1)
-        1       Restriktion9(i9,i2,v3)
-        1       Restriktion9(i10,i2,v1)
-        1       Restriktion9(i10,i2,v3)
-        1       Restriktion10(i2,v1)
-        1       Restriktion10(i2,v3)
+        1       Restriktion7(i8)
+        1       Restriktion8(i8)
+        1       Restriktion9(i6,i8,v2)
+        1       Restriktion9(depot,i8,v2)
+       -1       Restriktion9(i8,i6,v2)
+       -1       Restriktion9(i8,i9,v2)
+        1       Restriktion9(i9,i8,v2)
+        1       Restriktion10(i8,v2)
 
-w(i3)
-                (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-        1       Restriktion7(i3)
-        1       Restriktion8(i3)
-        1       Restriktion9(depot,i3,v1)
-        1       Restriktion9(depot,i3,v3)
-        1       Restriktion9(i2,i3,v1)
-        1       Restriktion9(i2,i3,v3)
-       -1       Restriktion9(i3,i2,v1)
-       -1       Restriktion9(i3,i2,v3)
-       -1       Restriktion9(i3,i4,v1)
-       -1       Restriktion9(i3,i4,v3)
-       -1       Restriktion9(i3,i5,v1)
-       -1       Restriktion9(i3,i5,v3)
-       -1       Restriktion9(i3,i6,v1)
-       -1       Restriktion9(i3,i6,v3)
-       -1       Restriktion9(i3,i7,v1)
-       -1       Restriktion9(i3,i7,v3)
-       -1       Restriktion9(i3,i8,v1)
-       -1       Restriktion9(i3,i8,v3)
-       -1       Restriktion9(i3,i9,v1)
-       -1       Restriktion9(i3,i9,v3)
-       -1       Restriktion9(i3,i10,v1)
-       -1       Restriktion9(i3,i10,v3)
-        1       Restriktion9(i4,i3,v1)
-        1       Restriktion9(i4,i3,v3)
-        1       Restriktion9(i5,i3,v1)
-        1       Restriktion9(i5,i3,v3)
-        1       Restriktion9(i6,i3,v1)
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 13
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE vrp Using MIP From line 382
-
-
-     w  Anfahrtszeitpunkte
-
-        1       Restriktion9(i6,i3,v3)
-        1       Restriktion9(i7,i3,v1)
-        1       Restriktion9(i7,i3,v3)
-        1       Restriktion9(i8,i3,v1)
-        1       Restriktion9(i8,i3,v3)
-        1       Restriktion9(i9,i3,v1)
-        1       Restriktion9(i9,i3,v3)
-        1       Restriktion9(i10,i3,v1)
-        1       Restriktion9(i10,i3,v3)
-        1       Restriktion10(i3,v1)
-        1       Restriktion10(i3,v3)
-
-REMAINING 8 ENTRIES SKIPPED
+REMAINING 2 ENTRIES SKIPPED
 
 ---- hv  Hilfsvariable
 
-hv(i2)
+hv(i6)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-        1       Restriktion5(i2,i3)
-        1       Restriktion5(i2,i4)
-        1       Restriktion5(i2,i5)
-        1       Restriktion5(i2,i6)
-        1       Restriktion5(i2,i7)
-        1       Restriktion5(i2,i8)
-        1       Restriktion5(i2,i9)
-        1       Restriktion5(i2,i10)
-       -1       Restriktion5(i3,i2)
-       -1       Restriktion5(i4,i2)
-       -1       Restriktion5(i5,i2)
-       -1       Restriktion5(i6,i2)
-       -1       Restriktion5(i7,i2)
-       -1       Restriktion5(i8,i2)
-       -1       Restriktion5(i9,i2)
-       -1       Restriktion5(i10,i2)
+        1       Restriktion5(i6,i8)
+        1       Restriktion5(i6,i9)
+       -1       Restriktion5(i8,i6)
+       -1       Restriktion5(i9,i6)
 
-hv(i3)
+hv(i8)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-       -1       Restriktion5(i2,i3)
-        1       Restriktion5(i3,i2)
-        1       Restriktion5(i3,i4)
-        1       Restriktion5(i3,i5)
-        1       Restriktion5(i3,i6)
-        1       Restriktion5(i3,i7)
-        1       Restriktion5(i3,i8)
-        1       Restriktion5(i3,i9)
-        1       Restriktion5(i3,i10)
-       -1       Restriktion5(i4,i3)
-       -1       Restriktion5(i5,i3)
-       -1       Restriktion5(i6,i3)
-       -1       Restriktion5(i7,i3)
-       -1       Restriktion5(i8,i3)
-       -1       Restriktion5(i9,i3)
-       -1       Restriktion5(i10,i3)
+       -1       Restriktion5(i6,i8)
+        1       Restriktion5(i8,i6)
+        1       Restriktion5(i8,i9)
+       -1       Restriktion5(i9,i8)
 
-hv(i4)
+hv(i9)
                 (.LO, .L, .UP, .M = 0, 0, +INF, 0)
-       -1       Restriktion5(i2,i4)
-       -1       Restriktion5(i3,i4)
-        1       Restriktion5(i4,i2)
-        1       Restriktion5(i4,i3)
-        1       Restriktion5(i4,i5)
-        1       Restriktion5(i4,i6)
-        1       Restriktion5(i4,i7)
-        1       Restriktion5(i4,i8)
-        1       Restriktion5(i4,i9)
-        1       Restriktion5(i4,i10)
-       -1       Restriktion5(i5,i4)
-       -1       Restriktion5(i6,i4)
-       -1       Restriktion5(i7,i4)
-       -1       Restriktion5(i8,i4)
-       -1       Restriktion5(i9,i4)
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 14
+       -1       Restriktion5(i6,i9)
+       -1       Restriktion5(i8,i9)
+        1       Restriktion5(i9,i6)
+        1       Restriktion5(i9,i8)
+
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/12/12 19:01:21 Page 10
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Column Listing      SOLVE vrp Using MIP From line 382
-
-
-     hv  Hilfsvariable
-
-       -1       Restriktion5(i10,i4)
-
-REMAINING 6 ENTRIES SKIPPED
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 15
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Model Statistics    SOLVE vrp Using MIP From line 382
+Model Statistics    SOLVE vrp Using MIP From line 188
 
 
 MODEL STATISTICS
 
-BLOCKS OF EQUATIONS          12     SINGLE EQUATIONS          343
-BLOCKS OF VARIABLES           5     SINGLE VARIABLES          241
-NON ZERO ELEMENTS         1,506     DISCRETE VARIABLES        220
+BLOCKS OF EQUATIONS          12     SINGLE EQUATIONS           42
+BLOCKS OF VARIABLES           5     SINGLE VARIABLES           29
+NON ZERO ELEMENTS           121     DISCRETE VARIABLES         20
 
 
-GENERATION TIME      =        0.032 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
+GENERATION TIME      =        0.000 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
 
 
-EXECUTION TIME       =        0.047 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 16
+EXECUTION TIME       =        0.000 SECONDS      4 Mb  WEX237-237 Aug 23, 2011
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/12/12 19:01:21 Page 11
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
+Solution Report     SOLVE vrp Using MIP From line 188
 
 
                S O L V E      S U M M A R Y
 
      MODEL   vrp                 OBJECTIVE  Z
      TYPE    MIP                 DIRECTION  MINIMIZE
-     SOLVER  CPLEX               FROM LINE  382
+     SOLVER  CPLEX               FROM LINE  188
 
 **** SOLVER STATUS     1 Normal Completion         
-**** MODEL STATUS      8 Integer Solution          
-**** OBJECTIVE VALUE               80.0145
+**** MODEL STATUS      1 Optimal                   
+**** OBJECTIVE VALUE            51662.0000
 
- RESOURCE USAGE, LIMIT          0.858      1000.000
- ITERATION COUNT, LIMIT      3661    2000000000
+ RESOURCE USAGE, LIMIT          0.032      1000.000
+ ITERATION COUNT, LIMIT        20    2000000000
 
 IBM ILOG CPLEX   Jul 14, 2011 23.7.3 WEX 27723.27726 WEI x86_64/MS Windows
---- GAMS/Cplex licensed for continuous and discrete problems.
 Cplex 12.3.0.0
 
-MIP status(102): integer optimal, tolerance
+MIP status(101): integer optimal solution
 Fixing integer variables, and solving final LP...
 Fixed MIP status(1): optimal
-Solution satisfies tolerances.
+Proven optimal solution.
 
-MIP Solution:           80.014526    (3654 iterations, 241 nodes)
-Final Solve:            80.014526    (7 iterations)
+MIP Solution:        51662.000000    (18 iterations, 0 nodes)
+Final Solve:         51662.000000    (2 iterations)
 
-Best possible:          72.055400
-Absolute gap:            7.959126
-Relative gap:            0.099471
+Best possible:       51662.000000
+Absolute gap:            0.000000
+Relative gap:            0.000000
 
 
                            LOWER          LEVEL          UPPER         MARGINAL
@@ -943,436 +556,95 @@ Relative gap:            0.099471
 
           LOWER          LEVEL          UPPER         MARGINAL
 
-v1        -INF          150.0000       150.0000          .          
-v3        -INF          122.0000       150.0000          .          
+v2        -INF           46.0000       120.0000          .          
 
 ---- EQU Restriktion2  xxx
 
                 LOWER          LEVEL          UPPER         MARGINAL
 
-depot.v1          .              .              .              .          
-depot.v3          .              .              .              .          
-i2   .v1          .              .              .              .          
-i2   .v3          .              .              .              .          
-i3   .v1          .              .              .              .          
-i3   .v3          .              .              .              .          
-i4   .v1          .              .              .              .          
-i4   .v3          .              .              .              .          
-i5   .v1          .              .              .              .          
-i5   .v3          .              .              .              .          
-i6   .v1          .              .              .              .          
-i6   .v3          .              .              .              .          
-i7   .v1          .              .              .              .          
-i7   .v3          .              .              .              .          
-i8   .v1          .              .              .              .          
-i8   .v3          .              .              .              .          
-i9   .v1          .              .              .              .          
-i9   .v3          .              .              .              .          
-i10  .v1          .              .              .              .          
-i10  .v3          .              .              .              .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 17
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
+i6   .v2          .              .              .              .          
+depot.v2          .              .              .              .          
+i8   .v2          .              .              .              .          
+i9   .v2          .              .              .              .          
 
 ---- EQU Restriktion3  xxx
 
                 LOWER          LEVEL          UPPER         MARGINAL
 
-depot.v1          .              .              .              .          
-depot.v3          .              .              .              .          
-i2   .v1          .              .              .              .          
-i2   .v3          .              .              .              .          
-i3   .v1          .              .              .              .          
-i3   .v3          .              .              .              .          
-i4   .v1          .              .              .              .          
-i4   .v3          .              .              .              .          
-i5   .v1          .              .              .              .          
-i5   .v3          .              .              .              .          
-i6   .v1          .              .              .              .          
-i6   .v3          .              .              .              .          
-i7   .v1          .              .              .              .          
-i7   .v3          .              .              .              .          
-i8   .v1          .              .              .              .          
-i8   .v3          .              .              .              .          
-i9   .v1          .              .              .              .          
-i9   .v3          .              .              .              .          
-i10  .v1          .              .              .              .          
-i10  .v3          .              .              .              .          
+i6   .v2          .              .              .              .          
+depot.v2          .              .              .              .          
+i8   .v2          .              .              .              .          
+i9   .v2          .              .              .              .          
 
 ---- EQU Restriktion4  xxx
 
-           LOWER          LEVEL          UPPER         MARGINAL
+          LOWER          LEVEL          UPPER         MARGINAL
 
-i2          1.0000         1.0000         1.0000          .          
-i3          1.0000         1.0000         1.0000          .          
-i4          1.0000         1.0000         1.0000          .          
-i5          1.0000         1.0000         1.0000          .          
-i6          1.0000         1.0000         1.0000          .          
-i7          1.0000         1.0000         1.0000          .          
-i8          1.0000         1.0000         1.0000          .          
-i9          1.0000         1.0000         1.0000          .          
-i10         1.0000         1.0000         1.0000          .          
+i6         1.0000         1.0000         1.0000          .          
+i8         1.0000         1.0000         1.0000          .          
+i9         1.0000         1.0000         1.0000          .          
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/12/12 19:01:21 Page 12
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 188
+
 
 ---- EQU Restriktion5  xxx
 
-               LOWER          LEVEL          UPPER         MARGINAL
+             LOWER          LEVEL          UPPER         MARGINAL
 
-i2 .i3         -INF           -2.0000         9.0000          .          
-i2 .i4         -INF             .             9.0000          .          
-i2 .i5         -INF            1.0000         9.0000          .          
-i2 .i6         -INF           -2.0000         9.0000          .          
-i2 .i7         -INF           -3.0000         9.0000          .          
-i2 .i8         -INF           -1.0000         9.0000          .          
-i2 .i9         -INF            1.0000         9.0000          .          
-i2 .i10        -INF            9.0000         9.0000         EPS         
-i3 .i2         -INF            2.0000         9.0000          .          
-i3 .i4         -INF            2.0000         9.0000          .          
-i3 .i5         -INF            3.0000         9.0000          .          
-i3 .i6         -INF             .             9.0000          .          
-i3 .i7         -INF           -1.0000         9.0000          .          
-i3 .i8         -INF            1.0000         9.0000          .          
-i3 .i9         -INF            3.0000         9.0000          .          
-i3 .i10        -INF            1.0000         9.0000          .          
-i4 .i2         -INF             .             9.0000          .          
-i4 .i3         -INF           -2.0000         9.0000          .          
-i4 .i5         -INF            1.0000         9.0000          .          
-i4 .i6         -INF           -2.0000         9.0000          .          
-i4 .i7         -INF           -3.0000         9.0000          .          
-i4 .i8         -INF            9.0000         9.0000         EPS         
-i4 .i9         -INF            1.0000         9.0000          .          
-i4 .i10        -INF           -1.0000         9.0000          .          
-i5 .i2         -INF           -1.0000         9.0000          .          
-i5 .i3         -INF           -3.0000         9.0000          .          
-i5 .i4         -INF            9.0000         9.0000         EPS         
-i5 .i6         -INF           -3.0000         9.0000          .          
-i5 .i7         -INF           -4.0000         9.0000          .          
-i5 .i8         -INF           -2.0000         9.0000          .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 18
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     EQU Restriktion5  xxx
-
-               LOWER          LEVEL          UPPER         MARGINAL
-
-i5 .i9         -INF             .             9.0000          .          
-i5 .i10        -INF           -2.0000         9.0000          .          
-i6 .i2         -INF            2.0000         9.0000          .          
-i6 .i3         -INF             .             9.0000          .          
-i6 .i4         -INF            2.0000         9.0000          .          
-i6 .i5         -INF            3.0000         9.0000          .          
-i6 .i7         -INF            9.0000         9.0000         EPS         
-i6 .i8         -INF            1.0000         9.0000          .          
-i6 .i9         -INF            3.0000         9.0000          .          
-i6 .i10        -INF            1.0000         9.0000          .          
-i7 .i2         -INF            3.0000         9.0000          .          
-i7 .i3         -INF            1.0000         9.0000          .          
-i7 .i4         -INF            3.0000         9.0000          .          
-i7 .i5         -INF            4.0000         9.0000          .          
-i7 .i6         -INF            1.0000         9.0000          .          
-i7 .i8         -INF            2.0000         9.0000          .          
-i7 .i9         -INF            4.0000         9.0000          .          
-i7 .i10        -INF            2.0000         9.0000          .          
-i8 .i2         -INF            1.0000         9.0000          .          
-i8 .i3         -INF            9.0000         9.0000         EPS         
-i8 .i4         -INF            1.0000         9.0000          .          
-i8 .i5         -INF            2.0000         9.0000          .          
-i8 .i6         -INF           -1.0000         9.0000          .          
-i8 .i7         -INF           -2.0000         9.0000          .          
-i8 .i9         -INF            2.0000         9.0000          .          
-i8 .i10        -INF             .             9.0000          .          
-i9 .i2         -INF            9.0000         9.0000         EPS         
-i9 .i3         -INF           -3.0000         9.0000          .          
-i9 .i4         -INF           -1.0000         9.0000          .          
-i9 .i5         -INF             .             9.0000          .          
-i9 .i6         -INF           -3.0000         9.0000          .          
-i9 .i7         -INF           -4.0000         9.0000          .          
-i9 .i8         -INF           -2.0000         9.0000          .          
-i9 .i10        -INF           -2.0000         9.0000          .          
-i10.i2         -INF            1.0000         9.0000          .          
-i10.i3         -INF           -1.0000         9.0000          .          
-i10.i4         -INF            1.0000         9.0000          .          
-i10.i5         -INF            2.0000         9.0000          .          
-i10.i6         -INF            9.0000         9.0000         EPS         
-i10.i7         -INF           -2.0000         9.0000          .          
-i10.i8         -INF             .             9.0000          .          
-i10.i9         -INF            2.0000         9.0000          .          
+i6.i8        -INF            1.0000         3.0000          .          
+i6.i9        -INF            2.0000         3.0000          .          
+i8.i6        -INF            3.0000         3.0000         EPS         
+i8.i9        -INF            1.0000         3.0000          .          
+i9.i6        -INF           -2.0000         3.0000          .          
+i9.i8        -INF            3.0000         3.0000         EPS         
 
 ---- EQU Restriktion6  xxx
 
                 LOWER          LEVEL          UPPER         MARGINAL
 
-depot.v1          .              .              .              .          
-depot.v3          .              .              .              .          
-i2   .v1          .              .              .              .          
-i2   .v3          .              .              .              .          
-i3   .v1          .              .              .              .          
-i3   .v3          .              .              .              .          
-i4   .v1          .              .              .              .          
-i4   .v3          .              .              .              .          
-i5   .v1          .              .              .              .          
-i5   .v3          .              .              .              .          
-i6   .v1          .              .              .              .          
-i6   .v3          .              .              .              .          
-i7   .v1          .              .              .              .          
-i7   .v3          .              .              .              .          
-i8   .v1          .              .              .              .          
-i8   .v3          .              .              .              .          
-i9   .v1          .              .              .              .          
-i9   .v3          .              .              .              .          
-i10  .v1          .              .              .              .          
-i10  .v3          .              .              .              .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 19
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
+i6   .v2          .              .              .              .          
+depot.v2          .              .              .              .          
+i8   .v2          .              .              .              .          
+i9   .v2          .              .              .              .          
 
 ---- EQU Restriktion7  xxx
 
-           LOWER          LEVEL          UPPER         MARGINAL
+          LOWER          LEVEL          UPPER         MARGINAL
 
-i2           .           169.9734        +INF             .          
-i3           .          4000.0000        +INF             .          
-i4           .            81.9504        +INF             .          
-i5           .             6.6709        +INF             .          
-i6           .          3823.9149        +INF             .          
-i7           .          4000.0000        +INF             .          
-i8           .           288.3026        +INF             .          
-i9           .             9.9816        +INF             .          
-i10          .           378.7138        +INF             .          
+i6          .          2458.0000        +INF             .          
+i8          .          2292.0000        +INF             .          
+i9          .           739.0000        +INF             .          
 
 ---- EQU Restriktion8  xxx
 
-           LOWER          LEVEL          UPPER         MARGINAL
+          LOWER          LEVEL          UPPER         MARGINAL
 
-i2         -INF          169.9734      4000.0000          .          
-i3         -INF         4000.0000      4000.0000         EPS         
-i4         -INF           81.9504      4000.0000          .          
-i5         -INF            6.6709      4000.0000          .          
-i6         -INF         3823.9149      4000.0000          .          
-i7         -INF         4000.0000      4000.0000         EPS         
-i8         -INF          288.3026      4000.0000          .          
-i9         -INF            9.9816      4000.0000          .          
-i10        -INF          378.7138      4000.0000          .          
+i6        -INF         2458.0000      4000.0000          .          
+i8        -INF         2292.0000      4000.0000          .          
+i9        -INF          739.0000     40000.0000          .          
 
 ---- EQU Restriktion9  xxx
 
-                    LOWER          LEVEL          UPPER         MARGINAL
+                   LOWER          LEVEL          UPPER         MARGINAL
 
-depot.i2 .v1    -14665.6677       169.9734        +INF             .          
-depot.i2 .v3    -14665.6677       169.9734        +INF             .          
-depot.i3 .v1    -14682.7618      4000.0000        +INF             .          
-depot.i3 .v3    -14682.7618      4000.0000        +INF             .          
-depot.i4 .v1    -14672.0302        81.9504        +INF             .          
-depot.i4 .v3    -14672.0302        81.9504        +INF             .          
-depot.i5 .v1    -14678.8659         6.6709        +INF             .          
-depot.i5 .v3    -14678.8659    -14678.8659        +INF            EPS         
-depot.i6 .v1    -14682.6093      3823.9149        +INF             .          
-depot.i6 .v3    -14682.6093      3823.9149        +INF             .          
-depot.i7 .v1    -14682.7949      4000.0000        +INF             .          
-depot.i7 .v3    -14682.7949      4000.0000        +INF             .          
-depot.i8 .v1    -14677.4682       288.3026        +INF             .          
-depot.i8 .v3    -14677.4682       288.3026        +INF             .          
-depot.i9 .v1    -14675.5552    -14675.5552        +INF            EPS         
-depot.i9 .v3    -14675.5552         9.9816        +INF             .          
-depot.i10.v1    -14674.3222       378.7138        +INF             .          
-depot.i10.v3    -14674.3222       378.7138        +INF             .          
-i2   .i3 .v1    -14464.1846      3830.0266        +INF             .          
-i2   .i3 .v3    -14464.1846      3830.0266        +INF             .          
-i2   .i4 .v1    -14452.5374       -88.0230        +INF             .          
-i2   .i4 .v3    -14452.5374       -88.0230        +INF             .          
-i2   .i5 .v1    -14466.8221      -163.3025        +INF             .          
-i2   .i5 .v3    -14466.8221      -163.3025        +INF             .          
-i2   .i6 .v1    -14467.8862      3653.9415        +INF             .          
-i2   .i6 .v3    -14467.8862      3653.9415        +INF             .          
-i2   .i7 .v1    -14466.9025      3830.0266        +INF             .          
-i2   .i7 .v3    -14466.9025      3830.0266        +INF             .          
-i2   .i8 .v1    -14457.5993       118.3292        +INF             .          
-i2   .i8 .v3    -14457.5993       118.3292        +INF             .          
-i2   .i9 .v1    -14475.5451      -159.9918        +INF             .          
-i2   .i9 .v3    -14475.5451      -159.9918        +INF             .          
-i2   .i10.v1    -14476.7964    -14476.7964        +INF            EPS         
-i2   .i10.v3    -14476.7964       208.7405        +INF             .          
-i3   .i2 .v1    -14464.1846     -3830.0266        +INF             .          
-i3   .i2 .v3    -14464.1846     -3830.0266        +INF             .          
-i3   .i4 .v1    -14472.2979     -3918.0496        +INF             .          
-i3   .i4 .v3    -14472.2979     -3918.0496        +INF             .          
-i3   .i5 .v1    -14476.1170     -3993.3291        +INF             .          
-i3   .i5 .v3    -14476.1170     -3993.3291        +INF             .          
-i3   .i6 .v1    -14481.8281      -176.0851        +INF             .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 20
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     EQU Restriktion9  xxx
-
-                    LOWER          LEVEL          UPPER         MARGINAL
-
-i3   .i6 .v3    -14481.8281      -176.0851        +INF             .          
-i3   .i7 .v1    -14482.8058   1.818989E-12        +INF             .          
-i3   .i7 .v3    -14482.8058   1.818989E-12        +INF             .          
-i3   .i8 .v1    -14478.4141     -3711.6974        +INF             .          
-i3   .i8 .v3    -14478.4141     -3711.6974        +INF             .          
-i3   .i9 .v1    -14474.1750     -3990.0184        +INF             .          
-i3   .i9 .v3    -14474.1750     -3990.0184        +INF             .          
-i3   .i10.v1    -14472.5760     -3621.2862        +INF             .          
-i3   .i10.v3    -14472.5760     -3621.2862        +INF             .          
-i4   .i2 .v1    -14452.5374        88.0230        +INF             .          
-i4   .i2 .v3    -14452.5374        88.0230        +INF             .          
-i4   .i3 .v1    -14472.2979      3918.0496        +INF             .          
-i4   .i3 .v3    -14472.2979      3918.0496        +INF             .          
-i4   .i5 .v1    -14470.2574       -75.2794        +INF             .          
-i4   .i5 .v3    -14470.2574       -75.2794        +INF             .          
-i4   .i6 .v1    -14469.2534      3741.9646        +INF             .          
-i4   .i6 .v3    -14469.2534      3741.9646        +INF             .          
-i4   .i7 .v1    -14469.8873      3918.0496        +INF             .          
-i4   .i7 .v3    -14469.8873      3918.0496        +INF             .          
-i4   .i8 .v1    -14479.1846       206.3523        +INF             .          
-i4   .i8 .v3    -14479.1846    -14479.1846        +INF            EPS         
-i4   .i9 .v1    -14462.1679       -71.9687        +INF             .          
-i4   .i9 .v3    -14462.1679       -71.9687        +INF             .          
-i4   .i10.v1    -14461.2759       296.7635        +INF             .          
-i4   .i10.v3    -14461.2759       296.7635        +INF             .          
-i5   .i2 .v1    -14606.8221       163.3025        +INF             .          
-i5   .i2 .v3    -14606.8221       163.3025        +INF             .          
-i5   .i3 .v1    -14616.1170      3993.3291        +INF             .          
-i5   .i3 .v3    -14616.1170      3993.3291        +INF             .          
-i5   .i4 .v1    -14610.2574        75.2794        +INF             .          
-i5   .i4 .v3    -14610.2574    -14610.2574        +INF            EPS         
-i5   .i6 .v1    -14617.4550      3817.2440        +INF             .          
-i5   .i6 .v3    -14617.4550      3817.2440        +INF             .          
-i5   .i7 .v1    -14616.8453      3993.3291        +INF             .          
-i5   .i7 .v3    -14616.8453      3993.3291        +INF             .          
-i5   .i8 .v1    -14613.4238       281.6317        +INF             .          
-i5   .i8 .v3    -14613.4238       281.6317        +INF             .          
-i5   .i9 .v1    -14614.9330         3.3107        +INF             .          
-i5   .i9 .v3    -14614.9330         3.3107        +INF             .          
-i5   .i10.v1    -14615.1135       372.0429        +INF             .          
-i5   .i10.v3    -14615.1135       372.0429        +INF             .          
-i6   .i2 .v1    -14492.8862     -3653.9415        +INF             .          
-i6   .i2 .v3    -14492.8862     -3653.9415        +INF             .          
-i6   .i3 .v1    -14506.8281       176.0851        +INF             .          
-i6   .i3 .v3    -14506.8281       176.0851        +INF             .          
-i6   .i4 .v1    -14494.2534     -3741.9646        +INF             .          
-i6   .i4 .v3    -14494.2534     -3741.9646        +INF             .          
-i6   .i5 .v1    -14502.4550     -3817.2440        +INF             .          
-i6   .i5 .v3    -14502.4550     -3817.2440        +INF             .          
-i6   .i7 .v1    -14509.4518    -14509.4518        +INF            EPS         
-i6   .i7 .v3    -14509.4518       176.0851        +INF             .          
-i6   .i8 .v1    -14500.0165     -3535.6123        +INF             .          
-i6   .i8 .v3    -14500.0165     -3535.6123        +INF             .          
-i6   .i9 .v1    -14502.8779     -3813.9333        +INF             .          
-i6   .i9 .v3    -14502.8779     -3813.9333        +INF             .          
-i6   .i10.v1    -14501.2635     -3445.2011        +INF             .          
-i6   .i10.v3    -14501.2635     -3445.2011        +INF             .          
-i7   .i2 .v1    -14541.9025     -3830.0266        +INF             .          
-i7   .i2 .v3    -14541.9025     -3830.0266        +INF             .          
-i7   .i3 .v1    -14557.8058          .            +INF             .          
-i7   .i3 .v3    -14557.8058          .            +INF             .          
-i7   .i4 .v1    -14544.8873     -3918.0496        +INF             .          
-i7   .i4 .v3    -14544.8873     -3918.0496        +INF             .          
-i7   .i5 .v1    -14551.8453     -3993.3291        +INF             .          
-i7   .i5 .v3    -14551.8453     -3993.3291        +INF             .          
-i7   .i6 .v1    -14559.4518      -176.0851        +INF             .          
-i7   .i6 .v3    -14559.4518      -176.0851        +INF             .          
-i7   .i8 .v1    -14550.8096     -3711.6974        +INF             .          
-i7   .i8 .v3    -14550.8096     -3711.6974        +INF             .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 21
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     EQU Restriktion9  xxx
-
-                    LOWER          LEVEL          UPPER         MARGINAL
-
-i7   .i9 .v1    -14551.8875     -3990.0184        +INF             .          
-i7   .i9 .v3    -14551.8875     -3990.0184        +INF             .          
-i7   .i10.v1    -14550.2095     -3621.2862        +INF             .          
-i7   .i10.v3    -14550.2095     -3621.2862        +INF             .          
-i8   .i2 .v1    -14507.5993      -118.3292        +INF             .          
-i8   .i2 .v3    -14507.5993      -118.3292        +INF             .          
-i8   .i3 .v1    -14528.4141      3711.6974        +INF             .          
-i8   .i3 .v3    -14528.4141    -10973.8395        +INF             .          
-i8   .i4 .v1    -14529.1846      -206.3523        +INF             .          
-i8   .i4 .v3    -14529.1846      -206.3523        +INF             .          
-i8   .i5 .v1    -14523.4238      -281.6317        +INF             .          
-i8   .i5 .v3    -14523.4238      -281.6317        +INF             .          
-i8   .i6 .v1    -14525.0165      3535.6123        +INF             .          
-i8   .i6 .v3    -14525.0165      3535.6123        +INF             .          
-i8   .i7 .v1    -14525.8096      3711.6974        +INF             .          
-i8   .i7 .v3    -14525.8096      3711.6974        +INF             .          
-i8   .i9 .v1    -14517.5144      -278.3210        +INF             .          
-i8   .i9 .v3    -14517.5144      -278.3210        +INF             .          
-i8   .i10.v1    -14516.2659        90.4112        +INF             .          
-i8   .i10.v3    -14516.2659        90.4112        +INF             .          
-i9   .i2 .v1    -14525.5451    -14525.5451        +INF            EPS         
-i9   .i2 .v3    -14525.5451       159.9918        +INF             .          
-i9   .i3 .v1    -14524.1750      3990.0184        +INF             .          
-i9   .i3 .v3    -14524.1750      3990.0184        +INF             .          
-i9   .i4 .v1    -14512.1679        71.9687        +INF             .          
-i9   .i4 .v3    -14512.1679        71.9687        +INF             .          
-i9   .i5 .v1    -14524.9330        -3.3107        +INF             .          
-i9   .i5 .v3    -14524.9330        -3.3107        +INF             .          
-i9   .i6 .v1    -14527.8779      3813.9333        +INF             .          
-i9   .i6 .v3    -14527.8779      3813.9333        +INF             .          
-i9   .i7 .v1    -14526.8875      3990.0184        +INF             .          
-i9   .i7 .v3    -14526.8875      3990.0184        +INF             .          
-i9   .i8 .v1    -14517.5144       278.3210        +INF             .          
-i9   .i8 .v3    -14517.5144       278.3210        +INF             .          
-i9   .i10.v1    -14533.2330       368.7322        +INF             .          
-i9   .i10.v3    -14533.2330       368.7322        +INF             .          
-i10  .i2 .v1    -14576.7964      -208.7405        +INF             .          
-i10  .i2 .v3    -14576.7964      -208.7405        +INF             .          
-i10  .i3 .v1    -14572.5760      3621.2862        +INF             .          
-i10  .i3 .v3    -14572.5760      3621.2862        +INF             .          
-i10  .i4 .v1    -14561.2759      -296.7635        +INF             .          
-i10  .i4 .v3    -14561.2759      -296.7635        +INF             .          
-i10  .i5 .v1    -14575.1135      -372.0429        +INF             .          
-i10  .i5 .v3    -14575.1135      -372.0429        +INF             .          
-i10  .i6 .v1    -14576.2635    -11240.3358        +INF             .          
-i10  .i6 .v3    -14576.2635      3445.2011        +INF             .          
-i10  .i7 .v1    -14575.2095      3621.2862        +INF             .          
-i10  .i7 .v3    -14575.2095      3621.2862        +INF             .          
-i10  .i8 .v1    -14566.2659       -90.4112        +INF             .          
-i10  .i8 .v3    -14566.2659       -90.4112        +INF             .          
-i10  .i9 .v1    -14583.2330      -368.7322        +INF             .          
-i10  .i9 .v3    -14583.2330      -368.7322        +INF             .          
+i6   .i8.v2    -13665.0000      -166.0000        +INF             .          
+i6   .i9.v2    -12184.0000     -1719.0000        +INF             .          
+depot.i6.v2    -12460.0000      2458.0000        +INF             .          
+depot.i8.v2    -12496.0000      2292.0000        +INF             .          
+depot.i9.v2    -13050.0000    -13050.0000        +INF            EPS         
+i8   .i6.v2    -13623.0000    -13623.0000        +INF            EPS         
+i8   .i9.v2    -12180.0000     -1553.0000        +INF             .          
+i9   .i6.v2    -12222.0000      1719.0000        +INF             .          
+i9   .i8.v2    -12258.0000    -12236.0000        +INF             .          
 
 ---- EQU Restriktion10  xxx
 
-              LOWER          LEVEL          UPPER         MARGINAL
+             LOWER          LEVEL          UPPER         MARGINAL
 
-i2 .v1        -INF          169.9734    114465.6677          .          
-i2 .v3        -INF          169.9734    114465.6677          .          
-i3 .v1        -INF         4000.0000    114482.7618          .          
-i3 .v3        -INF        18685.5368    114482.7618          .          
-i4 .v1        -INF           81.9504    114472.0302          .          
-i4 .v3        -INF           81.9504    114472.0302          .          
-i5 .v1        -INF            6.6709    114618.8659          .          
-i5 .v3        -INF            6.6709    114618.8659          .          
-i6 .v1        -INF         3823.9149    114507.6093          .          
-i6 .v3        -INF         3823.9149    114507.6093          .          
-i7 .v1        -INF        18685.5368    114557.7949          .          
-i7 .v3        -INF         4000.0000    114557.7949          .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 22
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     EQU Restriktion10  xxx
-
-              LOWER          LEVEL          UPPER         MARGINAL
-
-i8 .v1        -INF          288.3026    114527.4682          .          
-i8 .v3        -INF          288.3026    114527.4682          .          
-i9 .v1        -INF            9.9816    114525.5552          .          
-i9 .v3        -INF            9.9816    114525.5552          .          
-i10.v1        -INF          378.7138    114574.3222          .          
-i10.v3        -INF          378.7138    114574.3222          .          
+i6.v2        -INF        16247.0000     16247.0000         EPS         
+i8.v2        -INF         2292.0000     16243.0000          .          
+i9.v2        -INF          739.0000     17282.0000          .          
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
@@ -1382,335 +654,84 @@ i10.v3        -INF          378.7138    114574.3222          .
 
                            LOWER          LEVEL          UPPER         MARGINAL
 
----- VAR Z                 -INF           80.0145        +INF             .          
+---- VAR Z                 -INF        51662.0000        +INF             .          
 
   Z  Zielfunktionswert
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/12/12 19:01:21 Page 13
+G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
+Solution Report     SOLVE vrp Using MIP From line 188
+
 
 ---- VAR x  Bedienunsvariable
 
                       LOWER          LEVEL          UPPER         MARGINAL
 
-depot.depot.v1          .              .             1.0000         EPS         
-depot.depot.v3          .              .             1.0000         EPS         
-depot.i2   .v1          .              .             1.0000        19.8691      
-depot.i2   .v3          .              .             1.0000        19.8691      
-depot.i3   .v1          .              .             1.0000         2.7750      
-depot.i3   .v3          .              .             1.0000         2.7750      
-depot.i4   .v1          .              .             1.0000        13.5067      
-depot.i4   .v3          .              .             1.0000        13.5067      
-depot.i5   .v1          .              .             1.0000         6.6709      
-depot.i5   .v3          .             1.0000         1.0000         6.6709      
-depot.i6   .v1          .              .             1.0000         2.9276      
-depot.i6   .v3          .              .             1.0000         2.9276      
-depot.i7   .v1          .              .             1.0000         2.7419      
-depot.i7   .v3          .              .             1.0000         2.7419      
-depot.i8   .v1          .              .             1.0000         8.0687      
-depot.i8   .v3          .              .             1.0000         8.0687      
-depot.i9   .v1          .             1.0000         1.0000         9.9816      
-depot.i9   .v3          .              .             1.0000         9.9816      
-depot.i10  .v1          .              .             1.0000        11.2146      
-depot.i10  .v3          .              .             1.0000        11.2146      
-i2   .depot.v1          .              .             1.0000        19.8691      
-i2   .depot.v3          .              .             1.0000        19.8691      
-i2   .i2   .v1          .              .             1.0000         EPS         
-i2   .i2   .v3          .              .             1.0000         EPS         
-i2   .i3   .v1          .              .             1.0000        21.3523      
-i2   .i3   .v3          .              .             1.0000        21.3523      
-i2   .i4   .v1          .              .             1.0000        32.9994      
-i2   .i4   .v3          .              .             1.0000        32.9994      
-i2   .i5   .v1          .              .             1.0000        18.7147      
-i2   .i5   .v3          .              .             1.0000        18.7147      
-i2   .i6   .v1          .              .             1.0000        17.6507      
-i2   .i6   .v3          .              .             1.0000        17.6507      
-i2   .i7   .v1          .              .             1.0000        18.6343      
-i2   .i7   .v3          .              .             1.0000        18.6343      
-i2   .i8   .v1          .              .             1.0000        27.9376      
-i2   .i8   .v3          .              .             1.0000        27.9376      
-i2   .i9   .v1          .              .             1.0000         9.9918      
-i2   .i9   .v3          .              .             1.0000         9.9918      
-i2   .i10  .v1          .             1.0000         1.0000         8.7405      
-i2   .i10  .v3          .              .             1.0000         8.7405      
-i3   .depot.v1          .              .             1.0000         2.7750      
-i3   .depot.v3          .             1.0000         1.0000         2.7750      
-i3   .i2   .v1          .              .             1.0000        21.3523      
-i3   .i2   .v3          .              .             1.0000        21.3523      
-i3   .i3   .v1          .              .             1.0000         EPS         
-i3   .i3   .v3          .              .             1.0000         EPS         
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 23
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     VAR x  Bedienunsvariable
-
-                      LOWER          LEVEL          UPPER         MARGINAL
-
-i3   .i4   .v1          .              .             1.0000        13.2389      
-i3   .i4   .v3          .              .             1.0000        13.2389      
-i3   .i5   .v1          .              .             1.0000         9.4198      
-i3   .i5   .v3          .              .             1.0000         9.4198      
-i3   .i6   .v1          .              .             1.0000         3.7088      
-i3   .i6   .v3          .              .             1.0000         3.7088      
-i3   .i7   .v1          .              .             1.0000         2.7311      
-i3   .i7   .v3          .              .             1.0000         2.7311      
-i3   .i8   .v1          .              .             1.0000         7.1227      
-i3   .i8   .v3          .              .             1.0000         7.1227      
-i3   .i9   .v1          .              .             1.0000        11.3618      
-i3   .i9   .v3          .              .             1.0000        11.3618      
-i3   .i10  .v1          .              .             1.0000        12.9609      
-i3   .i10  .v3          .              .             1.0000        12.9609      
-i4   .depot.v1          .              .             1.0000        13.5067      
-i4   .depot.v3          .              .             1.0000        13.5067      
-i4   .i2   .v1          .              .             1.0000        32.9994      
-i4   .i2   .v3          .              .             1.0000        32.9994      
-i4   .i3   .v1          .              .             1.0000        13.2389      
-i4   .i3   .v3          .              .             1.0000        13.2389      
-i4   .i4   .v1          .              .             1.0000         EPS         
-i4   .i4   .v3          .              .             1.0000         EPS         
-i4   .i5   .v1          .              .             1.0000        15.2794      
-i4   .i5   .v3          .              .             1.0000        15.2794      
-i4   .i6   .v1          .              .             1.0000        16.2835      
-i4   .i6   .v3          .              .             1.0000        16.2835      
-i4   .i7   .v1          .              .             1.0000        15.6496      
-i4   .i7   .v3          .              .             1.0000        15.6496      
-i4   .i8   .v1          .              .             1.0000         6.3523      
-i4   .i8   .v3          .             1.0000         1.0000         6.3523      
-i4   .i9   .v1          .              .             1.0000        23.3689      
-i4   .i9   .v3          .              .             1.0000        23.3689      
-i4   .i10  .v1          .              .             1.0000        24.2610      
-i4   .i10  .v3          .              .             1.0000        24.2610      
-i5   .depot.v1          .              .             1.0000         6.6709      
-i5   .depot.v3          .              .             1.0000         6.6709      
-i5   .i2   .v1          .              .             1.0000        18.7147      
-i5   .i2   .v3          .              .             1.0000        18.7147      
-i5   .i3   .v1          .              .             1.0000         9.4198      
-i5   .i3   .v3          .              .             1.0000         9.4198      
-i5   .i4   .v1          .              .             1.0000        15.2794      
-i5   .i4   .v3          .             1.0000         1.0000        15.2794      
-i5   .i5   .v1          .              .             1.0000         EPS         
-i5   .i5   .v3          .              .             1.0000         EPS         
-i5   .i6   .v1          .              .             1.0000         8.0818      
-i5   .i6   .v3          .              .             1.0000         8.0818      
-i5   .i7   .v1          .              .             1.0000         8.6915      
-i5   .i7   .v3          .              .             1.0000         8.6915      
-i5   .i8   .v1          .              .             1.0000        12.1130      
-i5   .i8   .v3          .              .             1.0000        12.1130      
-i5   .i9   .v1          .              .             1.0000        10.6038      
-i5   .i9   .v3          .              .             1.0000        10.6038      
-i5   .i10  .v1          .              .             1.0000        10.4233      
-i5   .i10  .v3          .              .             1.0000        10.4233      
-i6   .depot.v1          .              .             1.0000         2.9276      
-i6   .depot.v3          .              .             1.0000         2.9276      
-i6   .i2   .v1          .              .             1.0000        17.6507      
-i6   .i2   .v3          .              .             1.0000        17.6507      
-i6   .i3   .v1          .              .             1.0000         3.7088      
-i6   .i3   .v3          .              .             1.0000         3.7088      
-i6   .i4   .v1          .              .             1.0000        16.2835      
-i6   .i4   .v3          .              .             1.0000        16.2835      
-i6   .i5   .v1          .              .             1.0000         8.0818      
-i6   .i5   .v3          .              .             1.0000         8.0818      
-i6   .i6   .v1          .              .             1.0000         EPS         
-i6   .i6   .v3          .              .             1.0000         EPS         
-i6   .i7   .v1          .             1.0000         1.0000         1.0851      
-i6   .i7   .v3          .              .             1.0000         1.0851      
-i6   .i8   .v1          .              .             1.0000        10.5204      
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 24
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     VAR x  Bedienunsvariable
-
-                      LOWER          LEVEL          UPPER         MARGINAL
-
-i6   .i8   .v3          .              .             1.0000        10.5204      
-i6   .i9   .v1          .              .             1.0000         7.6589      
-i6   .i9   .v3          .              .             1.0000         7.6589      
-i6   .i10  .v1          .              .             1.0000         9.2734      
-i6   .i10  .v3          .              .             1.0000         9.2734      
-i7   .depot.v1          .             1.0000         1.0000         2.7419      
-i7   .depot.v3          .              .             1.0000         2.7419      
-i7   .i2   .v1          .              .             1.0000        18.6343      
-i7   .i2   .v3          .              .             1.0000        18.6343      
-i7   .i3   .v1          .              .             1.0000         2.7311      
-i7   .i3   .v3          .              .             1.0000         2.7311      
-i7   .i4   .v1          .              .             1.0000        15.6496      
-i7   .i4   .v3          .              .             1.0000        15.6496      
-i7   .i5   .v1          .              .             1.0000         8.6915      
-i7   .i5   .v3          .              .             1.0000         8.6915      
-i7   .i6   .v1          .              .             1.0000         1.0851      
-i7   .i6   .v3          .              .             1.0000         1.0851      
-i7   .i7   .v1          .              .             1.0000         EPS         
-i7   .i7   .v3          .              .             1.0000         EPS         
-i7   .i8   .v1          .              .             1.0000         9.7272      
-i7   .i8   .v3          .              .             1.0000         9.7272      
-i7   .i9   .v1          .              .             1.0000         8.6493      
-i7   .i9   .v3          .              .             1.0000         8.6493      
-i7   .i10  .v1          .              .             1.0000        10.3274      
-i7   .i10  .v3          .              .             1.0000        10.3274      
-i8   .depot.v1          .              .             1.0000         8.0687      
-i8   .depot.v3          .              .             1.0000         8.0687      
-i8   .i2   .v1          .              .             1.0000        27.9376      
-i8   .i2   .v3          .              .             1.0000        27.9376      
-i8   .i3   .v1          .              .             1.0000         7.1227      
-i8   .i3   .v3          .             1.0000         1.0000         7.1227      
-i8   .i4   .v1          .              .             1.0000         6.3523      
-i8   .i4   .v3          .              .             1.0000         6.3523      
-i8   .i5   .v1          .              .             1.0000        12.1130      
-i8   .i5   .v3          .              .             1.0000        12.1130      
-i8   .i6   .v1          .              .             1.0000        10.5204      
-i8   .i6   .v3          .              .             1.0000        10.5204      
-i8   .i7   .v1          .              .             1.0000         9.7272      
-i8   .i7   .v3          .              .             1.0000         9.7272      
-i8   .i8   .v1          .              .             1.0000         EPS         
-i8   .i8   .v3          .              .             1.0000         EPS         
-i8   .i9   .v1          .              .             1.0000        18.0224      
-i8   .i9   .v3          .              .             1.0000        18.0224      
-i8   .i10  .v1          .              .             1.0000        19.2710      
-i8   .i10  .v3          .              .             1.0000        19.2710      
-i9   .depot.v1          .              .             1.0000         9.9816      
-i9   .depot.v3          .              .             1.0000         9.9816      
-i9   .i2   .v1          .             1.0000         1.0000         9.9918      
-i9   .i2   .v3          .              .             1.0000         9.9918      
-i9   .i3   .v1          .              .             1.0000        11.3618      
-i9   .i3   .v3          .              .             1.0000        11.3618      
-i9   .i4   .v1          .              .             1.0000        23.3689      
-i9   .i4   .v3          .              .             1.0000        23.3689      
-i9   .i5   .v1          .              .             1.0000        10.6038      
-i9   .i5   .v3          .              .             1.0000        10.6038      
-i9   .i6   .v1          .              .             1.0000         7.6589      
-i9   .i6   .v3          .              .             1.0000         7.6589      
-i9   .i7   .v1          .              .             1.0000         8.6493      
-i9   .i7   .v3          .              .             1.0000         8.6493      
-i9   .i8   .v1          .              .             1.0000        18.0224      
-i9   .i8   .v3          .              .             1.0000        18.0224      
-i9   .i9   .v1          .              .             1.0000         EPS         
-i9   .i9   .v3          .              .             1.0000         EPS         
-i9   .i10  .v1          .              .             1.0000         2.3039      
-i9   .i10  .v3          .              .             1.0000         2.3039      
-i10  .depot.v1          .              .             1.0000        11.2146      
-i10  .depot.v3          .              .             1.0000        11.2146      
-i10  .i2   .v1          .              .             1.0000         8.7405      
-i10  .i2   .v3          .              .             1.0000         8.7405      
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 25
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     VAR x  Bedienunsvariable
-
-                      LOWER          LEVEL          UPPER         MARGINAL
-
-i10  .i3   .v1          .              .             1.0000        12.9609      
-i10  .i3   .v3          .              .             1.0000        12.9609      
-i10  .i4   .v1          .              .             1.0000        24.2610      
-i10  .i4   .v3          .              .             1.0000        24.2610      
-i10  .i5   .v1          .              .             1.0000        10.4233      
-i10  .i5   .v3          .              .             1.0000        10.4233      
-i10  .i6   .v1          .             1.0000         1.0000         9.2734      
-i10  .i6   .v3          .              .             1.0000         9.2734      
-i10  .i7   .v1          .              .             1.0000        10.3274      
-i10  .i7   .v3          .              .             1.0000        10.3274      
-i10  .i8   .v1          .              .             1.0000        19.2710      
-i10  .i8   .v3          .              .             1.0000        19.2710      
-i10  .i9   .v1          .              .             1.0000         2.3039      
-i10  .i9   .v3          .              .             1.0000         2.3039      
-i10  .i10  .v1          .              .             1.0000         EPS         
-i10  .i10  .v3          .              .             1.0000         EPS         
+i6   .i6   .v2          .              .             1.0000         EPS         
+i6   .depot.v2          .             1.0000         1.0000     21335.0000      
+i6   .i8   .v2          .              .             1.0000       425.0000      
+i6   .i9   .v2          .              .             1.0000     27019.0000      
+depot.i6   .v2          .              .             1.0000     21101.0000      
+depot.depot.v2          .              .             1.0000         EPS         
+depot.i8   .v2          .              .             1.0000     20720.0000      
+depot.i9   .v2          .             1.0000         1.0000      4609.0000      
+i8   .i6   .v2          .             1.0000         1.0000       425.0000      
+i8   .depot.v2          .              .             1.0000     21113.0000      
+i8   .i8   .v2          .              .             1.0000         EPS         
+i8   .i9   .v2          .              .             1.0000     26797.0000      
+i9   .i6   .v2          .              .             1.0000     25674.0000      
+i9   .depot.v2          .              .             1.0000      4167.0000      
+i9   .i8   .v2          .             1.0000         1.0000     25293.0000      
+i9   .i9   .v2          .              .             1.0000         EPS         
 
 ---- VAR y  Tourvariable
 
                 LOWER          LEVEL          UPPER         MARGINAL
 
-depot.v1          .             1.0000         1.0000         EPS         
-depot.v3          .             1.0000         1.0000         EPS         
-i2   .v1          .             1.0000         1.0000         EPS         
-i2   .v3          .              .             1.0000         EPS         
-i3   .v1          .              .             1.0000         EPS         
-i3   .v3          .             1.0000         1.0000         EPS         
-i4   .v1          .              .             1.0000         EPS         
-i4   .v3          .             1.0000         1.0000         EPS         
-i5   .v1          .              .             1.0000         EPS         
-i5   .v3          .             1.0000         1.0000         EPS         
-i6   .v1          .             1.0000         1.0000         EPS         
-i6   .v3          .              .             1.0000         EPS         
-i7   .v1          .             1.0000         1.0000         EPS         
-i7   .v3          .              .             1.0000         EPS         
-i8   .v1          .              .             1.0000         EPS         
-i8   .v3          .             1.0000         1.0000         EPS         
-i9   .v1          .             1.0000         1.0000         EPS         
-i9   .v3          .              .             1.0000         EPS         
-i10  .v1          .             1.0000         1.0000         EPS         
-i10  .v3          .              .             1.0000         EPS         
+i6   .v2          .             1.0000         1.0000         EPS         
+depot.v2          .             1.0000         1.0000         EPS         
+i8   .v2          .             1.0000         1.0000         EPS         
+i9   .v2          .             1.0000         1.0000         EPS         
 
 ---- VAR w  Anfahrtszeitpunkte
 
               LOWER          LEVEL          UPPER         MARGINAL
 
+i6              .          2458.0000        +INF             .          
 depot           .              .            +INF            EPS         
-i2              .           169.9734        +INF             .          
-i3              .          4000.0000        +INF             .          
-i4              .            81.9504        +INF             .          
-i5              .             6.6709        +INF             .          
-i6              .          3823.9149        +INF             .          
-i7              .          4000.0000        +INF             .          
-i8              .           288.3026        +INF             .          
-i9              .             9.9816        +INF             .          
-i10             .           378.7138        +INF             .          
+i8              .          2292.0000        +INF             .          
+i9              .           739.0000        +INF             .          
 dstart          .              .            +INF             .          
 
 ---- VAR hv  Hilfsvariable
 
-           LOWER          LEVEL          UPPER         MARGINAL
+          LOWER          LEVEL          UPPER         MARGINAL
 
-i2           .             1.0000        +INF             .          
-i3           .             3.0000        +INF             .          
-i4           .             1.0000        +INF             .          
-i5           .              .            +INF            EPS         
-i6           .             3.0000        +INF             .          
-i7           .             4.0000        +INF             .          
-i8           .             2.0000        +INF             .          
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 26
-G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
-Solution Report     SOLVE vrp Using MIP From line 382
-
-
-     VAR hv  Hilfsvariable
-
-           LOWER          LEVEL          UPPER         MARGINAL
-
-i9           .              .            +INF            EPS         
-i10          .             2.0000        +INF             .          
+i6          .             2.0000        +INF             .          
+i8          .             1.0000        +INF             .          
+i9          .              .            +INF            EPS         
 
 
 **** REPORT SUMMARY :        0     NONOPT
                              0 INFEASIBLE
                              0  UNBOUNDED
-GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/11/12 01:51:27 Page 27
+GAMS Rev 237  WEX-WEI 23.7.3 x86_64/MS Windows                                                                                                                                                                                        02/12/12 19:01:21 Page 14
 G e n e r a l   A l g e b r a i c   M o d e l i n g   S y s t e m
 E x e c u t i o n
 
 
-----    384 VARIABLE x.L  Bedienunsvariable
+----    190 VARIABLE x.L  Bedienunsvariable
 
-                     v1          v3
+                     v2
 
-depot.i5                      1.000
+i6   .depot       1.000
 depot.i9          1.000
-i2   .i10         1.000
-i3   .depot                   1.000
-i4   .i8                      1.000
-i5   .i4                      1.000
-i6   .i7          1.000
-i7   .depot       1.000
-i8   .i3                      1.000
-i9   .i2          1.000
-i10  .i6          1.000
+i8   .i6          1.000
+i9   .i8          1.000
 
 
-----    384 VARIABLE w.L  Anfahrtszeitpunkte
+----    190 VARIABLE w.L  Anfahrtszeitpunkte
 
-i2   169.973,    i3  4000.000,    i4    81.950,    i5     6.671,    i6  3823.915,    i7  4000.000,    i8   288.303,    i9     9.982,    i10  378.714
+i6 2458.000,    i8 2292.000,    i9  739.000
 
 
 **** REPORT FILE SUMMARY
@@ -1720,7 +741,7 @@ outputfile2 C:\Sites\Tourenplaner_v3\VRP_Loesung2.txt
 outputfile3 C:\Sites\Tourenplaner_v3\VRP_Loesung3.txt
 
 
-EXECUTION TIME       =        0.032 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
+EXECUTION TIME       =        0.000 SECONDS      3 Mb  WEX237-237 Aug 23, 2011
 
 
 USER: Stefan Helber                                  G110217/0001AH-WIN

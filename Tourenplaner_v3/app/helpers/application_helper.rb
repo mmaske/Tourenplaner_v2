@@ -11,6 +11,10 @@
     end
     def logo
     image_tag("logo.png", :alt => "Sample App", :class => "round")
-  end
+    end
+
+    def signup
+    image_tag("sign_up.png", :alt => "Sample App")
+    end
   end
 

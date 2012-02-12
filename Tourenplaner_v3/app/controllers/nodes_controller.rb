@@ -29,7 +29,10 @@ class NodesController < ApplicationController
   # GET /nodes/new.xml
   def new
     @node = Node.new(:user_id => current_user[:id])
-
+    project = Project.where(:user_id => current_user[:id]).first
+    project.optimized = false
+    project.loading= false
+    project.save
 
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +44,24 @@ class NodesController < ApplicationController
   def edit
     @node = Node.find(params[:id])
     @json = Node.find(params[:id]).to_gmaps4rails
-    current_user[:optimized] = false
+   # current_user[:optimized] = false
+#    if @node.nodechanged?
+    if @node.save
+    @nodes = Node.where(:user_id => current_user[:id])
+    if @nodes != nil
+    @nodes.each do |node|
+      node.jobnumber = nil
+      node.vehicle_id = nil
+      node.servicetime = nil
+      node.tour_id = nil
+      node.save
+    end
+    end
+    project = Project.where(:user_id => current_user[:id]).first
+    project.optimized = false
+    project.loading = false
+    project.save
+    end
   end
 
   # POST /nodes
@@ -54,6 +74,20 @@ class NodesController < ApplicationController
     @json = Node.where(:user_id => current_user[:id]).to_gmaps4rails
     current_user[:optimized] = false
 
+    if @node.save
+    @nodes = Node.where(:user_id => current_user[:id])
+    @nodes.each do |node|
+      node.jobnumber = nil
+      node.vehicle_id = nil
+      node.servicetime = nil
+      node.tour_id = nil
+      node.save
+    end
+      project = Project.where(:user_id => current_user[:id]).first
+      project.optimized = false
+      project.loading = false
+      project.save
+    end
 
 
 
@@ -76,7 +110,18 @@ class NodesController < ApplicationController
 
     respond_to do |format|
       if @node.update_attributes(params[:node])
-        current_user[:optimized] = false
+        @nodes = Node.where(:user_id => current_user[:id])
+         @nodes.each do |node|
+          node.jobnumber = nil
+      node.vehicle_id = nil
+      node.servicetime = nil
+      node.tour_id = nil
+      node.save
+    end
+        project = Project.where(:user_id => current_user[:id]).first
+        project.optimized = false
+        project.loading = false
+        project.save
         format.html { redirect_to(nodes_path, :notice => 'Node was successfully updated.') }
         format.xml  { head :ok }
       else
@@ -91,8 +136,18 @@ class NodesController < ApplicationController
   def destroy
     @node = Node.find(params[:id])
     @node.destroy
-    current_user[:optimized] = false
-
+    project = Project.where(:user_id => current_user[:id]).first
+    project.optimized = false
+    project.loading = false
+    project.save
+    @nodes = Node.where(:user_id => current_user[:id])
+    @nodes.each do |node|
+      node.jobnumber = nil
+      node.vehicle_id = nil
+      node.servicetime = nil
+      node.tour_id = nil
+      node.save
+    end
     respond_to do |format|
       format.html { redirect_to(nodes_url) }
       format.xml  { head :ok }

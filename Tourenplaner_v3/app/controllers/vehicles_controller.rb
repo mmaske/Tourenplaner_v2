@@ -6,7 +6,7 @@ class VehiclesController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      format.xml  { render :xml => @vehicles }
+      format.xml { render :xml => @vehicles }
     end
   end
 
@@ -17,7 +17,7 @@ class VehiclesController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
-      format.xml  { render :xml => @vehicle }
+      format.xml { render :xml => @vehicle }
     end
   end
 
@@ -28,14 +28,13 @@ class VehiclesController < ApplicationController
     @vehicle = Vehicle.new(:user_id => current_user[:id])
     respond_to do |format|
       format.html # new.html.erb
-      format.xml  { render :xml => @vehicle }
+      format.xml { render :xml => @vehicle }
     end
   end
 
   # GET /vehicles/1/edit
   def edit
     @vehicle = Vehicle.find(params[:id])
-    current_user[:optimized] = false
   end
 
   # POST /vehicles
@@ -46,12 +45,25 @@ class VehiclesController < ApplicationController
 
     respond_to do |format|
       if @vehicle.save
-        current_user[:optimized] = false
+        project = Project.where(:user_id => current_user[:id]).first
+        project.loading = false
+        project.optimized = false
+        project.save
+        @nodes = Node.where(:user_id => current_user[:id])
+        if @nodes != nil
+          @nodes.each do |node|
+            node.jobnumber = nil
+            node.vehicle_id = nil
+            node.servicetime = nil
+            node.tour_id = nil
+            node.save
+          end
+        end
         format.html { redirect_to(@vehicle, :notice => 'Vehicle was successfully created.') }
-        format.xml  { render :xml => @vehicle, :status => :created, :location => @vehicle }
+        format.xml { render :xml => @vehicle, :status => :created, :location => @vehicle }
       else
         format.html { render :action => "new" }
-        format.xml  { render :xml => @vehicle.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @vehicle.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -63,12 +75,25 @@ class VehiclesController < ApplicationController
 
     respond_to do |format|
       if @vehicle.update_attributes(params[:vehicle])
-        current_user[:optimized] = false
+        project = Project.where(:user_id => current_user[:id]).first
+        project.loading = false
+        project.optimized = false
+        project.save
+        @nodes = Node.where(:user_id => current_user[:id])
+        if @nodes != nil
+          @nodes.each do |node|
+            node.jobnumber = nil
+            node.vehicle_id = nil
+            node.servicetime = nil
+            node.tour_id = nil
+            node.save
+          end
+        end
         format.html { redirect_to(@vehicle, :notice => 'Vehicle was successfully updated.') }
-        format.xml  { head :ok }
+        format.xml { head :ok }
       else
         format.html { render :action => "edit" }
-        format.xml  { render :xml => @vehicle.errors, :status => :unprocessable_entity }
+        format.xml { render :xml => @vehicle.errors, :status => :unprocessable_entity }
       end
     end
   end
@@ -78,10 +103,23 @@ class VehiclesController < ApplicationController
   def destroy
     @vehicle = Vehicle.find(params[:id])
     @vehicle.destroy
-    current_user[:optimized] = false
+    project = Project.where(:user_id => current_user[:id]).first
+    project.loading = false
+    project.optimized = false
+    project.save
+    @nodes = Node.where(:user_id => current_user[:id])
+    if @nodes != nil
+      @nodes.each do |node|
+        node.jobnumber = nil
+        node.vehicle_id = nil
+        node.servicetime = nil
+        node.tour_id = nil
+        node.save
+      end
+    end
     respond_to do |format|
       format.html { redirect_to(vehicles_url) }
-      format.xml  { head :ok }
+      format.xml { head :ok }
     end
   end
 end

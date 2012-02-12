@@ -43,8 +43,8 @@ Restriktion7(i)                            xxx
 Restriktion8(i)                            xxx
 Restriktion9(i,j,k)                        xxx
 Restriktion10(i,k)                         xxx
-Restriktion11                              xxx;
-
+Restriktion11                              xxx
+;
 
 Zielfunktion..
      Z =e=   sum((i,j,k),c(i,j)*x(i,j,k));

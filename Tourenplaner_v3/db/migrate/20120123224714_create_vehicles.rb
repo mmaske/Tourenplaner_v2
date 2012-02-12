@@ -6,13 +6,13 @@ class CreateVehicles < ActiveRecord::Migration
       t.float :Capacity
       t.integer :project_id
       t.integer :user_id
-      t.integer :link_id
+
 
       t.timestamps
     end
     add_index :vehicles, [:project_id]
     add_index :vehicles, [:user_id]
-    add_index :vehicles, [:link_id]
+
   end
 
   def self.down

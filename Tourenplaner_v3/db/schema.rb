@@ -63,7 +63,13 @@ ActiveRecord::Schema.define(:version => 20120207161942) do
 
   create_table "projects", :force => true do |t|
     t.string   "name"
+    t.boolean  "distance_accuracy"
+    t.boolean  "duration_accuracy"
+    t.float    "tourduration"
+    t.boolean  "optimized"
+    t.boolean  "loading"
     t.integer  "user_id"
+    t.float    "serviceparameter"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

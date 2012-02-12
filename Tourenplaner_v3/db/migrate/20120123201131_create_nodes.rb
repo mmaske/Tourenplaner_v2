@@ -6,7 +6,6 @@ class CreateNodes < ActiveRecord::Migration
       t.boolean :gmaps
       t.string :name
       t.string :street
-      t.string :number
       t.string :city
       t.string :country
       t.float :demand
@@ -24,7 +23,6 @@ class CreateNodes < ActiveRecord::Migration
       t.timestamps
     end
     add_index :nodes, [:project_id]
-    add_index :nodes, [:tour_id]
     add_index :nodes, [:user_id]
     add_index :nodes, [:vehicle_id]
 

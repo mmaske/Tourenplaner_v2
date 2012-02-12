@@ -5,8 +5,9 @@ acts_as_gmappable :process_geocoding => true, :validation =>true
   "#{self.street}, #{self.city}, #{self.country}"
   end
   def gmaps4rails_infowindow
-      "#####{id}##### \n #{name} \n #{gmaps4rails_address}\n Demand:#{demand}"
+      "#{name} \n #{gmaps4rails_address}\n Demand:#{demand}"
   end
+
 
 
 def gmaps4rails_marker_picture
@@ -18,8 +19,19 @@ def gmaps4rails_marker_picture
 
 end
 
-  belongs_to :project, :class_name => "Project"
-  belongs_to :link
+def nodechanged?
+    if (self.demand.changed? || self.street.changed? || self.city.changed? || self.earliest.changed? || self.latest.changed? || self.depot?.changed?)
+      return true
+    else
+      false
+  end
+end
+
+#def formattime
+#   hour = (self.servicetime/60)
+#   minute =
+#end
+
+  belongs_to :project
   belongs_to :user
-  belongs_to :tour
   end

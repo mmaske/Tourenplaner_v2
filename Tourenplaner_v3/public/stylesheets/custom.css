@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #cff;
+  background-image:url(/images/background.jpg);
 }
 
 header {
@@ -12,14 +12,14 @@ header {
 
 header img {
   padding: 1em;
-  background: #fff;
+  background: #cccccc;
 }
 
 section {
   margin-top: 1em;
   font-size: 120%;
   padding: 20px;
-  background: #fff;
+  background: #cccccc;
 }
 
 section h1 {
@@ -49,7 +49,7 @@ nav {
 }
 
 nav {
-  background-color: white;
+  background-color: #cccccc;
   padding: 0 0.7em;
   white-space: nowrap;
 }
@@ -111,13 +111,26 @@ a.signup_button {
   text-align: center;
   width: 190px;
   color: #fff;
-  background: #006400;
+  background: #ff3333;
   font-size: 150%;
   font-weight: bold;
   padding: 20px;
 }
 
+/* Sign up button */
 
+a.optimize_button {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  text-align: center;
+  width: 110px;
+  color: #fff;
+  background: #006400;
+  font-size: 150%;
+  font-weight: bold;
+  padding: 20px;
+}
 
 /* Round corners */
 
@@ -132,7 +145,7 @@ a.signup_button {
 footer {
   text-align: center;
   margin-top: 10px;
-  width: 710px;
+  width: 900px;
   margin-left: auto;
   margin-right: auto;
 }

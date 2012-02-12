@@ -23,6 +23,7 @@ SampleApp2::Application.routes.draw do
   match 'projects/read_vrp_solution', :to => 'projects#read_vrp_solution'
   match 'projects/read_polyline', :to => 'projects#read_polyline'
   match 'projects/show_solution', :to => 'projects#show_solution'
+  match 'projects/get_content_to_display', :to => 'projects#get_content_to_display'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

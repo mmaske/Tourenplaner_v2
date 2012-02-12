@@ -6,9 +6,11 @@
       <% if signed_in? %>
       <li><%= link_to "Nodes", nodes_path %></li>
       <li><%= link_to "Vehicles", vehicles_path %></li>
-      <li><%= link_to "Optimization Page", edit_user_path(current_user) %></li>
+      <% project = Project.where(:user_id => current_user[:id]).first %>
+      <li><%= link_to "Optimization Parameters", edit_project_path(project) %></li>
+      <% if (Project.where(:user_id => current_user[:id]).first.loading?) %>
       <li><%= link_to "Solution Page", solution_path(current_user) %></li>
-
+      <% end %>
       <% end %>
 
     </ul>
